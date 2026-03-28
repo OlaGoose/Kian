@@ -1,0 +1,75 @@
+{
+  "site": {
+    "name": "Your Name",
+    "description": "Developer, builder, and writer."
+  },
+  "nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "projects": "Projects",
+    "chat": "Chat",
+    "language": "Language"
+  },
+  "home": {
+    "bio1": "I'm a <developerLink>developer and builder</developerLink>. I work on <productLink>products</productLink> that matter. I've been coding for years and care deeply about craft.",
+    "bio2": "My focus is building things that are fast, accessible, and useful. I'm a <musicLink>music fan</musicLink> and believe good software should be invisible.",
+    "writingTitle": "Some of my favorite writing:",
+    "aiTwin": "You can also <chatLink>ask my AI</chatLink> to learn more about my work and thinking.",
+    "footer": "You can <blogLink>read my writing</blogLink> or view my <projectsLink>projects</projectsLink>, or <followLink>follow me online</followLink>. <contactLink>Reach out</contactLink> if you'd like to connect."
+  },
+  "blog": {
+    "title": "Writing",
+    "description": "Thoughts on building, technology, and what I've learned.",
+    "empty": "No posts yet.",
+    "readMore": "Read more",
+    "minuteRead": "{count} min read",
+    "backToBlog": "All posts",
+    "publishedOn": "Published"
+  },
+  "projects": {
+    "title": "Projects",
+    "description": "Products and tools I've built.",
+    "visitSite": "Visit",
+    "viewCode": "Code",
+    "status": {
+      "live": "Live",
+      "wip": "In Progress",
+      "archived": "Archived"
+    },
+    "featured": "Featured"
+  },
+  "chat": {
+    "title": "Ask Me",
+    "back": "Back",
+    "placeholder": "Ask anything…",
+    "thinking": "Thinking…",
+    "intro": "Hi, I'm an AI trained on the writings and work of this site's author. What would you like to know?"
+  },
+  "feedback": {
+    "title": "Feedback",
+    "description": "Have any thoughts or suggestions?",
+    "placeholder": "Your feedback…",
+    "submit": "Submit",
+    "success": "Thank you!",
+    "voice": {
+      "record": "Record",
+      "stop": "Stop",
+      "play": "Play",
+      "delete": "Delete",
+      "recording": "Recording…"
+    }
+  },
+  "booking": {
+    "title": "Schedule",
+    "subtitle": "Book a meeting or leave a message",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "submit": "Book",
+    "success": "Booking sent!",
+    "mySchedule": "My Schedule",
+    "available": "Open",
+    "busy": "Busy",
+    "back": "Back"
+  }
+}

@@ -1,0 +1,26 @@
+# Personal Website
+
+> Developer, builder, and writer.
+
+This is the personal website of [Your Name]. It contains writing, projects, and a way to connect.
+
+## Pages
+
+- [Home](/) — Introduction and featured writing
+- [Blog](/blog) — Articles on building, technology, and ideas
+- [Projects](/projects) — Products and tools I've built
+- [Chat](/chat) — Ask an AI trained on my writing
+
+## Writing
+
+The blog covers topics including software development, product building, and technology thinking.
+All articles are available in English and Chinese.
+
+## Projects
+
+A curated list of web products and tools built by the author.
+Projects include live products, open-source tools, and experiments.
+
+## Contact
+
+Reach out via email or social links available on the homepage.

@@ -1,0 +1,75 @@
+{
+  "site": {
+    "name": "你的名字",
+    "description": "开发者、产品构建者与写作者。"
+  },
+  "nav": {
+    "home": "主页",
+    "blog": "文章",
+    "projects": "作品",
+    "chat": "对话",
+    "language": "语言"
+  },
+  "home": {
+    "bio1": "我是一名<developerLink>开发者和构建者</developerLink>。我专注于打造<productLink>有意义的产品</productLink>，对技术与工艺有着深厚的热情。",
+    "bio2": "我致力于构建快速、可访问且实用的软件。我热爱<musicLink>音乐</musicLink>，也相信好的软件应当无处不在却悄然无声。",
+    "writingTitle": "我最喜欢的一些文章：",
+    "aiTwin": "你也可以<chatLink>与我的 AI</chatLink> 对话，进一步了解我的工作与思考。",
+    "footer": "你可以<blogLink>阅读我的文章</blogLink>或查看我的<projectsLink>作品集</projectsLink>，也可以在<followLink>网上关注我</followLink>。<contactLink>欢迎联系</contactLink>。"
+  },
+  "blog": {
+    "title": "文章",
+    "description": "关于构建、技术和所思所学。",
+    "empty": "暂无文章。",
+    "readMore": "阅读全文",
+    "minuteRead": "{count} 分钟阅读",
+    "backToBlog": "所有文章",
+    "publishedOn": "发布于"
+  },
+  "projects": {
+    "title": "作品",
+    "description": "我构建的产品和工具。",
+    "visitSite": "访问",
+    "viewCode": "代码",
+    "status": {
+      "live": "已上线",
+      "wip": "开发中",
+      "archived": "已归档"
+    },
+    "featured": "精选"
+  },
+  "chat": {
+    "title": "问问我",
+    "back": "返回",
+    "placeholder": "问任何问题…",
+    "thinking": "思考中…",
+    "intro": "你好，我是基于本站作者文章和作品训练的 AI。你想了解什么？"
+  },
+  "feedback": {
+    "title": "反馈",
+    "description": "有什么想法或建议吗？",
+    "placeholder": "你的反馈…",
+    "submit": "提交",
+    "success": "感谢你的反馈！",
+    "voice": {
+      "record": "录音",
+      "stop": "停止",
+      "play": "播放",
+      "delete": "删除",
+      "recording": "录音中…"
+    }
+  },
+  "booking": {
+    "title": "日程安排",
+    "subtitle": "预约会议或留言",
+    "name": "姓名",
+    "email": "邮箱",
+    "message": "留言",
+    "submit": "预约",
+    "success": "预约请求已发送！",
+    "mySchedule": "我的日程",
+    "available": "空闲",
+    "busy": "忙碌",
+    "back": "返回"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "name": "Minimalist Personal Portfolio",
+  "description": "A high-performance, minimalist personal website inspired by industry leaders like Lee Robinson. Built with React, Tailwind CSS, and Framer Motion.",
+  "requestFramePermissions": ["microphone"]
+}
