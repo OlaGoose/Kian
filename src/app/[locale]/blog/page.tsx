@@ -57,7 +57,7 @@ export default async function BlogPage({ params }: Props) {
         <SiteHeader name={siteT('name')} />
 
         <section>
-          <h1 className="text-[22px] md:text-[28px] font-medium leading-tight mb-2">
+          <h1 className="text-[22px] md:text-[30px] font-medium leading-tight mb-2">
             {t('title')}
           </h1>
           <p className="text-copy text-neutral-500 dark:text-neutral-500 mb-10">
@@ -80,13 +80,13 @@ export default async function BlogPage({ params }: Props) {
                         <h2 className="text-copy font-medium text-neutral-900 dark:text-neutral-100 group-hover:opacity-70 transition-opacity leading-snug">
                           {getTitle(post)}
                         </h2>
-                        <span className="text-[12px] text-neutral-400 dark:text-neutral-600 whitespace-nowrap mt-0.5 flex-shrink-0">
+                        <span className="text-[12px] md:text-[14px] text-neutral-400 dark:text-neutral-600 whitespace-nowrap mt-0.5 flex-shrink-0">
                           {post.reading_time_minutes}m
                         </span>
                       </div>
 
                       {getExcerpt(post) && (
-                        <p className="text-[14px] md:text-[15px] leading-relaxed text-neutral-500 dark:text-neutral-500 mb-2">
+                        <p className="text-[14px] md:text-[17px] leading-relaxed text-neutral-500 dark:text-neutral-500 mb-2">
                           {getExcerpt(post)}
                         </p>
                       )}
@@ -95,7 +95,7 @@ export default async function BlogPage({ params }: Props) {
                         {post.published_at && (
                           <time
                             dateTime={post.published_at}
-                            className="text-[12px] text-neutral-400 dark:text-neutral-600"
+                            className="text-[12px] md:text-[14px] text-neutral-400 dark:text-neutral-600"
                           >
                             {formatDate(post.published_at, locale)}
                           </time>
@@ -105,7 +105,7 @@ export default async function BlogPage({ params }: Props) {
                             {post.tags.slice(0, 3).map((tag) => (
                               <span
                                 key={tag}
-                                className="text-[11px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600"
+                                className="text-[11px] md:text-[13px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600"
                               >
                                 {tag}
                               </span>

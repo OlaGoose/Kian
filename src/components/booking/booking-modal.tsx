@@ -70,10 +70,10 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
             ) : (
               <>
                 <div className="mb-8">
-                  <h2 className="text-[18px] md:text-[20px] font-bold text-neutral-900 dark:text-neutral-100 mb-1 font-serif">
+                  <h2 className="text-[18px] md:text-[22px] font-bold text-neutral-900 dark:text-neutral-100 mb-1 font-serif">
                     {t('title')}
                   </h2>
-                  <p className="text-neutral-500 text-[11px] md:text-[13px] font-sans">
+                  <p className="text-neutral-500 text-[11px] md:text-[15px] font-sans">
                     {t('subtitle')}
                   </p>
                 </div>
@@ -81,7 +81,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                 {step === 'view' ? (
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-[11px] md:text-[13px] font-sans font-medium uppercase tracking-wider text-neutral-400 mb-4">
+                      <h3 className="text-[11px] md:text-[15px] font-sans font-medium uppercase tracking-wider text-neutral-400 mb-4">
                         {t('mySchedule')}
                       </h3>
                       <div className="grid grid-cols-2 gap-2">
@@ -94,8 +94,8 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                                 : 'border-neutral-100 dark:border-neutral-900 opacity-40'
                             }`}
                           >
-                            <span className="text-[13px] font-mono">{item.time}</span>
-                            <span className={`text-[10px] uppercase tracking-tighter font-sans ${
+                            <span className="text-[13px] md:text-[15px] font-mono">{item.time}</span>
+                            <span className={`text-[10px] md:text-[12px] uppercase tracking-tighter font-sans ${
                               item.status === 'available' ? 'text-neutral-900 dark:text-neutral-100' : 'text-neutral-400'
                             }`}>
                               {item.status === 'available' ? t('available') : t('busy')}
@@ -106,7 +106,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                     </div>
                     <button
                       onClick={() => setStep('form')}
-                      className="w-full py-3 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black text-[11px] md:text-[13px] font-sans font-medium uppercase tracking-wider hover:opacity-80 transition-all rounded-[2px]"
+                      className="w-full py-3 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black text-[11px] md:text-[15px] font-sans font-medium uppercase tracking-wider hover:opacity-80 transition-all rounded-[2px]"
                     >
                       {t('submit')}
                     </button>
@@ -115,7 +115,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                   <form onSubmit={handleSubmit} className="space-y-4">
                     {(['name', 'email', 'message'] as const).map((field) => (
                       <div key={field} className="space-y-1">
-                        <label className="text-[10px] uppercase tracking-wider text-neutral-400 font-sans">
+                        <label className="text-[10px] md:text-[12px] uppercase tracking-wider text-neutral-400 font-sans">
                           {t(field)}
                         </label>
                         {field === 'message' ? (
@@ -124,7 +124,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                             rows={3}
                             value={formData[field]}
                             onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
-                            className="w-full bg-transparent border-b border-neutral-200 dark:border-neutral-800 py-2 text-[13px] font-serif focus:outline-none focus:border-neutral-900 dark:focus:border-neutral-100 transition-colors resize-none"
+                            className="w-full bg-transparent border-b border-neutral-200 dark:border-neutral-800 py-2 text-[13px] md:text-[15px] font-serif focus:outline-none focus:border-neutral-900 dark:focus:border-neutral-100 transition-colors resize-none"
                           />
                         ) : (
                           <input
@@ -132,7 +132,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                             type={field === 'email' ? 'email' : 'text'}
                             value={formData[field]}
                             onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
-                            className="w-full bg-transparent border-b border-neutral-200 dark:border-neutral-800 py-2 text-[13px] font-serif focus:outline-none focus:border-neutral-900 dark:focus:border-neutral-100 transition-colors"
+                            className="w-full bg-transparent border-b border-neutral-200 dark:border-neutral-800 py-2 text-[13px] md:text-[15px] font-serif focus:outline-none focus:border-neutral-900 dark:focus:border-neutral-100 transition-colors"
                           />
                         )}
                       </div>
@@ -141,13 +141,13 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                       <button
                         type="button"
                         onClick={() => setStep('view')}
-                        className="flex-1 py-3 border border-neutral-200 dark:border-neutral-800 text-[11px] md:text-[13px] font-sans font-medium uppercase tracking-wider hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-all rounded-[2px]"
+                        className="flex-1 py-3 border border-neutral-200 dark:border-neutral-800 text-[11px] md:text-[15px] font-sans font-medium uppercase tracking-wider hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-all rounded-[2px]"
                       >
                         {t('back')}
                       </button>
                       <button
                         type="submit"
-                        className="flex-1 py-3 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black text-[11px] md:text-[13px] font-sans font-medium uppercase tracking-wider hover:opacity-80 transition-all rounded-[2px]"
+                        className="flex-1 py-3 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black text-[11px] md:text-[15px] font-sans font-medium uppercase tracking-wider hover:opacity-80 transition-all rounded-[2px]"
                       >
                         {t('submit')}
                       </button>

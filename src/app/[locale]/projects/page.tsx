@@ -37,7 +37,7 @@ function StatusBadge({ status, label }: { status: Project['status']; label: stri
   };
 
   return (
-    <span className={`text-[10px] font-sans uppercase tracking-wider ${colors[status]}`}>
+    <span className={`text-[10px] md:text-[12px] font-sans uppercase tracking-wider ${colors[status]}`}>
       {label}
     </span>
   );
@@ -94,7 +94,7 @@ export default async function ProjectsPage({ params }: Props) {
           <SiteHeader name={siteT('name')} />
 
           <section>
-            <h1 className="text-[22px] md:text-[28px] font-medium leading-tight mb-2">
+            <h1 className="text-[22px] md:text-[30px] font-medium leading-tight mb-2">
               {t('title')}
             </h1>
             <p className="text-copy text-neutral-500 dark:text-neutral-500 mb-10">
@@ -103,7 +103,7 @@ export default async function ProjectsPage({ params }: Props) {
 
             {featured.length > 0 && (
               <div className="mb-12">
-                <h2 className="text-[11px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600 mb-6">
+                <h2 className="text-[11px] md:text-[13px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600 mb-6">
                   {t('featured')}
                 </h2>
                 <div className="space-y-0">
@@ -129,7 +129,7 @@ export default async function ProjectsPage({ params }: Props) {
             {others.length > 0 && (
               <div>
                 {featured.length > 0 && (
-                  <h2 className="text-[11px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600 mb-6">
+                  <h2 className="text-[11px] md:text-[13px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600 mb-6">
                     Other
                   </h2>
                 )}
@@ -189,14 +189,14 @@ function ProjectCard({
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3 mb-2 flex-wrap">
-            <h3 className={`font-medium text-neutral-900 dark:text-neutral-100 ${featured ? 'text-[16px] md:text-[18px]' : 'text-[15px] md:text-[16px]'}`}>
+            <h3 className={`font-medium text-neutral-900 dark:text-neutral-100 ${featured ? 'text-[16px] md:text-[20px]' : 'text-[15px] md:text-[18px]'}`}>
               {project.name}
             </h3>
             <StatusBadge status={project.status} label={statusLabels[project.status]} />
           </div>
 
           {description && (
-            <p className="text-[14px] md:text-[16px] leading-relaxed text-neutral-500 dark:text-neutral-500 mb-3">
+            <p className="text-[14px] md:text-[18px] leading-relaxed text-neutral-500 dark:text-neutral-500 mb-3">
               {description}
             </p>
           )}
@@ -206,7 +206,7 @@ function ProjectCard({
               {project.tech.map((tech) => (
                 <span
                   key={tech}
-                  className="text-[11px] font-mono text-neutral-400 dark:text-neutral-600"
+                  className="text-[11px] md:text-[13px] font-mono text-neutral-400 dark:text-neutral-600"
                 >
                   {tech}
                 </span>

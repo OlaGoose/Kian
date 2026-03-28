@@ -33,7 +33,7 @@ export function HomeClient({ name, posts }: HomeClientProps) {
 
           {/* Name row: H1 on left, actions on right */}
           <div className="flex justify-between items-baseline mb-1">
-            <h1 className="text-[22px] md:text-[28px] font-medium leading-[3.5rem]">
+            <h1 className="text-[22px] md:text-[30px] font-medium leading-[3.5rem]">
               {name}
             </h1>
             <div className="flex items-center gap-3.5 pb-1">

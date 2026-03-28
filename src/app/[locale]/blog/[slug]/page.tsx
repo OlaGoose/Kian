@@ -119,7 +119,7 @@ export default async function BlogPostPage({ params }: Props) {
 
             <article>
               <header className="mb-10">
-                <h1 className="text-[22px] md:text-[28px] font-medium leading-snug mb-4">
+                <h1 className="text-[22px] md:text-[30px] font-medium leading-snug mb-4">
                   {title}
                 </h1>
 
@@ -127,12 +127,12 @@ export default async function BlogPostPage({ params }: Props) {
                   {post.published_at && (
                     <time
                       dateTime={post.published_at}
-                      className="text-[12px]"
+                      className="text-[12px] md:text-[14px]"
                     >
                       {t('publishedOn')} {formatDate(post.published_at, locale)}
                     </time>
                   )}
-                  <span className="text-[12px]">
+                  <span className="text-[12px] md:text-[14px]">
                     {t('minuteRead', { count: post.reading_time_minutes })}
                   </span>
                 </div>
@@ -142,7 +142,7 @@ export default async function BlogPostPage({ params }: Props) {
                     {post.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-[11px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600"
+                        className="text-[11px] md:text-[13px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600"
                       >
                         {tag}
                       </span>

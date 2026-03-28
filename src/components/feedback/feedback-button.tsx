@@ -177,10 +177,10 @@ export function FeedbackButton() {
 
                 <div className="flex justify-between items-start mb-5">
                   <div>
-                    <h2 className="text-[16px] font-medium text-neutral-900 dark:text-neutral-100">
+                    <h2 className="text-[16px] md:text-[18px] font-medium text-neutral-900 dark:text-neutral-100">
                       {t('title')}
                     </h2>
-                    <p className="text-[13px] text-neutral-500 dark:text-neutral-500 mt-1 leading-relaxed">
+                    <p className="text-[13px] md:text-[15px] text-neutral-500 dark:text-neutral-500 mt-1 leading-relaxed">
                       {t('description')}
                     </p>
                   </div>
@@ -197,7 +197,7 @@ export function FeedbackButton() {
                   <motion.div
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="py-8 text-center text-[15px] text-neutral-900 dark:text-neutral-100"
+                    className="py-8 text-center text-[15px] md:text-[17px] text-neutral-900 dark:text-neutral-100"
                   >
                     {t('success')}
                   </motion.div>
@@ -210,7 +210,7 @@ export function FeedbackButton() {
                           value={feedback}
                           onChange={(e) => setFeedback(e.target.value)}
                           placeholder={t('placeholder')}
-                          className="w-full bg-white dark:bg-neutral-900/30 border border-neutral-200 dark:border-neutral-800 rounded-[2px] p-3.5 pr-11 text-[14px] focus:outline-none focus:border-neutral-400 dark:focus:border-neutral-600 transition-colors placeholder:text-neutral-400 dark:placeholder:text-neutral-600 min-h-[140px] resize-none leading-relaxed"
+                          className="w-full bg-white dark:bg-neutral-900/30 border border-neutral-200 dark:border-neutral-800 rounded-[2px] p-3.5 pr-11 text-[14px] md:text-[16px] focus:outline-none focus:border-neutral-400 dark:focus:border-neutral-600 transition-colors placeholder:text-neutral-400 dark:placeholder:text-neutral-600 min-h-[140px] resize-none leading-relaxed"
                         />
                         <button
                           type="button"
@@ -235,14 +235,6 @@ export function FeedbackButton() {
                                 : <Mic className="w-10 h-10" strokeWidth={1.5} />
                               }
                             </button>
-                            <button
-                              type="button"
-                              onClick={() => setMode('text')}
-                              className="absolute top-2.5 right-2.5 text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
-                              title="Switch to text"
-                            >
-                              <X className="w-3.5 h-3.5" strokeWidth={1.5} />
-                            </button>
                           </>
                         ) : (
                           <div className="w-full">
@@ -250,7 +242,7 @@ export function FeedbackButton() {
                           </div>
                         )}
                         {permissionError && (
-                          <p className="absolute bottom-2 text-[11px] text-red-500 text-center px-4">{permissionError}</p>
+                          <p className="absolute bottom-2 text-[11px] md:text-[13px] text-red-500 text-center px-4">{permissionError}</p>
                         )}
                       </div>
                     )}
@@ -258,7 +250,7 @@ export function FeedbackButton() {
                     <button
                       type="submit"
                       disabled={(mode === 'text' && !feedback.trim()) || (mode === 'voice' && !audioBlob)}
-                      className="w-full py-2.5 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black text-[12px] font-medium uppercase tracking-wider hover:opacity-80 transition-all active:scale-[0.99] disabled:opacity-25 rounded-[2px]"
+                      className="w-full py-2.5 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black text-[12px] md:text-[14px] font-medium uppercase tracking-wider hover:opacity-80 transition-all active:scale-[0.99] disabled:opacity-25 rounded-[2px]"
                     >
                       {t('submit')}
                     </button>

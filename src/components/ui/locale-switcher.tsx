@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { usePathname, useRouter } from '@/i18n/navigation';
 import { motion, AnimatePresence } from 'motion/react';
+import { Globe } from 'lucide-react';
 
 const locales = [
   { code: 'en' as const, label: 'English' },
@@ -29,14 +30,16 @@ export function LocaleSwitcher() {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1.5 text-neutral-400 dark:text-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+        className="flex items-center text-neutral-400 dark:text-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
         aria-label={t('language')}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
-        <span className="text-[13px] font-medium uppercase tracking-wider">
-          {locale}
-        </span>
+        <Globe
+          className="size-[15px] md:size-[17px] shrink-0"
+          strokeWidth={1.5}
+          aria-hidden
+        />
       </button>
 
       <AnimatePresence>
@@ -63,7 +66,7 @@ export function LocaleSwitcher() {
                   role="option"
                   aria-selected={locale === l.code}
                   onClick={() => handleLocaleChange(l.code)}
-                  className={`w-full text-left px-4 py-2 text-[13px] transition-colors ${
+                  className={`w-full text-left px-4 py-2 text-[13px] md:text-[15px] transition-colors ${
                     locale === l.code
                       ? 'text-neutral-900 dark:text-neutral-100 bg-neutral-50 dark:bg-neutral-900'
                       : 'text-neutral-400 dark:text-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100'

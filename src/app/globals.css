@@ -34,7 +34,7 @@
 
   @media (min-width: 768px) {
     .text-copy {
-      font-size: 17px;
+      font-size: 19px;
     }
   }
 
@@ -79,7 +79,7 @@
 
   @media (min-width: 768px) {
     .prose-minimal {
-      font-size: 17px;
+      font-size: 19px;
     }
   }
 
@@ -96,9 +96,9 @@
   .prose-minimal h3 { font-size: 17px; }
 
   @media (min-width: 768px) {
-    .prose-minimal h1 { font-size: 28px; }
-    .prose-minimal h2 { font-size: 23px; }
-    .prose-minimal h3 { font-size: 19px; }
+    .prose-minimal h1 { font-size: 30px; }
+    .prose-minimal h2 { font-size: 25px; }
+    .prose-minimal h3 { font-size: 21px; }
   }
 
   .prose-minimal p {
@@ -109,7 +109,7 @@
 
   @media (min-width: 768px) {
     .prose-minimal p {
-      font-size: 17px;
+      font-size: 19px;
     }
   }
 
@@ -130,7 +130,7 @@
 
   @media (min-width: 768px) {
     .prose-minimal li {
-      font-size: 17px;
+      font-size: 19px;
     }
   }
 
@@ -151,6 +151,16 @@
   .prose-minimal pre {
     @apply text-[13px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 p-4 rounded-[2px] overflow-x-auto mb-6;
     font-family: var(--font-mono);
+  }
+
+  @media (min-width: 768px) {
+    .prose-minimal code:not(pre code) {
+      font-size: 15px;
+    }
+
+    .prose-minimal pre {
+      font-size: 15px;
+    }
   }
 
   .prose-minimal hr {

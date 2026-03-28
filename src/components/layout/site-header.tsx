@@ -26,13 +26,13 @@ export function SiteHeader({ name }: SiteHeaderProps) {
         <nav className="flex items-center gap-5">
           <Link
             href={`${prefix}/blog`}
-            className="text-[14px] text-neutral-500 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+            className="text-[14px] md:text-[16px] text-neutral-500 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
           >
             {t('blog')}
           </Link>
           <Link
             href={`${prefix}/projects`}
-            className="text-[14px] text-neutral-500 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+            className="text-[14px] md:text-[16px] text-neutral-500 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
           >
             {t('projects')}
           </Link>

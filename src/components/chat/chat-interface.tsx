@@ -171,7 +171,7 @@ export function ChatInterface({ siteName }: ChatInterfaceProps) {
                   }
                 }}
                 placeholder={t('placeholder')}
-                className="w-full bg-transparent resize-none focus:outline-none text-[13px] md:text-[15px] font-serif placeholder:text-neutral-400 max-h-40 no-scrollbar py-1"
+                className="w-full bg-transparent resize-none focus:outline-none text-[13px] md:text-[17px] font-serif placeholder:text-neutral-400 max-h-40 no-scrollbar py-1"
                 style={{ height: 'auto' }}
               />
             </div>
@@ -182,7 +182,7 @@ export function ChatInterface({ siteName }: ChatInterfaceProps) {
                   <Plus className="w-3 h-3 md:w-3.5 md:h-3.5" strokeWidth={1.5} />
                 </button>
                 <div className="h-3 w-[1px] bg-neutral-100 dark:bg-neutral-800 mx-1" />
-                <span className="text-[8px] md:text-[10px] font-sans font-medium text-neutral-400 uppercase tracking-widest px-1">
+                <span className="text-[8px] md:text-[12px] font-sans font-medium text-neutral-400 uppercase tracking-widest px-1">
                   Gemini 2.0 Flash
                 </span>
               </div>
