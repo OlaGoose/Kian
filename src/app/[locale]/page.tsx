@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
 import { HomeClient } from '@/components/home/home-client';
 import { getAlternates } from '@/lib/metadata';
+import { buildPersonLd, buildWebSiteLd } from '@/lib/structured-data';
 import type { PostPreview } from '@/types';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -33,10 +34,23 @@ export default async function HomePage({ params }: Props) {
     .order('published_at', { ascending: false })
     .limit(6);
 
+  const personLd = buildPersonLd({ name: t('name'), description: t('description') });
+  const websiteLd = buildWebSiteLd({ name: t('name'), description: t('description') });
+
   return (
-    <HomeClient
-      name={t('name')}
-      posts={(posts as PostPreview[]) ?? []}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
+      />
+      <HomeClient
+        name={t('name')}
+        posts={(posts as PostPreview[]) ?? []}
+      />
+    </>
   );
 }

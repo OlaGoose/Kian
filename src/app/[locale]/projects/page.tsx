@@ -6,8 +6,11 @@ import { SiteHeader } from '@/components/layout/site-header';
 import { FeedbackButton } from '@/components/feedback/feedback-button';
 import { localizedText } from '@/lib/localized-content';
 import { getAlternates } from '@/lib/metadata';
+import { buildSoftwareAppListLd } from '@/lib/structured-data';
 import type { Project } from '@/types';
 import type { Tables } from '@/lib/supabase/database.types';
+
+export const revalidate = 3600;
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -63,23 +66,16 @@ export default async function ProjectsPage({ params }: Props) {
   const featured = projects?.filter((p) => p.featured) ?? [];
   const others = projects?.filter((p) => !p.featured) ?? [];
 
-  // JSON-LD structured data for projects
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
+  const jsonLd = buildSoftwareAppListLd({
     name: t('title'),
-    itemListElement: projects?.map((p, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      item: {
-        '@type': 'SoftwareApplication',
+    items:
+      projects?.map((p, i) => ({
+        position: i + 1,
         name: p.name,
         description: getDescription(p),
         url: p.url,
-        applicationCategory: 'WebApplication',
-      },
-    })) ?? [],
-  };
+      })) ?? [],
+  });
 
   return (
     <>

@@ -9,6 +9,8 @@ import { FeedbackButton } from '@/components/feedback/feedback-button';
 import { localizedText } from '@/lib/localized-content';
 import { formatDate } from '@/lib/utils';
 import { getAlternates } from '@/lib/metadata';
+import { buildBlogPostingLd } from '@/lib/structured-data';
+import { SITE_URL } from '@/lib/constants';
 import type { Tables } from '@/lib/supabase/database.types';
 
 type Props = {
@@ -77,6 +79,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BlogPostPage({ params }: Props) {
   const { locale, slug } = await params;
   const t = await getTranslations({ locale, namespace: 'blog' });
+  const siteT = await getTranslations({ locale, namespace: 'site' });
   const prefix = locale === 'zh' ? '/zh' : '';
 
   const supabase = await createClient();
@@ -92,18 +95,20 @@ export default async function BlogPostPage({ params }: Props) {
 
   const title = localizedText(locale, post.title_en, post.title_zh);
   const content = localizedText(locale, post.content_en, post.content_zh);
+  const postUrl = locale === 'zh'
+    ? `${SITE_URL}/zh/blog/${slug}`
+    : `${SITE_URL}/blog/${slug}`;
 
-  // Structured data (JSON-LD) for SEO
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: title,
+  const jsonLd = buildBlogPostingLd({
+    title,
     description: localizedText(locale, post.excerpt_en, post.excerpt_zh),
-    datePublished: post.published_at,
-    dateModified: post.updated_at,
-    image: post.cover_image ?? `/api/og?title=${encodeURIComponent(title)}`,
-    keywords: post.tags.join(', '),
-  };
+    url: postUrl,
+    authorName: siteT('name'),
+    publishedAt: post.published_at,
+    updatedAt: post.updated_at,
+    image: post.cover_image ?? `${SITE_URL}/api/og?title=${encodeURIComponent(title)}`,
+    tags: post.tags,
+  });
 
   return (
     <>

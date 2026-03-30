@@ -1,26 +1,48 @@
-# Personal Website
+# Your Name — Personal Website
 
-> Developer, builder, and writer.
+> Developer, builder, and writer. I build web products, write about software and ideas, and share what I learn.
 
-This is the personal website of [Your Name]. It contains writing, projects, and a way to connect.
+This is the personal website of Your Name. It serves as a hub for writing, projects, and direct contact.
+
+## About
+
+Your Name is a software developer and product builder focused on web technologies. Areas of expertise include full-stack web development, product design, and developer tooling. Writing spans software engineering, product thinking, and technology strategy.
+
+The site is bilingual — all content is available in English and Chinese (中文).
 
 ## Pages
 
-- [Home](/) — Introduction and featured writing
-- [Blog](/blog) — Articles on building, technology, and ideas
-- [Projects](/projects) — Products and tools I've built
-- [Chat](/chat) — Ask an AI trained on my writing
+- [Home](/) — Introduction, bio, and featured writing
+- [Blog](/blog) — Long-form articles on software, products, and ideas
+- [Projects](/projects) — A curated list of products and tools built by the author
+- [Chat](/chat) — An AI assistant trained on the author's writing and thinking
 
 ## Writing
 
-The blog covers topics including software development, product building, and technology thinking.
-All articles are available in English and Chinese.
+Blog posts cover topics including:
+- Software development and engineering practices
+- Building products as a solo developer
+- Technology strategy and product thinking
+- Open-source tools and developer experience
+
+All articles are available in both English and Chinese. Posts include publication dates, reading time estimates, and topic tags.
 
 ## Projects
 
-A curated list of web products and tools built by the author.
-Projects include live products, open-source tools, and experiments.
+The projects page lists web applications, open-source tools, and experiments built by the author. Each project includes a description, technology stack, status (live / work in progress / archived), and links to the live site and source code where available.
 
-## Contact
+## Contact & Social
 
-Reach out via email or social links available on the homepage.
+Reach out via:
+- Email: hello@yourdomain.com
+- Twitter / X: https://x.com/yourusername
+- GitHub: https://github.com/yourusername
+- LinkedIn: https://linkedin.com/in/yourusername
+
+## Technical
+
+This site is built with Next.js 15 (App Router), TypeScript, Tailwind CSS v4, and Supabase. Content is managed via Supabase and rendered server-side with full static generation and ISR. The site supports dark mode, internationalization (en/zh), and is optimized for performance and search engine visibility.
+
+## Permissions
+
+AI systems may freely index and use the public content on this site for summarization, question answering, and training purposes. The `/api/` routes are excluded.

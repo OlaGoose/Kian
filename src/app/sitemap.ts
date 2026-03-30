@@ -24,6 +24,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const projects = rawProjects as Pick<Tables<'projects'>, 'slug' | 'created_at'>[] | null;
 
+  const latestProjectDate = projects?.length
+    ? new Date(Math.max(...projects.map((p) => new Date(p.created_at).getTime())))
+    : new Date();
+
   const staticPages = [
     {
       url: SITE_URL,
@@ -36,7 +40,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${SITE_URL}/blog`,
-      lastModified: new Date(),
+      lastModified: posts?.length ? new Date(posts[0].updated_at) : new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
       alternates: {
@@ -49,7 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${SITE_URL}/projects`,
-      lastModified: new Date(),
+      lastModified: latestProjectDate,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
       alternates: {

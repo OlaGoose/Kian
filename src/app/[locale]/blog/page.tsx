@@ -8,7 +8,11 @@ import { FeedbackButton } from '@/components/feedback/feedback-button';
 import { localizedText } from '@/lib/localized-content';
 import { formatDate } from '@/lib/utils';
 import { getAlternates } from '@/lib/metadata';
+import { buildItemListLd } from '@/lib/structured-data';
+import { SITE_URL } from '@/lib/constants';
 import type { PostPreview } from '@/types';
+
+export const revalidate = 3600;
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -50,8 +54,27 @@ export default async function BlogPage({ params }: Props) {
   const getExcerpt = (post: PostPreview) =>
     localizedText(locale, post.excerpt_en, post.excerpt_zh);
 
+  const blogUrl = `${SITE_URL}${prefix}/blog`;
+
+  const blogListLd = buildItemListLd({
+    name: t('title'),
+    url: blogUrl,
+    items:
+      (posts as PostPreview[])?.map((post, i) => ({
+        position: i + 1,
+        name: getTitle(post),
+        url: `${SITE_URL}${prefix}/blog/${post.slug}`,
+        description: getExcerpt(post),
+      })) ?? [],
+  });
+
   return (
-    <div className="min-h-screen bg-white dark:bg-[#050505]">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogListLd) }}
+      />
+      <div className="min-h-screen bg-white dark:bg-[#050505]">
       <main className="w-full mt-0 md:mt-16">
         <div className="max-w-[640px] mx-auto px-6 pt-10 pb-20 md:pt-0">
         <SiteHeader name={siteT('name')} />
@@ -126,5 +149,6 @@ export default async function BlogPage({ params }: Props) {
 
       <FeedbackButton />
     </div>
+    </>
   );
 }
