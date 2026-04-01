@@ -98,6 +98,18 @@ export function HomeClient({ name, posts }: HomeClientProps) {
             })}
           </p>
 
+          <p className="text-[11px] md:text-[13px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600 mt-10 mb-4">
+            {locale === 'zh' ? '探索更多' : 'Explore'}
+          </p>
+          <div className="text-copy flex flex-wrap gap-x-4 gap-y-2">
+            <CustomLink href={`${prefix}/about`}>{locale === 'zh' ? '关于' : 'About'}</CustomLink>
+            <CustomLink href={`${prefix}/uses`}>Uses</CustomLink>
+            <CustomLink href={`${prefix}/snippets`}>{locale === 'zh' ? '片段' : 'Snippets'}</CustomLink>
+            <CustomLink href={`${prefix}/notes`}>Notes</CustomLink>
+            <CustomLink href={`${prefix}/newsletter`}>{locale === 'zh' ? '订阅' : 'Newsletter'}</CustomLink>
+            <CustomLink href={`${prefix}/guestbook`}>{locale === 'zh' ? '留言板' : 'Guestbook'}</CustomLink>
+          </div>
+
           {/* Social links */}
           <div className="mt-12 flex items-center gap-5 text-neutral-400 dark:text-neutral-600">
             {SOCIAL_LINKS.twitter && (
