@@ -73,6 +73,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     },
     {
+      url: `${SITE_URL}/projects/ozon-catalog`,
+      lastModified: latestProjectDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.65,
+      alternates: {
+        languages: {
+          en: `${SITE_URL}/projects/ozon-catalog`,
+          zh: `${SITE_URL}/zh/projects/ozon-catalog`,
+          'x-default': `${SITE_URL}/projects/ozon-catalog`,
+        },
+      },
+    },
+    {
       url: `${SITE_URL}/about`,
       lastModified: contentLastModified,
       changeFrequency: 'monthly' as const,

@@ -25,3 +25,28 @@ export interface NavItem {
   href: string;
   external?: boolean;
 }
+
+export type OzonCategoryLeaf = {
+  zhName: string;
+  ruName: string;
+  ozonId: string;
+  enName?: string;
+};
+
+export type OzonCategoryLevel2 = {
+  zhName: string;
+  ruName: string;
+  enName?: string;
+  children: OzonCategoryLeaf[];
+};
+
+export type OzonCategoryLevel1 = {
+  id?: string;
+  zhName: string;
+  ruName: string;
+  enName?: string;
+  number?: string;
+  children: OzonCategoryLevel2[];
+};
+
+export type OzonCategoryData = OzonCategoryLevel1[];

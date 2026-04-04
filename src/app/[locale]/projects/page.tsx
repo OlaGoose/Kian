@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { ArrowUpRight, Github } from 'lucide-react';
+import { Link } from '@/i18n/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { SiteHeader } from '@/components/layout/site-header';
 import { FeedbackButton } from '@/components/feedback/feedback-button';
@@ -30,6 +31,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: alternates.canonical,
     },
   };
+}
+
+function isInternalAppPath(url: string | null): url is `/${string}` {
+  return Boolean(url && url.startsWith('/') && !url.startsWith('//'));
 }
 
 function StatusBadge({ status, label }: { status: Project['status']; label: string }) {
@@ -223,16 +228,26 @@ function ProjectCard({
               <Github className="w-4 h-4" strokeWidth={1.5} />
             </a>
           )}
-          {project.url && (
-            <a
+          {isInternalAppPath(project.url) ? (
+            <Link
               href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
               className="text-neutral-400 dark:text-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
               aria-label={`${visitLabel}: ${project.name}`}
             >
               <ArrowUpRight className="w-4 h-4" strokeWidth={1.5} />
-            </a>
+            </Link>
+          ) : (
+            project.url && (
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-neutral-400 dark:text-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+                aria-label={`${visitLabel}: ${project.name}`}
+              >
+                <ArrowUpRight className="w-4 h-4" strokeWidth={1.5} />
+              </a>
+            )
           )}
         </div>
       </div>

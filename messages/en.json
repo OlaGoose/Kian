@@ -60,6 +60,45 @@
       "recording": "Recording…"
     }
   },
+  "ozonCatalog": {
+    "meta": {
+      "title": "Ozon category directory",
+      "description": "Browse Ozon’s category tree with search, marketplace deep links, and keyword copy for cross-border research."
+    },
+    "back": "All projects",
+    "intro": "Search in Chinese, English, or Russian. Hover a leaf category on desktop (tap on mobile) for quick links and copy.",
+    "searchPlaceholder": "Search categories and keywords…",
+    "clearSearch": "Clear search",
+    "stat": {
+      "level1": "Level 1",
+      "level2": "Level 2",
+      "level3": "Level 3"
+    },
+    "loading": "Loading categories",
+    "loadError": "Could not load category data. Please refresh the page.",
+    "noResultsTitle": "No matching categories",
+    "noResultsHint": "Try a different keyword.",
+    "panelTitle": "Category actions",
+    "closePanel": "Close",
+    "scrollTop": "Back to top",
+    "copyRu": "Copy Russian",
+    "copyEn": "Copy English",
+    "copyFailed": "Copy failed",
+    "copiedRu": "Copied (Russian): {text}",
+    "copiedEn": "Copied (English): {text}",
+    "platform": {
+      "yandex": "Yandex",
+      "ozon": "Ozon",
+      "wildberries": "Wildberries",
+      "vk": "VK",
+      "google": "Google",
+      "tiktok": "TikTok",
+      "etsy": "Etsy",
+      "amazon": "Amazon",
+      "b1688": "1688",
+      "yiwugo": "Yiwugo"
+    }
+  },
   "booking": {
     "title": "Schedule",
     "subtitle": "Book a meeting or leave a message",

@@ -55,4 +55,14 @@ INSERT INTO public.projects (
   'https://github.com/yourusername/another-project',
   ARRAY['React', 'Node.js'],
   'live', false, 2
+),
+(
+  'Ozon category directory',
+  'ozon-catalog',
+  'Browse Ozon''s official category tree with search, deep links to marketplaces (Ozon, Wildberries, Yandex Wordstat, Google, TikTok, VK, 1688, and more), and one-tap copy for Russian and English keywords.',
+  '浏览 Ozon 官方商品分类树：支持中英俄搜索、多平台深度链接（Ozon、Wildberries、Yandex Wordstat、Google、TikTok、VK、1688 等）以及俄文/英文关键词一键复制。',
+  '/projects/ozon-catalog',
+  NULL,
+  ARRAY['Next.js', 'TypeScript'],
+  'live', false, 3
 );
