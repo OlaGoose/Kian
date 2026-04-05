@@ -1,7 +1,7 @@
 {
   "site": {
-    "name": "Your Name",
-    "description": "Developer, builder, and writer."
+    "name": "Kian Xu",
+    "description": "Merchant by day. Dad by evening. Builder by night."
   },
   "nav": {
     "home": "Home",
@@ -12,11 +12,14 @@
     "language": "Language"
   },
   "home": {
-    "bio1": "I'm a <developerLink>developer and builder</developerLink>. I work on <productLink>products</productLink> that matter. I've been coding for years and care deeply about craft.",
-    "bio2": "My focus is building things that are fast, accessible, and useful. I'm a <musicLink>music fan</musicLink> and believe good software should be invisible.",
-    "writingTitle": "Some of my favorite writing:",
-    "aiTwin": "You can also <chatLink>ask my AI</chatLink> to learn more about my work and thinking.",
-    "footer": "You can <blogLink>read my writing</blogLink> or view my <projectsLink>projects</projectsLink>, or <followLink>follow me online</followLink>. <contactLink>Reach out</contactLink> if you'd like to connect."
+    "tagline": "Merchant by day. Dad by evening. Builder by night.",
+    "bio1": "I'm a <developerLink>developer and builder</developerLink>. I've worked as an engineering manager at <pinganLink>Ping An Technology</pinganLink> and <sfLink>S.F. International</sfLink>, then led the frontend team at <plaudLink>PLAUD</plaudLink> across multiple product lines. These days I run an e-commerce business and focus on SEO.",
+    "bio2": "My goal is to build things that are fast, useful, and fun. I'm a husband and father. I'm a massive LEGO fan, currently obsessed with the F1 collection.",
+    "writingTitle": "Some of my favorite writing includes:",
+    "thingsIBelieve": "Things I Believe",
+    "projectsTitle": "Some of my projects:",
+    "ozonCatalogProject": "Ozon Category Catalog",
+    "footer": "You can <blogLink>read my writing</blogLink> or explore my <projectsLink>projects</projectsLink>, or <followLink>follow me online</followLink>. <contactLink>Reach out</contactLink> if interested."
   },
   "blog": {
     "title": "Writing",

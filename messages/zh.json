@@ -1,7 +1,7 @@
 {
   "site": {
-    "name": "你的名字",
-    "description": "开发者、产品构建者与写作者。"
+    "name": "许元凯",
+    "description": "白天经商，傍晚陪伴家人，夜里构建产品。"
   },
   "nav": {
     "home": "主页",
@@ -12,11 +12,14 @@
     "language": "语言"
   },
   "home": {
-    "bio1": "我是一名<developerLink>开发者和构建者</developerLink>。我专注于打造<productLink>有意义的产品</productLink>，对技术与工艺有着深厚的热情。",
-    "bio2": "我致力于构建快速、可访问且实用的软件。我热爱<musicLink>音乐</musicLink>，也相信好的软件应当无处不在却悄然无声。",
+    "tagline": "白天经商，傍晚陪伴家人，夜里构建产品。",
+    "bio1": "我是一名<developerLink>开发者和构建者</developerLink>。曾先后在<pinganLink>平安科技</pinganLink>和<sfLink>顺丰国际</sfLink>担任工程管理职位，后加入 <plaudLink>PLAUD</plaudLink> 主导多条产品线的前端团队。如今我经营跨境电商，专注于 SEO。",
+    "bio2": "我的目标是打造快速、实用、有趣的产品。我是一名丈夫和父亲，也是 LEGO 的忠实粉丝，目前正沉迷于 F1 系列。",
     "writingTitle": "我最喜欢的一些文章：",
-    "aiTwin": "你也可以<chatLink>与我的 AI</chatLink> 对话，进一步了解我的工作与思考。",
-    "footer": "你可以<blogLink>阅读我的文章</blogLink>或查看我的<projectsLink>作品集</projectsLink>，也可以在<followLink>网上关注我</followLink>。<contactLink>欢迎联系</contactLink>。"
+    "thingsIBelieve": "我信奉的事",
+    "projectsTitle": "我的部分项目：",
+    "ozonCatalogProject": "Ozon 商品分类目录",
+    "footer": "你可以<blogLink>阅读我的文章</blogLink>或浏览我的<projectsLink>作品集</projectsLink>，也可以在<followLink>网上关注我</followLink>。欢迎<contactLink>联系我</contactLink>。"
   },
   "blog": {
     "title": "文章",

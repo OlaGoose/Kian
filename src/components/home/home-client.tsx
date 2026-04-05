@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { Github, Twitter, Youtube, Mail, Linkedin, Calendar } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { CustomLink } from '@/components/ui/custom-link';
@@ -48,46 +47,59 @@ export function HomeClient({ name, posts }: HomeClientProps) {
             </div>
           </div>
 
+          <p className="text-[13px] md:text-[15px] leading-relaxed text-neutral-500 dark:text-neutral-500 mb-6">
+            {t('tagline')}
+          </p>
+
           <p className="text-copy my-6">
             {t.rich('bio1', {
               developerLink: (chunks) => <CustomLink href={`${prefix}/projects`}>{chunks}</CustomLink>,
-              productLink: (chunks) => <CustomLink href={`${prefix}/projects`}>{chunks}</CustomLink>,
-            })}
-          </p>
-
-          <p className="text-copy my-6">
-            {t.rich('bio2', {
-              musicLink: (chunks) => <CustomLink href="#" external>{chunks}</CustomLink>,
-            })}
-          </p>
-
-          {posts.length > 0 && (
-            <>
-              <p className="text-copy my-6">{t('writingTitle')}</p>
-              <ul className="text-copy pl-0 space-y-1">
-                {posts.map((post) => (
-                  <li key={post.id}>
-                    <CustomLink href={`${prefix}/blog/${post.slug}`}>
-                      {getPostTitle(post)}
-                    </CustomLink>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
-
-          <p className="text-copy my-6">
-            {t.rich('aiTwin', {
-              chatLink: (chunks) => (
-                <Link
-                  href={`${prefix}/chat`}
-                  className="transition-colors underline decoration-neutral-500 decoration-1 underline-offset-[2.5px] hover:decoration-neutral-400 dark:hover:decoration-neutral-600"
-                >
+              pinganLink: (chunks) => (
+                <CustomLink href="https://group.pingan.com/" external>
                   {chunks}
-                </Link>
+                </CustomLink>
+              ),
+              sfLink: (chunks) => (
+                <CustomLink href="https://www.sf-express.com/" external>
+                  {chunks}
+                </CustomLink>
+              ),
+              plaudLink: (chunks) => (
+                <CustomLink href="https://www.plaud.ai/" external>
+                  {chunks}
+                </CustomLink>
               ),
             })}
           </p>
+
+          <p className="text-copy my-6">
+            {t('bio2')}
+          </p>
+
+          <p className="text-copy my-6">{t('writingTitle')}</p>
+          <ul className="text-copy pl-0 space-y-1">
+            <li>
+              <CustomLink href={`${prefix}/blog/things-i-believe`}>
+                {t('thingsIBelieve')}
+              </CustomLink>
+            </li>
+            {posts.map((post) => (
+              <li key={post.id}>
+                <CustomLink href={`${prefix}/blog/${post.slug}`}>
+                  {getPostTitle(post)}
+                </CustomLink>
+              </li>
+            ))}
+          </ul>
+
+          <p className="text-copy my-6">{t('projectsTitle')}</p>
+          <ul className="text-copy pl-0 space-y-1">
+            <li>
+              <CustomLink href={`${prefix}/projects/ozon-catalog`}>
+                {t('ozonCatalogProject')}
+              </CustomLink>
+            </li>
+          </ul>
 
           <p className="text-copy my-6">
             {t.rich('footer', {

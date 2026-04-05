@@ -11,7 +11,7 @@ import {
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowUp, ChevronDown, Search, X } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { encodeGBK } from '@/lib/ozon/gbk';
 import { getCategoryIcon } from '@/lib/ozon/category-icon';
 import { getEnglishKeyword } from '@/lib/ozon/english-keyword';
@@ -147,6 +147,8 @@ function PlatformActions({
 
 export function OzonCatalogClient() {
   const t = useTranslations('ozonCatalog');
+  const locale = useLocale();
+  const isZh = locale === 'zh';
   const searchRef = useRef<HTMLInputElement>(null);
   const portalInnerRef = useRef<HTMLDivElement>(null);
   const [rawData, setRawData] = useState<OzonCategoryData | null>(null);
@@ -436,10 +438,12 @@ export function OzonCatalogClient() {
           style={{ width: Math.min(typeof window !== 'undefined' ? window.innerWidth - 32 : POPOVER_W, POPOVER_W) }}
         >
           <h3 className="text-[15px] font-medium text-neutral-900 dark:text-neutral-100 pb-3 border-b border-neutral-100 dark:border-neutral-900">
-            {popover.leaf.zhName}
+            {isZh ? popover.leaf.zhName : getEnglishKeyword(popover.leaf.enName, popover.leaf.zhName)}
           </h3>
           <p className="text-[12px] text-neutral-500 dark:text-neutral-500 mt-2 mb-3">
-            {getEnglishKeyword(popover.leaf.enName, popover.leaf.zhName)} · {popover.leaf.ruName}
+            {isZh
+              ? `${getEnglishKeyword(popover.leaf.enName, popover.leaf.zhName)} · ${popover.leaf.ruName}`
+              : `${popover.leaf.zhName} · ${popover.leaf.ruName}`}
           </p>
           <PlatformActions
             leaf={popover.leaf}
@@ -565,10 +569,10 @@ export function OzonCatalogClient() {
                   </span>
                   <div className="min-w-0">
                     <h3 className="text-[15px] md:text-[17px] font-medium text-neutral-900 dark:text-neutral-100">
-                      <Highlight text={cat1.zhName} term={debouncedSearch} />
+                      <Highlight text={isZh ? cat1.zhName : c1En} term={debouncedSearch} />
                     </h3>
                     <p className="text-[13px] text-neutral-500 dark:text-neutral-500 truncate">
-                      {c1En} · {cat1.ruName}
+                      {isZh ? `${c1En} · ${cat1.ruName}` : `${cat1.zhName} · ${cat1.ruName}`}
                     </p>
                   </div>
                 </div>
@@ -590,10 +594,10 @@ export function OzonCatalogClient() {
                       >
                         <div className="mb-3">
                           <h4 className="text-[14px] md:text-[15px] font-medium text-neutral-900 dark:text-neutral-100">
-                            <Highlight text={cat2.zhName} term={debouncedSearch} />
+                            <Highlight text={isZh ? cat2.zhName : c2En} term={debouncedSearch} />
                           </h4>
                           <p className="text-[12px] text-neutral-500 dark:text-neutral-500">
-                            {c2En} · {cat2.ruName}
+                            {isZh ? `${c2En} · ${cat2.ruName}` : `${cat2.zhName} · ${cat2.ruName}`}
                           </p>
                         </div>
                         <div className="flex flex-wrap gap-2">
@@ -609,7 +613,7 @@ export function OzonCatalogClient() {
                                 onClick={(e) => onCat3Click(cat3, e)}
                                 className="inline-flex items-center border border-neutral-200 dark:border-neutral-800 rounded-[2px] bg-white dark:bg-[#050505] px-3 py-1.5 text-[13px] text-neutral-600 dark:text-neutral-400 hover:border-neutral-400 dark:hover:border-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
                               >
-                                <Highlight text={cat3.zhName} term={debouncedSearch} />
+                                <Highlight text={isZh ? cat3.zhName : getEnglishKeyword(cat3.enName, cat3.zhName)} term={debouncedSearch} />
                               </button>
                             </div>
                           ))}
@@ -652,10 +656,12 @@ export function OzonCatalogClient() {
                 <div className="flex justify-between items-start gap-3 mb-4">
                   <div className="min-w-0">
                     <h3 className="text-[16px] font-medium text-neutral-900 dark:text-neutral-100">
-                      {sheetLeaf.zhName}
+                      {isZh ? sheetLeaf.zhName : getEnglishKeyword(sheetLeaf.enName, sheetLeaf.zhName)}
                     </h3>
                     <p className="text-[13px] text-neutral-500 dark:text-neutral-500 mt-1">
-                      {getEnglishKeyword(sheetLeaf.enName, sheetLeaf.zhName)} · {sheetLeaf.ruName}
+                      {isZh
+                        ? `${getEnglishKeyword(sheetLeaf.enName, sheetLeaf.zhName)} · ${sheetLeaf.ruName}`
+                        : `${sheetLeaf.zhName} · ${sheetLeaf.ruName}`}
                     </p>
                   </div>
                   <button

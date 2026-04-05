@@ -11,6 +11,26 @@ import { buildSoftwareAppListLd } from '@/lib/structured-data';
 import type { Project } from '@/types';
 import type { Tables } from '@/lib/supabase/database.types';
 
+const STATIC_PROJECTS: Project[] = [
+  {
+    id: 'ozon-catalog-static',
+    name: 'Ozon Category Catalog',
+    slug: 'ozon-catalog',
+    description_en:
+      "Browse Ozon's category tree with search, marketplace deep links, and keyword copy for cross-border research.",
+    description_zh:
+      '浏览 Ozon 官方分类树：支持中英俄搜索、多平台跳转与关键词复制，便于跨境与市场研究。',
+    url: '/projects/ozon-catalog',
+    github_url: null,
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS'],
+    status: 'live',
+    featured: true,
+    display_order: 0,
+    cover_image: null,
+    created_at: '2025-01-01T00:00:00Z',
+  },
+];
+
 export const revalidate = 3600;
 
 type Props = { params: Promise<{ locale: string }> };
@@ -63,13 +83,16 @@ export default async function ProjectsPage({ params }: Props) {
     .order('featured', { ascending: false })
     .order('display_order', { ascending: true });
 
-  const projects = rawProjects as Tables<'projects'>[] | null;
+  const dbProjects = rawProjects as Tables<'projects'>[] | null;
+  const dbSlugs = new Set(dbProjects?.map((p) => p.slug) ?? []);
+  const staticToMerge = STATIC_PROJECTS.filter((p) => !dbSlugs.has(p.slug));
+  const projects = [...staticToMerge, ...(dbProjects ?? [])];
 
   const getDescription = (p: Project) =>
     localizedText(locale, p.description_en, p.description_zh);
 
-  const featured = projects?.filter((p) => p.featured) ?? [];
-  const others = projects?.filter((p) => !p.featured) ?? [];
+  const featured = projects.filter((p) => p.featured);
+  const others = projects.filter((p) => !p.featured);
 
   const jsonLd = buildSoftwareAppListLd({
     name: t('title'),
@@ -153,7 +176,7 @@ export default async function ProjectsPage({ params }: Props) {
               </div>
             )}
 
-            {(!projects || projects.length === 0) && (
+            {projects.length === 0 && (
               <p className="text-copy text-neutral-500 dark:text-neutral-500">No projects yet.</p>
             )}
           </section>
