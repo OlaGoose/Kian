@@ -119,6 +119,11 @@ CREATE POLICY "Anyone can submit feedback"
   ON public.feedback FOR INSERT
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Anyone can read feedback" ON public.feedback;
+CREATE POLICY "Anyone can read feedback"
+  ON public.feedback FOR SELECT
+  USING (true);
+
 DROP POLICY IF EXISTS "Anyone can submit bookings" ON public.bookings;
 CREATE POLICY "Anyone can submit bookings"
   ON public.bookings FOR INSERT

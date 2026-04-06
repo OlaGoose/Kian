@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { createServiceClient } from '@/lib/supabase/service';
+import { createBuildClient } from '@/lib/supabase/build';
 import { getAdminSession } from '@/lib/admin-auth';
 
 type Props = { params: Promise<{ id: string }> };
@@ -19,10 +19,10 @@ export async function PATCH(req: NextRequest, { params }: Props) {
       return Response.json({ error: 'Invalid status' }, { status: 400 });
     }
 
-    const supabase = createServiceClient();
+    const supabase = createBuildClient();
     const { error } = await supabase
       .from('bookings')
-      .update({ status, admin_note: admin_note ?? null } as never)
+      .update({ status, admin_note: admin_note ?? null })
       .eq('id', id);
 
     if (error) {

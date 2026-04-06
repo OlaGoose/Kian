@@ -1,4 +1,4 @@
-import { createServiceClient } from '@/lib/supabase/service';
+import { createBuildClient } from '@/lib/supabase/build';
 import { getAdminSession } from '@/lib/admin-auth';
 
 export async function GET() {
@@ -8,7 +8,7 @@ export async function GET() {
   }
 
   try {
-    const supabase = createServiceClient();
+    const supabase = createBuildClient();
     const { data, error } = await supabase
       .from('feedback')
       .select('*')
