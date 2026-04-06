@@ -13,7 +13,7 @@ export const TWITTER_CREATOR = '@MKian2958';
 
 export const SOCIAL_LINKS = {
   twitter: 'https://x.com/MKian2958',
-  github: 'https://github.com/KianMX/Kian',
+  github: 'https://github.com/KianMX',
   youtube: '',
   linkedin: 'https://www.linkedin.com/in/kian73348a398/',
   email: 'mailto:kianm.aitech@gmail.com',
