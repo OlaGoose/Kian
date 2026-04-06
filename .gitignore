@@ -6,7 +6,6 @@ coverage/
 .DS_Store
 *.log
 .env*
-!.env.example
 .open-next/
 .vercel/
 cloudflare-env.d.ts
