@@ -2,10 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronDown, ChevronUp, LogOut, MessageSquare, CalendarDays } from 'lucide-react';
+import { ChevronDown, ChevronUp, LogOut, MessageSquare, CalendarDays, BarChart2 } from 'lucide-react';
 
 type BookingStatus = 'pending' | 'confirmed' | 'rejected';
-type AdminTab = 'bookings' | 'feedback';
+type AdminTab = 'bookings' | 'feedback' | 'analytics';
 
 interface Booking {
   id: string;
@@ -350,6 +350,147 @@ function FeedbackPanel({ onUnauth }: { onUnauth: () => void }) {
   );
 }
 
+type GAPageRow = {
+  path: string;
+  pageviews: number;
+  sessions: number;
+};
+
+type GAReport = {
+  users: number;
+  sessions: number;
+  pageviews: number;
+  pages: GAPageRow[];
+};
+
+type DateRange = 7 | 28 | 90;
+
+function StatCard({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="border border-neutral-100 dark:border-neutral-900 rounded-[2px] p-4">
+      <p className="text-[10px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600 font-sans mb-2">
+        {label}
+      </p>
+      <p className="text-[22px] font-medium text-neutral-900 dark:text-neutral-100 leading-none">
+        {value.toLocaleString()}
+      </p>
+    </div>
+  );
+}
+
+function AnalyticsPanel({ onUnauth }: { onUnauth: () => void }) {
+  const [report, setReport] = useState<GAReport | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [days, setDays] = useState<DateRange>(28);
+
+  const fetchReport = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/admin/analytics?days=${days}`);
+      if (res.status === 401) { onUnauth(); return; }
+      const data = await res.json();
+      if (data.error) { setError(data.error); return; }
+      setReport(data as GAReport);
+    } catch {
+      setError('Failed to load analytics');
+    } finally {
+      setLoading(false);
+    }
+  }, [days, onUnauth]);
+
+  useEffect(() => { fetchReport(); }, [fetchReport]);
+
+  const ranges: { value: DateRange; label: string }[] = [
+    { value: 7, label: '7d' },
+    { value: 28, label: '28d' },
+    { value: 90, label: '90d' },
+  ];
+
+  const maxViews = report?.pages[0]?.pageviews ?? 1;
+
+  return (
+    <>
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex gap-1">
+          {ranges.map((r) => (
+            <button
+              key={r.value}
+              onClick={() => setDays(r.value)}
+              className={`px-3 py-1.5 text-[11px] uppercase tracking-wider font-sans rounded-[2px] transition-colors ${
+                days === r.value
+                  ? 'bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black'
+                  : 'text-neutral-400 dark:text-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100'
+              }`}
+            >
+              {r.label}
+            </button>
+          ))}
+        </div>
+        <button
+          onClick={fetchReport}
+          className="text-[11px] uppercase tracking-wider font-sans text-neutral-400 dark:text-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+        >
+          Refresh
+        </button>
+      </div>
+
+      <div className="h-[1px] bg-neutral-100 dark:bg-neutral-900 mb-6" />
+
+      {loading ? (
+        <p className="text-[13px] text-neutral-400 dark:text-neutral-600 py-8 text-center font-sans">
+          Loading…
+        </p>
+      ) : error ? (
+        <div className="py-8 text-center">
+          <p className="text-[13px] text-neutral-500 dark:text-neutral-500 font-sans mb-1">{error}</p>
+          <p className="text-[11px] text-neutral-400 dark:text-neutral-600 font-sans">
+            Make sure GA_PROPERTY_ID and GA_SERVICE_ACCOUNT_B64 are configured.
+          </p>
+        </div>
+      ) : report ? (
+        <div className="space-y-6">
+          <div className="grid grid-cols-3 gap-3">
+            <StatCard label="Users" value={report.users} />
+            <StatCard label="Sessions" value={report.sessions} />
+            <StatCard label="Pageviews" value={report.pageviews} />
+          </div>
+
+          <div>
+            <p className="text-[10px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600 font-sans mb-3">
+              Top Pages
+            </p>
+            <div className="space-y-0">
+              {report.pages.map((page, i) => (
+                <div
+                  key={i}
+                  className="py-3 border-b border-neutral-100 dark:border-neutral-900 last:border-0"
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-[12px] font-mono text-neutral-700 dark:text-neutral-300 truncate mr-4">
+                      {page.path}
+                    </span>
+                    <span className="text-[12px] font-mono text-neutral-500 dark:text-neutral-500 whitespace-nowrap flex-shrink-0">
+                      {page.pageviews.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="h-[2px] bg-neutral-100 dark:bg-neutral-900 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-neutral-400 dark:bg-neutral-600 rounded-full transition-all duration-500"
+                      style={{ width: `${(page.pageviews / maxViews) * 100}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </>
+  );
+}
+
 export function AdminDashboard() {
   const router = useRouter();
   const [tab, setTab] = useState<AdminTab>('bookings');
@@ -366,6 +507,7 @@ export function AdminDashboard() {
   const tabs: { value: AdminTab; label: string; icon: React.ReactNode }[] = [
     { value: 'bookings', label: 'Bookings', icon: <CalendarDays size={13} strokeWidth={1.5} /> },
     { value: 'feedback', label: 'Feedback', icon: <MessageSquare size={13} strokeWidth={1.5} /> },
+    { value: 'analytics', label: 'Analytics', icon: <BarChart2 size={13} strokeWidth={1.5} /> },
   ];
 
   return (
@@ -408,6 +550,7 @@ export function AdminDashboard() {
 
         {tab === 'bookings' && <BookingsPanel onUnauth={handleUnauth} />}
         {tab === 'feedback' && <FeedbackPanel onUnauth={handleUnauth} />}
+        {tab === 'analytics' && <AnalyticsPanel onUnauth={handleUnauth} />}
       </div>
     </div>
   );
