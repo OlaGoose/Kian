@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-import { SITE_URL } from '@/lib/constants';
+import { SITE_URL, TWITTER_CREATOR } from '@/lib/constants';
 import '@/app/globals.css';
 
 const stix = STIX_Two_Text({
@@ -65,6 +65,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title: t('name'),
       description: t('description'),
+      creator: TWITTER_CREATOR,
     },
   };
 }

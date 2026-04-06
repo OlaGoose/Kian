@@ -15,7 +15,7 @@ Inspired by [leerob.com](https://leerob.com). The aesthetic is text-first, serif
 |------|-------|
 | Page H1 | `text-xl md:text-2xl font-medium leading-[3.25rem]` |
 | Section H2 (inner pages) | `text-xl md:text-2xl font-medium leading-[3.25rem] mb-1` |
-| Body / prose | `text-copy` (15px mobile → 16px desktop, line-height 1.65) |
+| Body / prose | `text-copy` (16px mobile → 17px desktop ≥768px, line-height 1.7) |
 | Sub-heading / label | `text-[11px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600` |
 | Meta text (dates, read time) | `text-[12px] text-neutral-400 dark:text-neutral-600` |
 | Description / muted | `text-[13px] md:text-[15px] leading-relaxed text-neutral-500 dark:text-neutral-500` |

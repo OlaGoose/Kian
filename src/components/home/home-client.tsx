@@ -83,11 +83,6 @@ export function HomeClient({ name, posts }: HomeClientProps) {
 
           <p className="text-copy my-6">{t('writingTitle')}</p>
           <ul className="text-copy pl-0 space-y-1">
-            <li>
-              <CustomLink href={`${prefix}/blog/things-i-believe`}>
-                {t('thingsIBelieve')}
-              </CustomLink>
-            </li>
             {posts.map((post) => (
               <li key={post.id}>
                 <CustomLink href={`${prefix}/blog/${post.slug}`}>

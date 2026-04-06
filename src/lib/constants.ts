@@ -9,11 +9,13 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://yourdomain.
 export const SITE_DESCRIPTION = 'Merchant by day. Dad by evening. Builder by night.';
 export const SITE_DESCRIPTION_ZH = '白天经商，傍晚陪伴家人，夜里构建产品。';
 
+export const TWITTER_CREATOR = '@MKian2958';
+
 export const SOCIAL_LINKS = {
-  twitter: 'https://x.com/yourusername',
-  github: 'https://github.com/yourusername',
+  twitter: 'https://x.com/MKian2958',
+  github: 'https://github.com/KianMX/Kian',
   youtube: '',
-  linkedin: 'https://linkedin.com/in/yourusername',
+  linkedin: 'https://www.linkedin.com/in/kian73348a398/',
   email: 'mailto:kianm.aitech@gmail.com',
 } as const;
 

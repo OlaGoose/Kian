@@ -35,9 +35,9 @@ The projects page lists web applications, open-source tools, and experiments bui
 
 Reach out via:
 - Email: kianm.aitech@gmail.com
-- Twitter / X: https://x.com/yourusername
-- GitHub: https://github.com/yourusername
-- LinkedIn: https://linkedin.com/in/yourusername
+- Twitter / X: https://x.com/MKian2958 (@MKian2958)
+- GitHub: https://github.com/KianMX/Kian
+- LinkedIn: https://www.linkedin.com/in/kian73348a398/
 
 ## Technical
 

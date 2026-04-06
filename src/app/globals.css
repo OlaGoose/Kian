@@ -4,6 +4,7 @@
   --font-serif: "STIX Two Text", "Georgia", serif;
   --font-sans: system-ui, -apple-system, sans-serif;
   --font-mono: "Menlo", "Monaco", "Courier New", monospace;
+  --font-size-copy-desktop: 17px;
 }
 
 @layer base {
@@ -34,7 +35,7 @@
 
   @media (min-width: 768px) {
     .text-copy {
-      font-size: 19px;
+      font-size: var(--font-size-copy-desktop);
     }
   }
 
@@ -79,7 +80,7 @@
 
   @media (min-width: 768px) {
     .prose-minimal {
-      font-size: 19px;
+      font-size: var(--font-size-copy-desktop);
     }
   }
 
@@ -109,7 +110,7 @@
 
   @media (min-width: 768px) {
     .prose-minimal p {
-      font-size: 19px;
+      font-size: var(--font-size-copy-desktop);
     }
   }
 
@@ -130,7 +131,7 @@
 
   @media (min-width: 768px) {
     .prose-minimal li {
-      font-size: 19px;
+      font-size: var(--font-size-copy-desktop);
     }
   }
 
