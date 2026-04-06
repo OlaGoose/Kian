@@ -87,6 +87,12 @@
     "copyFailed": "Copy failed",
     "copiedRu": "Copied (Russian): {text}",
     "copiedEn": "Copied (English): {text}",
+    "favorites": {
+      "title": "Favorites",
+      "clearAll": "Clear all",
+      "addFavorite": "Add to favorites",
+      "removeFavorite": "Remove from favorites"
+    },
     "platform": {
       "yandex": "Yandex",
       "ozon": "Ozon",

@@ -10,7 +10,7 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowUp, ChevronDown, Search, X } from 'lucide-react';
+import { ArrowUp, ChevronDown, Search, Star, X } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { encodeGBK } from '@/lib/ozon/gbk';
 import { getCategoryIcon } from '@/lib/ozon/category-icon';
@@ -22,6 +22,52 @@ const DATA_URL = '/data/ozon-category-data.json';
 const MOBILE_MAX = 768;
 const POPOVER_GAP = 12;
 const POPOVER_W = 300;
+const FAVORITES_KEY = 'ozon-catalog-favorites';
+
+function leafKey(leaf: OzonCategoryLeaf) {
+  return leaf.ozonId || `${leaf.zhName}|${leaf.ruName}`;
+}
+
+function useFavorites() {
+  const [favorites, setFavorites] = useState<OzonCategoryLeaf[]>([]);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(FAVORITES_KEY);
+      if (stored) setFavorites(JSON.parse(stored) as OzonCategoryLeaf[]);
+    } catch {}
+  }, []);
+
+  const isFavorite = useCallback(
+    (leaf: OzonCategoryLeaf) => {
+      const k = leafKey(leaf);
+      return favorites.some((f) => leafKey(f) === k);
+    },
+    [favorites],
+  );
+
+  const toggleFavorite = useCallback((leaf: OzonCategoryLeaf) => {
+    setFavorites((prev) => {
+      const k = leafKey(leaf);
+      const next = prev.some((f) => leafKey(f) === k)
+        ? prev.filter((f) => leafKey(f) !== k)
+        : [...prev, leaf];
+      try {
+        localStorage.setItem(FAVORITES_KEY, JSON.stringify(next));
+      } catch {}
+      return next;
+    });
+  }, []);
+
+  const clearFavorites = useCallback(() => {
+    setFavorites([]);
+    try {
+      localStorage.removeItem(FAVORITES_KEY);
+    } catch {}
+  }, []);
+
+  return { favorites, isFavorite, toggleFavorite, clearFavorites };
+}
 
 function useDebouncedValue<T>(value: T, ms: number): T {
   const [debounced, setDebounced] = useState(value);
@@ -175,6 +221,7 @@ export function OzonCatalogClient() {
   const resizeCloseTimer = useRef<number | undefined>(undefined);
   const isMobile = useIsMobile();
   const [mounted, setMounted] = useState(false);
+  const { favorites, isFavorite, toggleFavorite, clearFavorites } = useFavorites();
 
   useEffect(() => {
     setMounted(true);
@@ -544,6 +591,48 @@ export function OzonCatalogClient() {
         </div>
       )}
 
+      {favorites.length > 0 && (
+        <section className="mb-6">
+          <div className="flex items-center justify-between gap-2 mb-3">
+            <h2 className="flex items-center gap-1.5 text-[11px] font-sans uppercase tracking-wider text-neutral-400 dark:text-neutral-600">
+              <Star className="h-[13px] w-[13px] fill-current" strokeWidth={0} aria-hidden />
+              {t('favorites.title')} · {favorites.length}
+            </h2>
+            <button
+              type="button"
+              onClick={clearFavorites}
+              className="text-[11px] font-sans uppercase tracking-wider text-neutral-400 dark:text-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+            >
+              {t('favorites.clearAll')}
+            </button>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {favorites.map((leaf) => (
+              <div
+                key={leafKey(leaf)}
+                className="inline-flex items-center border border-neutral-200 dark:border-neutral-800 rounded-[2px] bg-white dark:bg-[#050505] hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
+              >
+                <button
+                  type="button"
+                  onClick={() => setSheetLeaf((prev) => (prev === leaf ? null : leaf))}
+                  className="px-3 py-1.5 text-[13px] text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+                >
+                  {isZh ? leaf.zhName : getEnglishKeyword(leaf.enName, leaf.zhName)}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => toggleFavorite(leaf)}
+                  className="pr-2 py-1.5 text-neutral-400 dark:text-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+                  aria-label={t('favorites.removeFavorite')}
+                >
+                  <X className="h-3 w-3" strokeWidth={1.5} />
+                </button>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       <div className="space-y-4">
         {visibleSlice.map((cat1: OzonCategoryLevel1, idx: number) => {
           const id = `cat1-${idx}`;
@@ -604,16 +693,30 @@ export function OzonCatalogClient() {
                           {(cat2.children || []).map((cat3) => (
                             <div
                               key={`${cat3.ozonId}-${cat3.zhName}`}
-                              className="inline-block"
+                              className="inline-flex items-center border border-neutral-200 dark:border-neutral-800 rounded-[2px] bg-white dark:bg-[#050505] hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
                               onMouseEnter={(e) => onCat3Enter(cat3, e.currentTarget)}
                               onMouseLeave={scheduleHidePopover}
                             >
                               <button
                                 type="button"
                                 onClick={(e) => onCat3Click(cat3, e)}
-                                className="inline-flex items-center border border-neutral-200 dark:border-neutral-800 rounded-[2px] bg-white dark:bg-[#050505] px-3 py-1.5 text-[13px] text-neutral-600 dark:text-neutral-400 hover:border-neutral-400 dark:hover:border-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+                                className="px-3 py-1.5 text-[13px] text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
                               >
                                 <Highlight text={isZh ? cat3.zhName : getEnglishKeyword(cat3.enName, cat3.zhName)} term={debouncedSearch} />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  toggleFavorite(cat3);
+                                }}
+                                className={`pr-2 py-1.5 transition-colors ${isFavorite(cat3) ? 'text-neutral-600 dark:text-neutral-400' : 'text-neutral-300 dark:text-neutral-700 hover:text-neutral-500 dark:hover:text-neutral-500'}`}
+                                aria-label={isFavorite(cat3) ? t('favorites.removeFavorite') : t('favorites.addFavorite')}
+                              >
+                                <Star
+                                  className={`h-3 w-3 ${isFavorite(cat3) ? 'fill-current' : ''}`}
+                                  strokeWidth={isFavorite(cat3) ? 0 : 1.5}
+                                />
                               </button>
                             </div>
                           ))}
@@ -630,7 +733,7 @@ export function OzonCatalogClient() {
       </div>
 
       <AnimatePresence>
-        {isMobile && sheetLeaf && (
+        {sheetLeaf && (
           <>
             <motion.button
               type="button"
