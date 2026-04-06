@@ -145,7 +145,7 @@ export default async function BlogPostPage({ params }: Props) {
                   </span>
                 </div>
 
-                {post.tags.length > 0 && (
+                {/* {post.tags.length > 0 && (
                   <div className="flex items-center gap-3 mt-4">
                     {post.tags.map((tag) => (
                       <span
@@ -156,7 +156,7 @@ export default async function BlogPostPage({ params }: Props) {
                       </span>
                     ))}
                   </div>
-                )}
+                )} */}
               </header>
 
               <div className="h-[1px] bg-neutral-100 dark:bg-neutral-900 mb-10" />
