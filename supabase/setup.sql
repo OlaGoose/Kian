@@ -129,6 +129,14 @@ CREATE POLICY "Anyone can read booking slots"
   ON public.bookings FOR SELECT
   USING (true);
 
+-- Admin routes use the service_role key which bypasses RLS entirely.
+-- This UPDATE policy is kept as a fallback but is not required when service_role is used.
+DROP POLICY IF EXISTS "Service role can update bookings" ON public.bookings;
+CREATE POLICY "Service role can update bookings"
+  ON public.bookings FOR UPDATE
+  USING (true)
+  WITH CHECK (true);
+
 -- ============================================================
 -- SEED DATA
 -- ============================================================

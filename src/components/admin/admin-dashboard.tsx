@@ -62,12 +62,12 @@ function BookingRow({ booking, onUpdate }: { booking: Booking; onUpdate: () => v
   const updateStatus = async (status: BookingStatus) => {
     setSaving(true);
     try {
-      await fetch(`/api/admin/bookings/${booking.id}`, {
+      const res = await fetch(`/api/admin/bookings/${booking.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status, admin_note: note || null }),
       });
-      onUpdate();
+      if (res.ok) onUpdate();
     } finally {
       setSaving(false);
     }
@@ -76,12 +76,12 @@ function BookingRow({ booking, onUpdate }: { booking: Booking; onUpdate: () => v
   const saveNote = async () => {
     setSaving(true);
     try {
-      await fetch(`/api/admin/bookings/${booking.id}`, {
+      const res = await fetch(`/api/admin/bookings/${booking.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: booking.status, admin_note: note || null }),
       });
-      onUpdate();
+      if (res.ok) onUpdate();
     } finally {
       setSaving(false);
     }
