@@ -7,7 +7,7 @@ import { CustomLink } from '@/components/ui/custom-link';
 import { LocaleSwitcher } from '@/components/ui/locale-switcher';
 import { FeedbackButton } from '@/components/feedback/feedback-button';
 import { BookingModal } from '@/components/booking/booking-modal';
-import { SOCIAL_LINKS } from '@/lib/constants';
+import { SOCIAL_LINKS, LOCATION } from '@/lib/constants';
 import { localizedText } from '@/lib/localized-content';
 import type { PostPreview } from '@/types';
 
@@ -32,9 +32,14 @@ export function HomeClient({ name, posts }: HomeClientProps) {
 
           {/* Name row: H1 on left, actions on right */}
           <div className="flex justify-between items-baseline mb-1">
-            <h1 className="text-[22px] md:text-[30px] font-medium leading-[3.5rem]">
-              {name}
-            </h1>
+            <div className="flex items-baseline gap-3">
+              <h1 className="text-[22px] md:text-[30px] font-medium leading-[3.5rem]">
+                {name}
+              </h1>
+              <span className="text-[11px] text-neutral-400 dark:text-neutral-600">
+                {locale === 'zh' ? LOCATION.displayZh : LOCATION.display}
+              </span>
+            </div>
             <div className="flex items-center gap-3.5 pb-1">
               <button
                 onClick={() => setIsBookingOpen(true)}

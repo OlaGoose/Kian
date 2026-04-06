@@ -102,16 +102,25 @@
     }
   },
   "booking": {
-    "title": "Schedule",
-    "subtitle": "Book a meeting or leave a message",
+    "title": "Schedule a Meeting",
+    "subtitle": "Pick a time and I'll confirm shortly.",
     "name": "Name",
     "email": "Email",
     "message": "Message",
-    "submit": "Book",
-    "success": "Booking sent!",
-    "mySchedule": "My Schedule",
+    "submit": "Send Request",
+    "submitting": "Sending…",
+    "submitError": "Something went wrong. Please try again.",
+    "success": "Request sent!",
+    "selectDate": "Select a Date",
+    "selectTime": "Select a Time",
     "available": "Open",
     "busy": "Busy",
-    "back": "Back"
+    "selected": "Selected",
+    "back": "Back",
+    "next": "Next",
+    "meetingType": "Meeting Type",
+    "online": "Online",
+    "inperson": "In-Person",
+    "recommended": "Recommended"
   }
 }

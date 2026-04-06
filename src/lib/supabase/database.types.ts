@@ -132,6 +132,37 @@ export type Database = {
         };
         Relationships: [];
       };
+      bookings: {
+        Row: {
+          id: string;
+          name: string;
+          email: string;
+          message: string;
+          meeting_type: 'online' | 'inperson';
+          date: string;
+          time: string;
+          status: 'pending' | 'confirmed' | 'rejected';
+          admin_note: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          email: string;
+          message: string;
+          meeting_type: 'online' | 'inperson';
+          date: string;
+          time: string;
+          status?: 'pending' | 'confirmed' | 'rejected';
+          admin_note?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          status?: 'pending' | 'confirmed' | 'rejected';
+          admin_note?: string | null;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

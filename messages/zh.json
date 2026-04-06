@@ -102,16 +102,25 @@
     }
   },
   "booking": {
-    "title": "日程安排",
-    "subtitle": "预约会议或留言",
+    "title": "预约会面",
+    "subtitle": "选择时间，我会尽快确认。",
     "name": "姓名",
     "email": "邮箱",
     "message": "留言",
-    "submit": "预约",
-    "success": "预约请求已发送！",
-    "mySchedule": "我的日程",
+    "submit": "发送申请",
+    "submitting": "发送中…",
+    "submitError": "提交失败，请重试。",
+    "success": "申请已发送！",
+    "selectDate": "选择日期",
+    "selectTime": "选择时间",
     "available": "空闲",
     "busy": "忙碌",
-    "back": "返回"
+    "selected": "已选",
+    "back": "返回",
+    "next": "下一步",
+    "meetingType": "会面方式",
+    "online": "线上",
+    "inperson": "线下",
+    "recommended": "推荐"
   }
 }

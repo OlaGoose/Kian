@@ -1,4 +1,10 @@
 export const SITE_NAME = 'Kian Xu';
+
+export const LOCATION = {
+  display: 'Shenzhen, China',
+  displayZh: '中国·深圳',
+  timezone: 'GMT+8',
+} as const;
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://yourdomain.com';
 export const SITE_DESCRIPTION = 'Merchant by day. Dad by evening. Builder by night.';
 export const SITE_DESCRIPTION_ZH = '白天经商，傍晚陪伴家人，夜里构建产品。';
