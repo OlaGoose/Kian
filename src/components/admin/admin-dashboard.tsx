@@ -253,16 +253,24 @@ function BookingsPanel({ onUnauth }: { onUnauth: () => void }) {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [filter, setFilter] = useState<BookingStatus | 'all'>('all');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchBookings = useCallback(async () => {
     setLoading(true);
+    setError(null);
     try {
       const url =
         filter === 'all' ? '/api/admin/bookings' : `/api/admin/bookings?status=${filter}`;
       const res = await fetch(url);
       if (res.status === 401) { onUnauth(); return; }
       const data = await res.json();
+      if (!res.ok) {
+        setError(data.error ?? 'Failed to fetch bookings');
+        return;
+      }
       setBookings(data.bookings ?? []);
+    } catch {
+      setError('Network error — could not reach API');
     } finally {
       setLoading(false);
     }
@@ -309,6 +317,8 @@ function BookingsPanel({ onUnauth }: { onUnauth: () => void }) {
 
       {loading ? (
         <p className="text-[13px] text-neutral-400 dark:text-neutral-600 py-8 text-center font-sans">Loading…</p>
+      ) : error ? (
+        <p className="text-[13px] text-red-500 dark:text-red-400 py-8 text-center font-sans">{error}</p>
       ) : filtered.length === 0 ? (
         <p className="text-[13px] text-neutral-400 dark:text-neutral-600 py-8 text-center font-sans">No bookings</p>
       ) : (
@@ -321,14 +331,22 @@ function BookingsPanel({ onUnauth }: { onUnauth: () => void }) {
 function FeedbackPanel({ onUnauth }: { onUnauth: () => void }) {
   const [items, setItems] = useState<Feedback[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchFeedback = useCallback(async () => {
     setLoading(true);
+    setError(null);
     try {
       const res = await fetch('/api/admin/feedback');
       if (res.status === 401) { onUnauth(); return; }
       const data = await res.json();
+      if (!res.ok) {
+        setError(data.error ?? 'Failed to fetch feedback');
+        return;
+      }
       setItems(data.feedback ?? []);
+    } catch {
+      setError('Network error — could not reach API');
     } finally {
       setLoading(false);
     }
@@ -341,6 +359,8 @@ function FeedbackPanel({ onUnauth }: { onUnauth: () => void }) {
       <div className="h-[1px] bg-neutral-100 dark:bg-neutral-900 mb-4" />
       {loading ? (
         <p className="text-[13px] text-neutral-400 dark:text-neutral-600 py-8 text-center font-sans">Loading…</p>
+      ) : error ? (
+        <p className="text-[13px] text-red-500 dark:text-red-400 py-8 text-center font-sans">{error}</p>
       ) : items.length === 0 ? (
         <p className="text-[13px] text-neutral-400 dark:text-neutral-600 py-8 text-center font-sans">No feedback</p>
       ) : (
