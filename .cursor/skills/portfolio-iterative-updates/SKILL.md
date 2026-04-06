@@ -47,7 +47,7 @@ description: Iterative update workflow for this Next.js 15 minimalist portfolio.
 ```
 1. For UI strings: edit messages/en.json AND messages/zh.json together
 2. For DB content: update *_en and *_zh columns
-3. For static content (snippets/notes): edit src/lib/snippets.ts or notes.ts
+3. For static content (notes): edit src/lib/notes.ts
 4. Never hardcode visible strings in JSX
 ```
 

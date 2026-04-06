@@ -2,7 +2,6 @@ import type { MetadataRoute } from 'next';
 import { createBuildClient } from '@/lib/supabase/build';
 import { SITE_URL } from '@/lib/constants';
 import type { Tables } from '@/lib/supabase/database.types';
-import { SNIPPETS } from '@/lib/snippets';
 import { NOTES } from '@/lib/notes';
 
 export const revalidate = 3600; // Regenerate every hour
@@ -99,19 +98,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     },
     {
-      url: `${SITE_URL}/snippets`,
-      lastModified: contentLastModified,
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-      alternates: {
-        languages: {
-          en: `${SITE_URL}/snippets`,
-          zh: `${SITE_URL}/zh/snippets`,
-          'x-default': `${SITE_URL}/snippets`,
-        },
-      },
-    },
-    {
       url: `${SITE_URL}/uses`,
       lastModified: contentLastModified,
       changeFrequency: 'monthly' as const,
@@ -182,20 +168,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     ]) ?? [];
 
-  const snippetPages = SNIPPETS.map((snippet) => ({
-    url: `${SITE_URL}/snippets/${snippet.slug}`,
-    lastModified: contentLastModified,
-    changeFrequency: 'monthly' as const,
-    priority: 0.6,
-    alternates: {
-      languages: {
-        en: `${SITE_URL}/snippets/${snippet.slug}`,
-        zh: `${SITE_URL}/zh/snippets/${snippet.slug}`,
-        'x-default': `${SITE_URL}/snippets/${snippet.slug}`,
-      },
-    },
-  }));
-
   const notePages = NOTES.map((note) => ({
     url: `${SITE_URL}/notes/${note.slug}`,
     lastModified: contentLastModified,
@@ -210,5 +182,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   }));
 
-  return [...staticPages, ...postPages, ...snippetPages, ...notePages];
+  return [...staticPages, ...postPages, ...notePages];
 }

@@ -17,7 +17,6 @@ src/app/
       page.tsx                  # Blog list
       [slug]/page.tsx           # Blog post
     projects/page.tsx
-    snippets/[slug]/page.tsx
     notes/[slug]/page.tsx
     ...
   api/                          # No [locale] — never locale-prefixed

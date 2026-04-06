@@ -122,9 +122,9 @@ Every URL entry needs `alternates.languages`:
 |------|---------|
 | Home | 1.0 |
 | Blog list, Projects | 0.8 |
-| Snippets, Notes, About | 0.65–0.7 |
+| Notes, About | 0.65–0.7 |
 | Individual blog posts | 0.7 |
-| Individual snippets/notes | 0.55–0.6 |
+| Individual notes | 0.55–0.6 |
 | Less-visited pages | 0.6 |
 
 Use `createBuildClient()` (not `createClient()`) in sitemap — it runs at build time, not in a request context.

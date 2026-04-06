@@ -47,7 +47,7 @@ const posts = rawPosts as Pick<Tables<'posts'>, 'slug' | 'updated_at'>[] | null;
 | Files | `kebab-case.tsx` / `.ts` | `home-client.tsx` |
 | React components | `PascalCase` named export | `export function HomeClient` |
 | Utility functions | `camelCase` | `buildPageMetadata` |
-| Constants | `UPPER_SNAKE_CASE` | `SITE_URL`, `SNIPPETS` |
+| Constants | `UPPER_SNAKE_CASE` | `SITE_URL`, `NOTES` |
 | Types/interfaces | `PascalCase` | `PostPreview`, `NavItem` |
 | i18n namespaces | dot-notation keys in JSON | `"site.name"` |
 

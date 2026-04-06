@@ -36,12 +36,6 @@ export function SiteHeader({ name }: SiteHeaderProps) {
           >
             {t('projects')}
           </Link>
-          <Link
-            href={`${prefix}/snippets`}
-            className="text-[14px] md:text-[16px] text-neutral-500 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
-          >
-            {t('snippets')}
-          </Link>
         </nav>
         <LocaleSwitcher />
       </div>

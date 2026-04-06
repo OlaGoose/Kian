@@ -22,7 +22,7 @@ const STATIC_PROJECTS: Project[] = [
       '浏览 Ozon 官方分类树：支持中英俄搜索、多平台跳转与关键词复制，便于跨境与市场研究。',
     url: '/projects/ozon-catalog',
     github_url: null,
-    tech: ['Next.js', 'TypeScript', 'Tailwind CSS'],
+    tech: [],
     status: 'live',
     featured: true,
     display_order: 0,
@@ -91,13 +91,10 @@ export default async function ProjectsPage({ params }: Props) {
   const getDescription = (p: Project) =>
     localizedText(locale, p.description_en, p.description_zh);
 
-  const featured = projects.filter((p) => p.featured);
-  const others = projects.filter((p) => !p.featured);
-
   const jsonLd = buildSoftwareAppListLd({
     name: t('title'),
     items:
-      projects?.map((p, i) => ({
+      projects.map((p, i) => ({
         position: i + 1,
         name: p.name,
         description: getDescription(p),
@@ -125,54 +122,23 @@ export default async function ProjectsPage({ params }: Props) {
               {t('description')}
             </p>
 
-            {featured.length > 0 && (
-              <div className="mb-12">
-                <h2 className="text-[11px] md:text-[13px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600 mb-6">
-                  {t('featured')}
-                </h2>
-                <div className="space-y-0">
-                  {featured.map((project) => (
-                    <ProjectCard
-                      key={project.id}
-                      project={project}
-                      description={getDescription(project)}
-                      visitLabel={t('visitSite')}
-                      codeLabel={t('viewCode')}
-                      statusLabels={{
-                        live: t('status.live'),
-                        wip: t('status.wip'),
-                        archived: t('status.archived'),
-                      }}
-                      featured
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {others.length > 0 && (
-              <div>
-                {featured.length > 0 && (
-                  <h2 className="text-[11px] md:text-[13px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600 mb-6">
-                    Other
-                  </h2>
-                )}
-                <div className="space-y-0">
-                  {others.map((project) => (
-                    <ProjectCard
-                      key={project.id}
-                      project={project}
-                      description={getDescription(project)}
-                      visitLabel={t('visitSite')}
-                      codeLabel={t('viewCode')}
-                      statusLabels={{
-                        live: t('status.live'),
-                        wip: t('status.wip'),
-                        archived: t('status.archived'),
-                      }}
-                    />
-                  ))}
-                </div>
+            {projects.length > 0 && (
+              <div className="space-y-0">
+                {projects.map((project) => (
+                  <ProjectCard
+                    key={project.id}
+                    project={project}
+                    description={getDescription(project)}
+                    visitLabel={t('visitSite')}
+                    codeLabel={t('viewCode')}
+                    statusLabels={{
+                      live: t('status.live'),
+                      wip: t('status.wip'),
+                      archived: t('status.archived'),
+                    }}
+                    featured={project.featured}
+                  />
+                ))}
               </div>
             )}
 
@@ -223,19 +189,6 @@ function ProjectCard({
             <p className="text-[14px] md:text-[18px] leading-relaxed text-neutral-500 dark:text-neutral-500 mb-3">
               {description}
             </p>
-          )}
-
-          {project.tech.length > 0 && (
-            <div className="flex flex-wrap gap-x-3 gap-y-1 mb-4">
-              {project.tech.map((tech) => (
-                <span
-                  key={tech}
-                  className="text-[11px] md:text-[13px] font-mono text-neutral-400 dark:text-neutral-600"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
           )}
         </div>
 

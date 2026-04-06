@@ -26,7 +26,7 @@ src/
       server.ts           # SSR cookie-aware client (server components)
       build.ts            # Plain anon client (generateStaticParams, sitemap)
     localized-content.ts  # localizedText() bilingual helper
-    snippets.ts / notes.ts  # Static file-based content
+    notes.ts                # Static file-based notes content
   i18n/
     routing.ts            # defineRouting config (single source of truth)
     request.ts            # next-intl plugin entry
@@ -69,7 +69,7 @@ src/components/home/home-client.tsx  ← 'use client'
 - **ISR**: `export const revalidate = 3600` on list pages, sitemap, feed.
 - **Static generation**: `generateStaticParams` with `createBuildClient` for blog slugs × locales.
 - **Client mutations**: `fetch('/api/feedback', { method: 'POST', body: JSON.stringify(...) })`.
-- **Static content** (snippets, notes): imported arrays from `src/lib/*.ts` — no DB needed.
+- **Static content** (notes): imported arrays from `src/lib/notes.ts` — no DB needed.
 
 ## State Management
 
