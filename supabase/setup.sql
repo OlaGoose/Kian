@@ -78,11 +78,31 @@ CREATE TABLE IF NOT EXISTS public.feedback (
 );
 
 -- ============================================================
+-- BOOKINGS TABLE
+-- ============================================================
+CREATE TABLE IF NOT EXISTS public.bookings (
+  id           UUID        DEFAULT gen_random_uuid() PRIMARY KEY,
+  name         TEXT        NOT NULL,
+  email        TEXT        NOT NULL,
+  message      TEXT        NOT NULL,
+  meeting_type TEXT        NOT NULL DEFAULT 'online' CHECK (meeting_type IN ('online', 'inperson')),
+  date         DATE        NOT NULL,
+  time         TEXT        NOT NULL,
+  status       TEXT        NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'rejected')),
+  admin_note   TEXT,
+  created_at   TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS bookings_date_time_idx ON public.bookings (date, time);
+CREATE INDEX IF NOT EXISTS bookings_status_idx    ON public.bookings (status);
+
+-- ============================================================
 -- ROW LEVEL SECURITY
 -- ============================================================
 ALTER TABLE public.posts     ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.projects  ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.feedback  ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.bookings  ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Public can read published posts" ON public.posts;
 CREATE POLICY "Public can read published posts"
@@ -98,6 +118,16 @@ DROP POLICY IF EXISTS "Anyone can submit feedback" ON public.feedback;
 CREATE POLICY "Anyone can submit feedback"
   ON public.feedback FOR INSERT
   WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Anyone can submit bookings" ON public.bookings;
+CREATE POLICY "Anyone can submit bookings"
+  ON public.bookings FOR INSERT
+  WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Anyone can read booking slots" ON public.bookings;
+CREATE POLICY "Anyone can read booking slots"
+  ON public.bookings FOR SELECT
+  USING (true);
 
 -- ============================================================
 -- SEED DATA
