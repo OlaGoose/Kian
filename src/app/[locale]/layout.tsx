@@ -5,7 +5,7 @@ import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
 import { routing } from '@/i18n/routing';
-import { SITE_URL, TWITTER_CREATOR } from '@/lib/constants';
+import { SITE_URL, TWITTER_CREATOR, SITE_NAME } from '@/lib/constants';
 import '@/app/globals.css';
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
@@ -48,6 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       template: `%s — ${t('name')}`,
     },
     description: t('description'),
+    authors: [{ name: SITE_NAME, url: SITE_URL }],
     openGraph: {
       type: 'website',
       locale: locale === 'zh' ? 'zh_CN' : 'en_US',

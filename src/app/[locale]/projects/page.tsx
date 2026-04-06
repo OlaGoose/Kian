@@ -6,7 +6,7 @@ import { createClient } from '@/lib/supabase/server';
 import { SiteHeader } from '@/components/layout/site-header';
 import { FeedbackButton } from '@/components/feedback/feedback-button';
 import { localizedText } from '@/lib/localized-content';
-import { getAlternates } from '@/lib/metadata';
+import { buildPageMetadata } from '@/lib/seo';
 import { buildSoftwareAppListLd } from '@/lib/structured-data';
 import type { Project } from '@/types';
 import type { Tables } from '@/lib/supabase/database.types';
@@ -39,18 +39,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'projects' });
   const siteT = await getTranslations({ locale, namespace: 'site' });
-  const alternates = getAlternates(locale, 'projects');
 
-  return {
+  return buildPageMetadata({
+    locale,
+    path: 'projects',
     title: t('title'),
     description: t('description'),
-    alternates,
-    openGraph: {
-      title: `${t('title')} — ${siteT('name')}`,
-      description: t('description'),
-      url: alternates.canonical,
-    },
-  };
+    siteName: siteT('name'),
+  });
 }
 
 function isInternalAppPath(url: string | null): url is `/${string}` {

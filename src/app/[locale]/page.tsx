@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { HomeClient } from '@/components/home/home-client';
 import { getAlternates } from '@/lib/metadata';
 import { buildPersonLd, buildWebSiteLd } from '@/lib/structured-data';
+import { TWITTER_CREATOR } from '@/lib/constants';
 import type { PostPreview } from '@/types';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -11,11 +12,31 @@ type Props = { params: Promise<{ locale: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'site' });
+  const alternates = getAlternates(locale);
 
   return {
     title: { absolute: t('name') },
     description: t('description'),
-    alternates: getAlternates(locale),
+    alternates,
+    openGraph: {
+      title: t('name'),
+      description: t('description'),
+      url: alternates.canonical,
+      images: [
+        {
+          url: `/api/og?title=${encodeURIComponent(t('name'))}`,
+          width: 1200,
+          height: 630,
+          alt: t('name'),
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t('name'),
+      description: t('description'),
+      creator: TWITTER_CREATOR,
+    },
   };
 }
 

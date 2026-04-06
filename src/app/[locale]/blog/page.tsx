@@ -7,7 +7,7 @@ import { SiteHeader } from '@/components/layout/site-header';
 import { FeedbackButton } from '@/components/feedback/feedback-button';
 import { localizedText } from '@/lib/localized-content';
 import { formatDate } from '@/lib/utils';
-import { getAlternates } from '@/lib/metadata';
+import { buildPageMetadata } from '@/lib/seo';
 import { buildItemListLd } from '@/lib/structured-data';
 import { SITE_URL } from '@/lib/constants';
 import type { PostPreview } from '@/types';
@@ -20,18 +20,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'blog' });
   const siteT = await getTranslations({ locale, namespace: 'site' });
-  const alternates = getAlternates(locale, 'blog');
 
-  return {
+  return buildPageMetadata({
+    locale,
+    path: 'blog',
     title: t('title'),
     description: t('description'),
-    alternates,
-    openGraph: {
-      title: `${t('title')} — ${siteT('name')}`,
-      description: t('description'),
-      url: alternates.canonical,
-    },
-  };
+    siteName: siteT('name'),
+  });
 }
 
 export default async function BlogPage({ params }: Props) {

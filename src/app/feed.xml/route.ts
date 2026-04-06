@@ -1,4 +1,4 @@
-import { SITE_NAME, SITE_URL } from '@/lib/constants';
+import { SITE_NAME, SITE_URL, SOCIAL_LINKS } from '@/lib/constants';
 import { createBuildClient } from '@/lib/supabase/build';
 import type { Tables } from '@/lib/supabase/database.types';
 
@@ -27,6 +27,8 @@ export async function GET() {
       'slug' | 'title_en' | 'excerpt_en' | 'updated_at' | 'published_at'
     >[] | null) ?? [];
 
+  const authorEmail = SOCIAL_LINKS.email.replace('mailto:', '');
+
   const items = posts
     .map((post) => {
       const title = escapeXml(post.title_en);
@@ -40,9 +42,10 @@ export async function GET() {
     <title>${title}</title>
     <description>${description}</description>
     <link>${link}</link>
-    <guid>${link}</guid>
+    <guid isPermaLink="true">${link}</guid>
     <pubDate>${pubDate}</pubDate>
     <dc:date>${updatedAt}</dc:date>
+    <author>${escapeXml(authorEmail)} (${escapeXml(SITE_NAME)})</author>
   </item>`;
     })
     .join('\n');
@@ -50,6 +53,8 @@ export async function GET() {
   const latestUpdatedAt = posts[0]?.updated_at
     ? new Date(posts[0].updated_at).toUTCString()
     : new Date().toUTCString();
+
+  const ogImage = `${SITE_URL}/api/og?title=${encodeURIComponent(SITE_NAME)}`;
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
@@ -59,7 +64,13 @@ export async function GET() {
   <link>${SITE_URL}</link>
   <language>en-us</language>
   <lastBuildDate>${latestUpdatedAt}</lastBuildDate>
+  <managingEditor>${escapeXml(authorEmail)} (${escapeXml(SITE_NAME)})</managingEditor>
   <atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml" />
+  <image>
+    <url>${ogImage}</url>
+    <title>${escapeXml(SITE_NAME)}</title>
+    <link>${SITE_URL}</link>
+  </image>
 ${items}
 </channel>
 </rss>`;

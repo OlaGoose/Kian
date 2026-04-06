@@ -19,4 +19,4 @@ export const SOCIAL_LINKS = {
   email: 'mailto:kianm.aitech@gmail.com',
 } as const;
 
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/og?title=${encodeURIComponent(SITE_NAME)}`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/api/og?title=${encodeURIComponent(SITE_NAME)}`;

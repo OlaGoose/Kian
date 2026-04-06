@@ -10,7 +10,7 @@ import { localizedText } from '@/lib/localized-content';
 import { formatDate } from '@/lib/utils';
 import { getAlternates } from '@/lib/metadata';
 import { buildBlogPostingLd } from '@/lib/structured-data';
-import { SITE_URL } from '@/lib/constants';
+import { SITE_URL, TWITTER_CREATOR } from '@/lib/constants';
 import type { Tables } from '@/lib/supabase/database.types';
 
 type Props = {
@@ -40,18 +40,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const { data: rawPost } = await supabase
     .from('posts')
-    .select('title_en, title_zh, excerpt_en, excerpt_zh, published_at, tags, cover_image')
+    .select('title_en, title_zh, excerpt_en, excerpt_zh, published_at, updated_at, tags, cover_image')
     .eq('slug', slug)
     .eq('published', true)
     .single();
 
-  const post = rawPost as Pick<Tables<'posts'>, 'title_en' | 'title_zh' | 'excerpt_en' | 'excerpt_zh' | 'published_at' | 'tags' | 'cover_image'> | null;
+  const post = rawPost as Pick<Tables<'posts'>, 'title_en' | 'title_zh' | 'excerpt_en' | 'excerpt_zh' | 'published_at' | 'updated_at' | 'tags' | 'cover_image'> | null;
 
   if (!post) return { title: 'Not Found' };
 
   const title = localizedText(locale, post.title_en, post.title_zh);
   const description = localizedText(locale, post.excerpt_en, post.excerpt_zh);
   const alternates = getAlternates(locale, `blog/${slug}`);
+  const ogImage = post.cover_image
+    ? [{ url: post.cover_image, width: 1200, height: 630, alt: title }]
+    : [{ url: `/api/og?title=${encodeURIComponent(title)}`, width: 1200, height: 630, alt: title }];
 
   return {
     title,
@@ -63,15 +66,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       url: alternates.canonical,
       publishedTime: post.published_at ?? undefined,
+      modifiedTime: post.updated_at,
       tags: post.tags,
-      images: post.cover_image
-        ? [{ url: post.cover_image, width: 1200, height: 630 }]
-        : [{ url: `/api/og?title=${encodeURIComponent(title)}`, width: 1200, height: 630 }],
+      images: ogImage,
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      creator: TWITTER_CREATOR,
     },
   };
 }
