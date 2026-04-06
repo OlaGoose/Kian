@@ -1,7 +1,107 @@
--- Sample data for development
--- Run this after the migration to populate your local database
+-- ============================================================
+-- FULL SETUP: Schema + Seed Data
+-- Run this once against your Supabase project via the SQL editor
+-- or: psql $DATABASE_URL -f supabase/setup.sql
+-- ============================================================
 
--- Sample blog posts
+-- Enable UUID generation
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+-- ============================================================
+-- POSTS TABLE
+-- ============================================================
+CREATE TABLE IF NOT EXISTS public.posts (
+  id                   UUID        DEFAULT gen_random_uuid() PRIMARY KEY,
+  title_en             TEXT        NOT NULL,
+  title_zh             TEXT,
+  slug                 TEXT        NOT NULL UNIQUE,
+  content_en           TEXT,
+  content_zh           TEXT,
+  excerpt_en           TEXT,
+  excerpt_zh           TEXT,
+  published            BOOLEAN     NOT NULL DEFAULT false,
+  published_at         TIMESTAMPTZ,
+  created_at           TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at           TIMESTAMPTZ NOT NULL DEFAULT now(),
+  tags                 TEXT[]      NOT NULL DEFAULT '{}',
+  cover_image          TEXT,
+  reading_time_minutes INTEGER     NOT NULL DEFAULT 5
+);
+
+CREATE OR REPLACE FUNCTION update_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = now();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS posts_updated_at ON public.posts;
+CREATE TRIGGER posts_updated_at
+  BEFORE UPDATE ON public.posts
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+
+CREATE INDEX IF NOT EXISTS posts_slug_idx         ON public.posts (slug);
+CREATE INDEX IF NOT EXISTS posts_published_at_idx ON public.posts (published_at DESC) WHERE published = true;
+CREATE INDEX IF NOT EXISTS posts_tags_idx         ON public.posts USING GIN (tags);
+
+-- ============================================================
+-- PROJECTS TABLE
+-- ============================================================
+CREATE TABLE IF NOT EXISTS public.projects (
+  id              UUID        DEFAULT gen_random_uuid() PRIMARY KEY,
+  name            TEXT        NOT NULL,
+  slug            TEXT        NOT NULL UNIQUE,
+  description_en  TEXT,
+  description_zh  TEXT,
+  url             TEXT,
+  github_url      TEXT,
+  tech            TEXT[]      NOT NULL DEFAULT '{}',
+  status          TEXT        NOT NULL DEFAULT 'live' CHECK (status IN ('live', 'archived', 'wip')),
+  featured        BOOLEAN     NOT NULL DEFAULT false,
+  display_order   INTEGER     NOT NULL DEFAULT 0,
+  cover_image     TEXT,
+  created_at      TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS projects_featured_order_idx ON public.projects (featured DESC, display_order ASC);
+
+-- ============================================================
+-- FEEDBACK TABLE
+-- ============================================================
+CREATE TABLE IF NOT EXISTS public.feedback (
+  id          UUID        DEFAULT gen_random_uuid() PRIMARY KEY,
+  content     TEXT,
+  type        TEXT        NOT NULL DEFAULT 'text' CHECK (type IN ('text', 'voice')),
+  page_path   TEXT,
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- ============================================================
+-- ROW LEVEL SECURITY
+-- ============================================================
+ALTER TABLE public.posts     ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.projects  ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.feedback  ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Public can read published posts" ON public.posts;
+CREATE POLICY "Public can read published posts"
+  ON public.posts FOR SELECT
+  USING (published = true);
+
+DROP POLICY IF EXISTS "Public can read all projects" ON public.projects;
+CREATE POLICY "Public can read all projects"
+  ON public.projects FOR SELECT
+  USING (true);
+
+DROP POLICY IF EXISTS "Anyone can submit feedback" ON public.feedback;
+CREATE POLICY "Anyone can submit feedback"
+  ON public.feedback FOR INSERT
+  WITH CHECK (true);
+
+-- ============================================================
+-- SEED DATA
+-- ============================================================
 INSERT INTO public.posts (
   title_en, title_zh, slug,
   content_en, content_zh,
@@ -27,9 +127,9 @@ INSERT INTO public.posts (
   'A deep dive into how image compression algorithms work under the hood.',
   '深入探讨图像压缩算法的底层原理。',
   true, now() - interval '15 days', ARRAY['technology', 'explainer'], 6
-);
+)
+ON CONFLICT (slug) DO NOTHING;
 
--- Sample projects
 INSERT INTO public.projects (
   name, slug,
   description_en, description_zh,
@@ -65,4 +165,5 @@ INSERT INTO public.projects (
   NULL,
   ARRAY['Next.js', 'TypeScript'],
   'live', false, 3
-);
+)
+ON CONFLICT (slug) DO NOTHING;
