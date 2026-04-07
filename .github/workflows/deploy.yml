@@ -23,6 +23,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
@@ -39,6 +40,7 @@ jobs:
         run: |
           echo "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}"    | npx wrangler secret put NEXT_PUBLIC_SUPABASE_URL    --name minimalist-personal-portfolio
           echo "${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" | npx wrangler secret put NEXT_PUBLIC_SUPABASE_ANON_KEY --name minimalist-personal-portfolio
+          echo "${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" | npx wrangler secret put SUPABASE_SERVICE_ROLE_KEY --name minimalist-personal-portfolio
           echo "${{ secrets.NEXT_PUBLIC_SITE_URL }}"        | npx wrangler secret put NEXT_PUBLIC_SITE_URL        --name minimalist-personal-portfolio
           echo "${{ secrets.GEMINI_API_KEY }}"              | npx wrangler secret put GEMINI_API_KEY              --name minimalist-personal-portfolio
           echo "${{ secrets.ADMIN_USERNAME }}"              | npx wrangler secret put ADMIN_USERNAME              --name minimalist-personal-portfolio

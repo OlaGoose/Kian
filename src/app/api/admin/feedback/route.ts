@@ -1,4 +1,4 @@
-import { createServiceClient } from '@/lib/supabase/service';
+import { createServiceClient, MissingServiceRoleKeyError } from '@/lib/supabase/service';
 import { getAdminSession } from '@/lib/admin-auth';
 
 export async function GET() {
@@ -20,7 +20,11 @@ export async function GET() {
     }
 
     return Response.json({ feedback: data ?? [] });
-  } catch {
+  } catch (e) {
+    if (e instanceof MissingServiceRoleKeyError) {
+      return Response.json({ error: e.message }, { status: 503 });
+    }
+    console.error('[admin/feedback]', e);
     return Response.json({ error: 'Invalid request' }, { status: 400 });
   }
 }

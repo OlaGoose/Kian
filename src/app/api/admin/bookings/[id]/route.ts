@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { createServiceClient } from '@/lib/supabase/service';
+import { createServiceClient, MissingServiceRoleKeyError } from '@/lib/supabase/service';
 import { getAdminSession } from '@/lib/admin-auth';
 
 type Props = { params: Promise<{ id: string }> };
@@ -31,7 +31,11 @@ export async function PATCH(req: NextRequest, { params }: Props) {
     }
 
     return Response.json({ success: true });
-  } catch {
+  } catch (e) {
+    if (e instanceof MissingServiceRoleKeyError) {
+      return Response.json({ error: e.message }, { status: 503 });
+    }
+    console.error('[admin/bookings/patch]', e);
     return Response.json({ error: 'Invalid request' }, { status: 400 });
   }
 }
