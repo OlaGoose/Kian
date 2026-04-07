@@ -24,6 +24,14 @@
   ::selection {
     @apply bg-neutral-200 dark:bg-neutral-800;
   }
+
+  @media (max-width: 767px) {
+    input,
+    textarea,
+    select {
+      font-size: 16px !important;
+    }
+  }
 }
 
 @layer utilities {
