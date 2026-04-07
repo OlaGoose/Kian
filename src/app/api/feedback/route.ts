@@ -3,32 +3,40 @@ import { createClient } from '@/lib/supabase/server';
 import { createServiceClient } from '@/lib/supabase/service';
 
 const AUDIO_BUCKET = 'feedback-audio';
-const MAX_AUDIO_BYTES = 10 * 1024 * 1024; // 10 MB
+const MAX_AUDIO_BYTES = 10 * 1024 * 1024;
 
-async function uploadAudio(audioFile: File): Promise<string | null> {
-  const supabase = createServiceClient();
-  const ext = audioFile.name.split('.').pop() ?? 'webm';
-  const filename = `${Date.now()}-${crypto.randomUUID()}.${ext}`;
+async function tryUploadAudio(audioFile: File): Promise<string | null> {
+  try {
+    const supabase = createServiceClient();
+    const ext = audioFile.name.split('.').pop() ?? 'webm';
+    const filename = `${Date.now()}-${crypto.randomUUID()}.${ext}`;
+    const arrayBuffer = await audioFile.arrayBuffer();
 
-  const arrayBuffer = await audioFile.arrayBuffer();
-  const { error } = await supabase.storage
-    .from(AUDIO_BUCKET)
-    .upload(filename, arrayBuffer, { contentType: audioFile.type || 'audio/webm', upsert: false });
+    const { error } = await supabase.storage
+      .from(AUDIO_BUCKET)
+      .upload(filename, arrayBuffer, {
+        contentType: audioFile.type || 'audio/webm',
+        upsert: false,
+      });
 
-  if (error) {
-    console.error('Audio upload error:', error);
+    if (error) {
+      console.error('[feedback] audio upload error:', error.message);
+      return null;
+    }
+
+    const { data } = supabase.storage.from(AUDIO_BUCKET).getPublicUrl(filename);
+    return data?.publicUrl ?? null;
+  } catch (err) {
+    console.error('[feedback] upload threw:', err);
     return null;
   }
-
-  const { data } = supabase.storage.from(AUDIO_BUCKET).getPublicUrl(filename);
-  return data?.publicUrl ?? null;
 }
 
 export async function POST(req: NextRequest) {
-  try {
-    const contentType = req.headers.get('content-type') ?? '';
+  const contentType = req.headers.get('content-type') ?? '';
 
-    if (contentType.includes('multipart/form-data')) {
+  if (contentType.includes('multipart/form-data')) {
+    try {
       const formData = await req.formData();
       const audioFile = formData.get('audio') as File | null;
       const page_path = (formData.get('page_path') as string | null) ?? null;
@@ -36,38 +44,48 @@ export async function POST(req: NextRequest) {
       if (!audioFile || audioFile.size === 0) {
         return Response.json({ error: 'Audio file is required' }, { status: 400 });
       }
-
       if (audioFile.size > MAX_AUDIO_BYTES) {
         return Response.json({ error: 'Audio file too large (max 10 MB)' }, { status: 400 });
       }
 
-      const audio_url = await uploadAudio(audioFile);
+      const audio_url = await tryUploadAudio(audioFile);
 
       const supabase = await createClient();
-      const { error } = await supabase.from('feedback').insert([
-        {
-          content: null,
-          type: 'voice',
-          page_path,
-          audio_url,
-        },
-      ] as never);
+
+      const { error } = await supabase
+        .from('feedback')
+        .insert([{ content: null, type: 'voice' as const, page_path, audio_url }]);
 
       if (error) {
-        console.error('Feedback insert error:', error);
-        return Response.json({ error: 'Failed to save feedback' }, { status: 500 });
+        if (error.message?.includes('audio_url')) {
+          const { error: retryError } = await supabase
+            .from('feedback')
+            .insert([{ content: null, type: 'voice' as const, page_path }]);
+          if (retryError) {
+            console.error('[feedback] retry insert error:', retryError.message);
+            return Response.json({ error: 'Failed to save feedback' }, { status: 500 });
+          }
+          console.warn('[feedback] audio_url column missing — saved without URL. Run migration: supabase/migrations/20260407_feedback_audio.sql');
+        } else {
+          console.error('[feedback] insert error:', error.message);
+          return Response.json({ error: 'Failed to save feedback' }, { status: 500 });
+        }
       }
 
-      return Response.json({ success: true }, { status: 201 });
+      return Response.json({ success: true, audio_url }, { status: 201 });
+    } catch (err) {
+      console.error('[feedback] multipart handler threw:', err);
+      return Response.json({ error: 'Failed to process audio' }, { status: 500 });
     }
+  }
 
+  try {
     const body = await req.json();
     const { content, type = 'text', page_path } = body;
 
     if (typeof content !== 'string' || content.trim().length === 0) {
       return Response.json({ error: 'Content is required' }, { status: 400 });
     }
-
     if (content.length > 5000) {
       return Response.json({ error: 'Content too long' }, { status: 400 });
     }
@@ -76,14 +94,13 @@ export async function POST(req: NextRequest) {
     const { error } = await supabase.from('feedback').insert([
       {
         content: content.trim(),
-        type: type === 'voice' ? 'voice' : 'text',
+        type: (type === 'voice' ? 'voice' : 'text') as 'text' | 'voice',
         page_path: page_path ?? null,
-        audio_url: null,
       },
-    ] as never);
+    ]);
 
     if (error) {
-      console.error('Feedback insert error:', error);
+      console.error('[feedback] text insert error:', error.message);
       return Response.json({ error: 'Failed to save feedback' }, { status: 500 });
     }
 

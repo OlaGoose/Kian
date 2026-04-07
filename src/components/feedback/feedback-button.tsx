@@ -126,7 +126,18 @@ export function FeedbackButton() {
     }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mediaRecorder = new MediaRecorder(stream);
+
+      const preferredTypes = [
+        'audio/webm;codecs=opus',
+        'audio/webm',
+        'audio/ogg;codecs=opus',
+        'audio/mp4',
+      ];
+      const mimeType = preferredTypes.find((t) => MediaRecorder.isTypeSupported(t)) ?? '';
+      const mediaRecorder = mimeType
+        ? new MediaRecorder(stream, { mimeType })
+        : new MediaRecorder(stream);
+
       mediaRecorderRef.current = mediaRecorder;
       chunksRef.current = [];
 
@@ -134,7 +145,8 @@ export function FeedbackButton() {
         if (e.data.size > 0) chunksRef.current.push(e.data);
       };
       mediaRecorder.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
+        const recordedMime = mediaRecorder.mimeType || mimeType || 'audio/webm';
+        const blob = new Blob(chunksRef.current, { type: recordedMime });
         setAudioBlob(blob);
         setAudioUrl(URL.createObjectURL(blob));
         stream.getTracks().forEach((t) => t.stop());
@@ -198,10 +210,13 @@ export function FeedbackButton() {
       let res: Response;
 
       if (mode === 'voice' && audioBlob) {
+        const ext = audioBlob.type.includes('mp4') ? 'mp4'
+          : audioBlob.type.includes('ogg') ? 'ogg'
+          : 'webm';
         const formData = new FormData();
         formData.append('type', 'voice');
         formData.append('page_path', pathname);
-        formData.append('audio', audioBlob, 'voice-feedback.webm');
+        formData.append('audio', audioBlob, `voice-feedback.${ext}`);
         res = await fetch('/api/feedback', { method: 'POST', body: formData });
       } else {
         res = await fetch('/api/feedback', {

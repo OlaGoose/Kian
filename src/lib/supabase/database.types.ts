@@ -116,6 +116,7 @@ export type Database = {
           content: string | null;
           type: 'text' | 'voice';
           page_path: string | null;
+          audio_url: string | null;
           created_at: string;
         };
         Insert: {
@@ -123,12 +124,14 @@ export type Database = {
           content?: string | null;
           type?: 'text' | 'voice';
           page_path?: string | null;
+          audio_url?: string | null;
           created_at?: string;
         };
         Update: {
           content?: string | null;
           type?: 'text' | 'voice';
           page_path?: string | null;
+          audio_url?: string | null;
         };
         Relationships: [];
       };
