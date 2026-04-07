@@ -5,9 +5,8 @@ import { Github, Twitter, Youtube, Mail, Linkedin, Calendar } from 'lucide-react
 import { useLocale, useTranslations } from 'next-intl';
 import { CustomLink } from '@/components/ui/custom-link';
 import { LocaleSwitcher } from '@/components/ui/locale-switcher';
-import { FeedbackButton } from '@/components/feedback/feedback-button';
 import { BookingModal } from '@/components/booking/booking-modal';
-import { SOCIAL_LINKS, LOCATION } from '@/lib/constants';
+import { SOCIAL_LINKS, LOCATION, FEATURES } from '@/lib/constants';
 import { localizedText } from '@/lib/localized-content';
 import type { PostPreview } from '@/types';
 
@@ -19,6 +18,7 @@ interface HomeClientProps {
 export function HomeClient({ name, posts }: HomeClientProps) {
   const locale = useLocale();
   const t = useTranslations('home');
+  const navT = useTranslations('nav');
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const prefix = locale === 'zh' ? '/zh' : '';
 
@@ -41,13 +41,15 @@ export function HomeClient({ name, posts }: HomeClientProps) {
               </span>
             </div>
             <div className="flex items-center gap-3.5 pb-1">
-              <button
-                onClick={() => setIsBookingOpen(true)}
-                className="text-neutral-400 dark:text-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
-                aria-label="Schedule a meeting"
-              >
-                <Calendar className="w-[15px] h-[15px]" strokeWidth={1.5} />
-              </button>
+              {FEATURES.booking && (
+                <button
+                  onClick={() => setIsBookingOpen(true)}
+                  className="text-neutral-400 dark:text-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+                  aria-label={navT('scheduleLabel')}
+                >
+                  <Calendar className="w-[15px] h-[15px]" strokeWidth={1.5} />
+                </button>
+              )}
               <LocaleSwitcher />
             </div>
           </div>
@@ -179,8 +181,9 @@ export function HomeClient({ name, posts }: HomeClientProps) {
         </div>
       </main>
 
-      <FeedbackButton />
-      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
+      {FEATURES.booking && (
+        <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
+      )}
     </div>
   );
 }

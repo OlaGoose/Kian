@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { BackLink } from '@/components/layout/back-link';
 import { SiteHeader } from '@/components/layout/site-header';
-import { FeedbackButton } from '@/components/feedback/feedback-button';
 import { localizedText } from '@/lib/localized-content';
 import { formatDate } from '@/lib/utils';
 import { buildPageMetadata } from '@/lib/seo';
@@ -143,7 +142,6 @@ export default async function BlogPage({ params }: Props) {
         </div>
       </main>
 
-      <FeedbackButton />
     </div>
     </>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, type FormEvent } from 'react';
+import { useState, useRef, useEffect, type FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   MessageSquare,
@@ -8,15 +8,24 @@ import {
   Mic,
   Square,
   Play,
+  Pause,
   Trash2,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 
+const MAX_RECORD_SECONDS = 60;
+
 function AudioPlayer({ src, onDelete, deleteLabel }: { src: string; onDelete: () => void; deleteLabel: string }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    return () => {
+      audioRef.current?.pause();
+    };
+  }, []);
 
   const togglePlay = () => {
     if (!audioRef.current) return;
@@ -35,13 +44,20 @@ function AudioPlayer({ src, onDelete, deleteLabel }: { src: string; onDelete: ()
         src={src}
         onTimeUpdate={() => {
           if (audioRef.current) {
-            setProgress((audioRef.current.currentTime / audioRef.current.duration) * 100);
+            setProgress((audioRef.current.currentTime / audioRef.current.duration) * 100 || 0);
           }
         }}
         onEnded={() => { setIsPlaying(false); setProgress(0); }}
       />
-      <button type="button" onClick={togglePlay} className="p-1.5 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors rounded-[2px]">
-        {isPlaying ? <Square size={14} fill="currentColor" /> : <Play size={14} fill="currentColor" />}
+      <button
+        type="button"
+        onClick={togglePlay}
+        className="p-1.5 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors rounded-[2px]"
+      >
+        {isPlaying
+          ? <Pause size={14} fill="currentColor" strokeWidth={0} />
+          : <Play size={14} fill="currentColor" strokeWidth={0} />
+        }
       </button>
       <div className="flex-1 h-[1px] bg-neutral-200 dark:bg-neutral-800 relative overflow-hidden">
         <motion.div
@@ -50,7 +66,12 @@ function AudioPlayer({ src, onDelete, deleteLabel }: { src: string; onDelete: ()
           transition={{ type: 'spring', bounce: 0, duration: 0.1 }}
         />
       </div>
-      <button type="button" onClick={onDelete} className="p-1.5 text-neutral-400 hover:text-red-500 transition-colors" aria-label={deleteLabel}>
+      <button
+        type="button"
+        onClick={onDelete}
+        className="p-1.5 text-neutral-400 hover:text-red-500 transition-colors"
+        aria-label={deleteLabel}
+      >
         <Trash2 size={14} strokeWidth={1.5} />
       </button>
     </div>
@@ -60,19 +81,49 @@ function AudioPlayer({ src, onDelete, deleteLabel }: { src: string; onDelete: ()
 export function FeedbackButton() {
   const t = useTranslations('feedback');
   const pathname = usePathname();
+
   const [isOpen, setIsOpen] = useState(false);
   const [mode, setMode] = useState<'text' | 'voice'>('text');
   const [feedback, setFeedback] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [isRecording, setIsRecording] = useState(false);
+  const [recordingSeconds, setRecordingSeconds] = useState(0);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [permissionError, setPermissionError] = useState<string | null>(null);
+
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const secondsRef = useRef(0);
+
+  const clearTimer = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    secondsRef.current = 0;
+    setRecordingSeconds(0);
+  };
+
+  const stopRecording = () => {
+    clearTimer();
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+      mediaRecorderRef.current.stop();
+    }
+    setIsRecording(false);
+  };
 
   const startRecording = async () => {
     setPermissionError(null);
+    setAudioBlob(null);
+    if (audioUrl) {
+      URL.revokeObjectURL(audioUrl);
+      setAudioUrl(null);
+    }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mediaRecorder = new MediaRecorder(stream);
@@ -88,23 +139,51 @@ export function FeedbackButton() {
         setAudioUrl(URL.createObjectURL(blob));
         stream.getTracks().forEach((t) => t.stop());
       };
+
       mediaRecorder.start();
       setIsRecording(true);
+
+      secondsRef.current = 0;
+      setRecordingSeconds(0);
+      timerRef.current = setInterval(() => {
+        secondsRef.current += 1;
+        setRecordingSeconds(secondsRef.current);
+        if (secondsRef.current >= MAX_RECORD_SECONDS) {
+          stopRecording();
+        }
+      }, 1000);
     } catch (err) {
-      setPermissionError(err instanceof Error ? err.message : 'Permission denied');
+      setPermissionError(err instanceof Error ? err.message : t('voice.permissionDenied'));
     }
   };
 
-  const stopRecording = () => {
-    if (mediaRecorderRef.current && isRecording) {
+  const deleteRecording = () => {
+    if (audioUrl) URL.revokeObjectURL(audioUrl);
+    setAudioBlob(null);
+    setAudioUrl(null);
+  };
+
+  const resetState = () => {
+    clearTimer();
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
       mediaRecorderRef.current.stop();
-      setIsRecording(false);
     }
+    mediaRecorderRef.current = null;
+    if (audioUrl) URL.revokeObjectURL(audioUrl);
+    setMode('text');
+    setFeedback('');
+    setIsSubmitted(false);
+    setSubmitError(null);
+    setIsSubmitting(false);
+    setIsRecording(false);
+    setAudioBlob(null);
+    setAudioUrl(null);
+    setPermissionError(null);
   };
 
   const handleClose = () => {
     setIsOpen(false);
-    setMode('text');
+    setTimeout(resetState, 300);
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -112,38 +191,52 @@ export function FeedbackButton() {
     if (mode === 'text' && !feedback.trim()) return;
     if (mode === 'voice' && !audioBlob) return;
 
-    try {
-      await fetch('/api/feedback', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          content: mode === 'text' ? feedback : '[Voice feedback]',
-          type: mode,
-          page_path: pathname,
-        }),
-      });
-    } catch {
-      // Best-effort; don't block the success UX
-    }
+    setIsSubmitting(true);
+    setSubmitError(null);
 
-    setIsSubmitted(true);
-    setFeedback('');
-    setAudioBlob(null);
-    setAudioUrl(null);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setIsOpen(false);
-      setMode('text');
-    }, 2000);
+    try {
+      let res: Response;
+
+      if (mode === 'voice' && audioBlob) {
+        const formData = new FormData();
+        formData.append('type', 'voice');
+        formData.append('page_path', pathname);
+        formData.append('audio', audioBlob, 'voice-feedback.webm');
+        res = await fetch('/api/feedback', { method: 'POST', body: formData });
+      } else {
+        res = await fetch('/api/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content: feedback.trim(), type: 'text', page_path: pathname }),
+        });
+      }
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setSubmitError((data as { error?: string }).error ?? t('submitError'));
+        return;
+      }
+
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setIsOpen(false);
+        setTimeout(resetState, 300);
+      }, 2000);
+    } catch {
+      setSubmitError(t('submitError'));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const timeLeft = MAX_RECORD_SECONDS - recordingSeconds;
 
   return (
     <>
-      {/* FAB trigger */}
       <button
         onClick={() => setIsOpen(true)}
         className="fixed bottom-5 right-5 md:bottom-7 md:right-7 p-2.5 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-all shadow-sm hover:shadow z-40 active:scale-95 rounded-[2px]"
-        aria-label="Feedback"
+        aria-label={t('title')}
       >
         <MessageSquare className="w-[18px] h-[18px]" strokeWidth={1.5} />
       </button>
@@ -151,7 +244,6 @@ export function FeedbackButton() {
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -161,7 +253,6 @@ export function FeedbackButton() {
               className="fixed inset-0 bg-black/5 dark:bg-black/30 z-50"
             />
 
-            {/* Modal container — bottom-sheet on mobile, centered on desktop */}
             <div className="fixed inset-0 flex items-end md:items-center justify-center z-50 pointer-events-none px-0 md:px-4">
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
@@ -170,7 +261,6 @@ export function FeedbackButton() {
                 transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 className="pointer-events-auto w-full md:max-w-[480px] bg-white dark:bg-[#0a0a0a] border border-neutral-200 dark:border-neutral-800 border-b-0 md:border-b rounded-t-[4px] md:rounded-[2px] px-6 pt-6 pb-8 md:px-8 md:pt-8 md:pb-8 shadow-2xl"
               >
-                {/* Drag handle — mobile only */}
                 <div className="flex justify-center mb-6 md:hidden">
                   <div className="w-10 h-[3px] bg-neutral-200 dark:bg-neutral-800 rounded-full" />
                 </div>
@@ -187,7 +277,7 @@ export function FeedbackButton() {
                   <button
                     onClick={handleClose}
                     className="ml-4 mt-0.5 text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors flex-shrink-0"
-                    aria-label="Close"
+                    aria-label={t('close')}
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -228,31 +318,55 @@ export function FeedbackButton() {
                             <button
                               type="button"
                               onClick={isRecording ? stopRecording : startRecording}
-                              className={`p-6 transition-all ${isRecording ? 'text-red-500 animate-pulse' : 'text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'}`}
+                              className={`p-6 transition-all ${isRecording ? 'text-red-500' : 'text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'}`}
                             >
                               {isRecording
                                 ? <Square className="w-10 h-10" strokeWidth={1.5} fill="currentColor" />
                                 : <Mic className="w-10 h-10" strokeWidth={1.5} />
                               }
                             </button>
+                            {isRecording && (
+                              <div className="flex flex-col items-center gap-1">
+                                <span className="text-[12px] text-red-500 font-mono animate-pulse">
+                                  {t('voice.recording')}
+                                </span>
+                                <span className="text-[11px] text-neutral-400 dark:text-neutral-600 font-mono tabular-nums">
+                                  {t('voice.timeLeft', { seconds: timeLeft })}
+                                </span>
+                              </div>
+                            )}
                           </>
                         ) : (
                           <div className="w-full">
-                            <AudioPlayer src={audioUrl} onDelete={() => { setAudioBlob(null); setAudioUrl(null); }} deleteLabel={t('voice.delete')} />
+                            <AudioPlayer
+                              src={audioUrl}
+                              onDelete={deleteRecording}
+                              deleteLabel={t('voice.delete')}
+                            />
                           </div>
                         )}
                         {permissionError && (
-                          <p className="absolute bottom-2 text-[11px] md:text-[13px] text-red-500 text-center px-4">{permissionError}</p>
+                          <p className="mt-2 text-[11px] md:text-[13px] text-red-500 text-center px-4">
+                            {permissionError}
+                          </p>
                         )}
                       </div>
                     )}
 
+                    {submitError && (
+                      <p className="text-[12px] text-red-500">{submitError}</p>
+                    )}
+
                     <button
                       type="submit"
-                      disabled={(mode === 'text' && !feedback.trim()) || (mode === 'voice' && !audioBlob)}
+                      disabled={
+                        isSubmitting ||
+                        (mode === 'text' && !feedback.trim()) ||
+                        (mode === 'voice' && !audioBlob)
+                      }
                       className="w-full py-2.5 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black text-[12px] md:text-[14px] font-medium uppercase tracking-wider hover:opacity-80 transition-all active:scale-[0.99] disabled:opacity-25 rounded-[2px]"
                     >
-                      {t('submit')}
+                      {isSubmitting ? t('submitting') : t('submit')}
                     </button>
                   </form>
                 )}

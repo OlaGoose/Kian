@@ -5,7 +5,6 @@ import { createClient } from '@/lib/supabase/server';
 import { createBuildClient } from '@/lib/supabase/build';
 import { BackLink } from '@/components/layout/back-link';
 import { PostContent } from '@/components/blog/post-content';
-import { FeedbackButton } from '@/components/feedback/feedback-button';
 import { localizedText } from '@/lib/localized-content';
 import { formatDate } from '@/lib/utils';
 import { getAlternates } from '@/lib/metadata';
@@ -166,7 +165,6 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
         </main>
 
-        <FeedbackButton />
       </div>
     </>
   );

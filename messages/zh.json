@@ -8,7 +8,8 @@
     "blog": "文章",
     "projects": "作品",
     "chat": "对话",
-    "language": "语言"
+    "language": "语言",
+    "scheduleLabel": "预约会面"
   },
   "home": {
     "tagline": "白天经商，傍晚陪伴家人，夜里构建产品。",
@@ -52,13 +53,18 @@
     "description": "有什么想法或建议吗？",
     "placeholder": "你的反馈…",
     "submit": "提交",
+    "submitting": "提交中…",
+    "submitError": "提交失败，请重试。",
+    "close": "关闭",
     "success": "感谢你的反馈！",
     "voice": {
-      "record": "录音",
-      "stop": "停止",
+      "record": "录制语音",
+      "stop": "停止录音",
       "play": "播放",
-      "delete": "删除",
-      "recording": "录音中…"
+      "delete": "删除录音",
+      "recording": "录音中…",
+      "timeLeft": "剩余 {seconds} 秒",
+      "permissionDenied": "麦克风权限被拒绝"
     }
   },
   "ozonCatalog": {

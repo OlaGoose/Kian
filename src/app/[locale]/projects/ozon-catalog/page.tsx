@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { BackLink } from '@/components/layout/back-link';
-import { FeedbackButton } from '@/components/feedback/feedback-button';
 import { OzonCatalogClient } from '@/components/projects/ozon-catalog-client';
 import { buildPageMetadata } from '@/lib/seo';
 
@@ -42,7 +41,6 @@ export default async function OzonCatalogPage({ params }: Props) {
         </div>
       </main>
 
-      <FeedbackButton />
     </div>
   );
 }

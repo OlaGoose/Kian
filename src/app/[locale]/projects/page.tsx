@@ -4,7 +4,6 @@ import { ArrowUpRight, Github } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { SiteHeader } from '@/components/layout/site-header';
-import { FeedbackButton } from '@/components/feedback/feedback-button';
 import { localizedText } from '@/lib/localized-content';
 import { buildPageMetadata } from '@/lib/seo';
 import { buildSoftwareAppListLd } from '@/lib/structured-data';
@@ -145,7 +144,6 @@ export default async function ProjectsPage({ params }: Props) {
           </div>
         </main>
 
-        <FeedbackButton />
       </div>
     </>
   );

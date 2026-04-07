@@ -8,7 +8,8 @@
     "blog": "Blog",
     "projects": "Projects",
     "chat": "Chat",
-    "language": "Language"
+    "language": "Language",
+    "scheduleLabel": "Schedule a meeting"
   },
   "home": {
     "tagline": "Merchant by day. Dad by evening. Builder by night.",
@@ -52,13 +53,18 @@
     "description": "Have any thoughts or suggestions?",
     "placeholder": "Your feedback…",
     "submit": "Submit",
+    "submitting": "Sending…",
+    "submitError": "Something went wrong. Please try again.",
+    "close": "Close",
     "success": "Thank you!",
     "voice": {
-      "record": "Record",
-      "stop": "Stop",
+      "record": "Record voice",
+      "stop": "Stop recording",
       "play": "Play",
-      "delete": "Delete",
-      "recording": "Recording…"
+      "delete": "Delete recording",
+      "recording": "Recording…",
+      "timeLeft": "{seconds}s left",
+      "permissionDenied": "Microphone access denied"
     }
   },
   "ozonCatalog": {

@@ -5,7 +5,8 @@ import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
 import { routing } from '@/i18n/routing';
-import { SITE_URL, TWITTER_CREATOR, SITE_NAME } from '@/lib/constants';
+import { SITE_URL, TWITTER_CREATOR, SITE_NAME, FEATURES } from '@/lib/constants';
+import { FeedbackButton } from '@/components/feedback/feedback-button';
 import '@/app/globals.css';
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
@@ -88,6 +89,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body className={stix.variable}>
         <NextIntlClientProvider messages={messages}>
           {children}
+          {FEATURES.feedback && <FeedbackButton />}
         </NextIntlClientProvider>
         {GA_ID && (
           <>

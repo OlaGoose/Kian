@@ -20,3 +20,8 @@ export const SOCIAL_LINKS = {
 } as const;
 
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/api/og?title=${encodeURIComponent(SITE_NAME)}`;
+
+export const FEATURES = {
+  feedback: process.env.NEXT_PUBLIC_FEEDBACK_ENABLED !== 'false',
+  booking: process.env.NEXT_PUBLIC_BOOKING_ENABLED !== 'false',
+} as const;
