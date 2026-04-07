@@ -286,12 +286,18 @@ function FeedbackRow({ item }: { item: Feedback }) {
               </p>
             </div>
           )}
-          {item.type === 'voice' && item.audio_url ? (
+          {item.type === 'voice' ? (
             <div>
               <p className="text-[10px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600 font-sans mb-1">
                 Audio
               </p>
-              <AdminAudioPlayer src={item.audio_url} />
+              {item.audio_url ? (
+                <AdminAudioPlayer src={item.audio_url} />
+              ) : (
+                <p className="text-[13px] text-neutral-400 dark:text-neutral-600 italic">
+                  Recording unavailable
+                </p>
+              )}
             </div>
           ) : (
             <div>

@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { createBuildClient } from '@/lib/supabase/build';
+import { createServiceClient } from '@/lib/supabase/service';
 import { getAdminSession } from '@/lib/admin-auth';
 
 export async function GET(req: NextRequest) {
@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = req.nextUrl;
     const status = searchParams.get('status');
 
-    const supabase = createBuildClient();
+    const supabase = createServiceClient();
     let query = supabase
       .from('bookings')
       .select('*')
