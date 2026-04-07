@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronDown, ChevronUp, LogOut, MessageSquare, CalendarDays, BarChart2 } from 'lucide-react';
+import { ChevronDown, ChevronUp, LogOut, MessageSquare, CalendarDays, BarChart2, Mic, Play, Pause } from 'lucide-react';
 
 type BookingStatus = 'pending' | 'confirmed' | 'rejected';
 type AdminTab = 'bookings' | 'feedback' | 'analytics';
@@ -24,8 +24,56 @@ interface Feedback {
   id: string;
   content: string | null;
   type: 'text' | 'voice';
+  audio_url: string | null;
   page_path: string | null;
   created_at: string;
+}
+
+function AdminAudioPlayer({ src }: { src: string }) {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  const togglePlay = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  return (
+    <div className="w-full flex items-center gap-3 py-1">
+      <audio
+        ref={audioRef}
+        src={src}
+        onTimeUpdate={() => {
+          if (audioRef.current) {
+            setProgress((audioRef.current.currentTime / audioRef.current.duration) * 100 || 0);
+          }
+        }}
+        onEnded={() => { setIsPlaying(false); setProgress(0); }}
+      />
+      <button
+        type="button"
+        onClick={togglePlay}
+        className="p-1.5 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors rounded-[2px] flex-shrink-0"
+      >
+        {isPlaying
+          ? <Pause size={14} fill="currentColor" strokeWidth={0} />
+          : <Play size={14} fill="currentColor" strokeWidth={0} />
+        }
+      </button>
+      <div className="flex-1 h-[1px] bg-neutral-200 dark:bg-neutral-800 relative overflow-hidden">
+        <div
+          className="absolute inset-y-0 left-0 bg-neutral-900 dark:bg-neutral-100 transition-all duration-100"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+    </div>
+  );
 }
 
 const STATUS_LABELS: Record<BookingStatus, string> = {
@@ -208,8 +256,11 @@ function FeedbackRow({ item }: { item: Feedback }) {
         className="w-full py-4 flex items-center gap-4 text-left hover:bg-neutral-50 dark:hover:bg-neutral-900/30 transition-colors px-4 -mx-4"
       >
         <div className="flex-1 min-w-0 grid grid-cols-[1fr_auto_auto] gap-4 items-center">
-          <span className="text-[13px] text-neutral-700 dark:text-neutral-300 truncate">
-            {item.content ?? '—'}
+          <span className="text-[13px] text-neutral-700 dark:text-neutral-300 truncate flex items-center gap-1.5">
+            {item.type === 'voice' && (
+              <Mic size={12} strokeWidth={1.5} className="flex-shrink-0 text-neutral-400 dark:text-neutral-600" />
+            )}
+            {item.type === 'voice' ? (item.content ?? 'Voice recording') : (item.content ?? '—')}
           </span>
           <span className="text-[11px] uppercase tracking-wider font-sans text-neutral-400 dark:text-neutral-600 whitespace-nowrap">
             {item.type}
@@ -235,14 +286,23 @@ function FeedbackRow({ item }: { item: Feedback }) {
               </p>
             </div>
           )}
-          <div>
-            <p className="text-[10px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600 font-sans mb-1">
-              Content
-            </p>
-            <p className="text-[13px] text-neutral-700 dark:text-neutral-300 leading-relaxed whitespace-pre-wrap">
-              {item.content ?? '—'}
-            </p>
-          </div>
+          {item.type === 'voice' && item.audio_url ? (
+            <div>
+              <p className="text-[10px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600 font-sans mb-1">
+                Audio
+              </p>
+              <AdminAudioPlayer src={item.audio_url} />
+            </div>
+          ) : (
+            <div>
+              <p className="text-[10px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600 font-sans mb-1">
+                Content
+              </p>
+              <p className="text-[13px] text-neutral-700 dark:text-neutral-300 leading-relaxed whitespace-pre-wrap">
+                {item.content ?? '—'}
+              </p>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -255,13 +315,11 @@ function BookingsPanel({ onUnauth }: { onUnauth: () => void }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchBookings = useCallback(async () => {
-    setLoading(true);
+  const fetchBookings = useCallback(async (silent = false) => {
+    if (!silent) setLoading(true);
     setError(null);
     try {
-      const url =
-        filter === 'all' ? '/api/admin/bookings' : `/api/admin/bookings?status=${filter}`;
-      const res = await fetch(url);
+      const res = await fetch('/api/admin/bookings');
       if (res.status === 401) { onUnauth(); return; }
       const data = await res.json();
       if (!res.ok) {
@@ -272,9 +330,9 @@ function BookingsPanel({ onUnauth }: { onUnauth: () => void }) {
     } catch {
       setError('Network error — could not reach API');
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
-  }, [filter, onUnauth]);
+  }, [onUnauth]);
 
   useEffect(() => { fetchBookings(); }, [fetchBookings]);
 
@@ -322,7 +380,7 @@ function BookingsPanel({ onUnauth }: { onUnauth: () => void }) {
       ) : filtered.length === 0 ? (
         <p className="text-[13px] text-neutral-400 dark:text-neutral-600 py-8 text-center font-sans">No bookings</p>
       ) : (
-        filtered.map((b) => <BookingRow key={b.id} booking={b} onUpdate={fetchBookings} />)
+        filtered.map((b) => <BookingRow key={b.id} booking={b} onUpdate={() => fetchBookings(true)} />)
       )}
     </>
   );
