@@ -217,7 +217,6 @@ export function OzonCatalogClient() {
     above: boolean;
     arrowLeft: number;
   } | null>(null);
-  const hidePopoverTimer = useRef<number | undefined>(undefined);
   const resizeCloseTimer = useRef<number | undefined>(undefined);
   const isMobile = useIsMobile();
   const [mounted, setMounted] = useState(false);
@@ -410,28 +409,19 @@ export function OzonCatalogClient() {
     };
   }, [popover, isMobile, mounted, positionPopover]);
 
-  const onCat3Enter = useCallback(
-    (leaf: OzonCategoryLeaf, el: HTMLElement) => {
-      if (isMobile) return;
-      window.clearTimeout(hidePopoverTimer.current);
-      const btn = el.querySelector('button') ?? el;
-      const rect = btn.getBoundingClientRect();
-      setPopover({ leaf, rect });
-    },
-    [isMobile],
-  );
-
-  const scheduleHidePopover = useCallback(() => {
-    if (isMobile) return;
-    window.clearTimeout(hidePopoverTimer.current);
-    hidePopoverTimer.current = window.setTimeout(() => setPopover(null), 150);
-  }, [isMobile]);
-
   const onCat3Click = useCallback(
-    (leaf: OzonCategoryLeaf, e: React.MouseEvent) => {
-      if (!isMobile) return;
+    (leaf: OzonCategoryLeaf, el: HTMLElement, e: React.MouseEvent) => {
       e.stopPropagation();
-      setSheetLeaf((prev) => (prev === leaf ? null : leaf));
+      if (isMobile) {
+        setSheetLeaf((prev) => (prev === leaf ? null : leaf));
+      } else {
+        setPopover((prev) => {
+          if (prev?.leaf === leaf) return null;
+          const btn = el.querySelector('button') ?? el;
+          const rect = btn.getBoundingClientRect();
+          return { leaf, rect };
+        });
+      }
     },
     [isMobile],
   );
@@ -445,6 +435,13 @@ export function OzonCatalogClient() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, [isMobile]);
+
+  useEffect(() => {
+    if (!popover || isMobile) return;
+    const handleOutsideClick = () => setPopover(null);
+    document.addEventListener('click', handleOutsideClick);
+    return () => document.removeEventListener('click', handleOutsideClick);
+  }, [popover, isMobile]);
 
   useEffect(() => {
     const onResize = () => {
@@ -474,8 +471,7 @@ export function OzonCatalogClient() {
       <div
         className="fixed z-[100] pointer-events-auto"
         style={{ left: portalStyle.left, top: portalStyle.top }}
-        onMouseEnter={() => window.clearTimeout(hidePopoverTimer.current)}
-        onMouseLeave={scheduleHidePopover}
+        onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-label={t('panelTitle')}
       >
@@ -694,12 +690,10 @@ export function OzonCatalogClient() {
                             <div
                               key={`${cat3.ozonId}-${cat3.zhName}`}
                               className="inline-flex items-center border border-neutral-200 dark:border-neutral-800 rounded-[2px] bg-white dark:bg-[#050505] hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
-                              onMouseEnter={(e) => onCat3Enter(cat3, e.currentTarget)}
-                              onMouseLeave={scheduleHidePopover}
                             >
                               <button
                                 type="button"
-                                onClick={(e) => onCat3Click(cat3, e)}
+                                onClick={(e) => onCat3Click(cat3, (e.currentTarget as HTMLElement).parentElement as HTMLElement, e)}
                                 className="px-3 py-1.5 text-[13px] text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
                               >
                                 <Highlight text={isZh ? cat3.zhName : getEnglishKeyword(cat3.enName, cat3.zhName)} term={debouncedSearch} />

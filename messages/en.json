@@ -1,7 +1,8 @@
 {
   "site": {
     "name": "Kian Xu",
-    "description": "Merchant by day. Dad by evening. Builder by night."
+    "pageTitle": "Kian Xu | Independent Developer & Cross-border E-commerce",
+    "description": "Personal site of Kian Xu (许元凯). Merchant by day, dad by evening, builder by night. Former engineering manager at Ping An Tech & S.F. International, and frontend lead at PLAUD. Now building products and running cross-border e-commerce."
   },
   "nav": {
     "home": "Home",
@@ -46,7 +47,9 @@
     "back": "Back",
     "placeholder": "Ask anything…",
     "thinking": "Thinking…",
-    "intro": "Hi, I'm an AI trained on the writings and work of this site's author. What would you like to know?"
+    "intro": "Hi, I'm an AI trained on the writings and work of this site's author. What would you like to know?",
+    "attach": "Attach",
+    "send": "Send"
   },
   "feedback": {
     "title": "Feedback",
@@ -73,7 +76,7 @@
       "description": "Browse Ozon’s category tree with search, marketplace deep links, and keyword copy for cross-border research."
     },
     "back": "All projects",
-    "intro": "Search in Chinese, English, or Russian. Hover a leaf category on desktop (tap on mobile) for quick links and copy.",
+    "intro": "Search in Chinese, English, or Russian. Click a leaf category to open quick links and copy tools. Click again or tap outside to close.",
     "searchPlaceholder": "Search categories and keywords…",
     "clearSearch": "Clear search",
     "stat": {
@@ -115,6 +118,7 @@
   "booking": {
     "title": "Schedule a Meeting",
     "subtitle": "Pick a time and I'll confirm shortly.",
+    "close": "Close",
     "name": "Name",
     "email": "Email",
     "message": "Message",

@@ -13,28 +13,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'site' });
   const alternates = getAlternates(locale);
+  const pageTitle = t('pageTitle');
+  const description = t('description');
 
   return {
-    title: { absolute: t('name') },
-    description: t('description'),
+    title: { absolute: pageTitle },
+    description,
     alternates,
     openGraph: {
-      title: t('name'),
-      description: t('description'),
+      title: pageTitle,
+      description,
       url: alternates.canonical,
       images: [
         {
           url: `/api/og?title=${encodeURIComponent(t('name'))}`,
           width: 1200,
           height: 630,
-          alt: t('name'),
+          alt: pageTitle,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: t('name'),
-      description: t('description'),
+      title: pageTitle,
+      description,
       creator: TWITTER_CREATOR,
     },
   };
@@ -55,7 +57,23 @@ export default async function HomePage({ params }: Props) {
     .order('published_at', { ascending: false })
     .limit(6);
 
-  const personLd = buildPersonLd({ name: t('name'), description: t('description') });
+  const personLd = buildPersonLd({
+    name: t('name'),
+    alternateName: locale === 'zh' ? 'Kian Xu' : '许元凯',
+    description: t('description'),
+    jobTitle: locale === 'zh' ? '独立开发者 · 跨境电商从业者' : 'Independent Developer & Cross-border E-commerce',
+    worksFor: {
+      name: locale === 'zh' ? '独立创业者' : 'Self-employed',
+    },
+    alumniOf: [
+      { name: locale === 'zh' ? '平安科技' : 'Ping An Technology', url: 'https://group.pingan.com/' },
+      { name: locale === 'zh' ? '顺丰国际' : 'S.F. International', url: 'https://www.sf-express.com/' },
+      { name: 'PLAUD', url: 'https://www.plaud.ai/' },
+    ],
+    knowsAbout: locale === 'zh'
+      ? ['跨境电商', 'SEO', '前端开发', 'Next.js', 'TypeScript', '独立开发']
+      : ['Cross-border E-commerce', 'SEO', 'Frontend Development', 'Next.js', 'TypeScript', 'Indie Development'],
+  });
   const websiteLd = buildWebSiteLd({ name: t('name'), description: t('description') });
 
   return (

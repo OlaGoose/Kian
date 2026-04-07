@@ -178,7 +178,7 @@ export function ChatInterface({ siteName }: ChatInterfaceProps) {
 
             <div className="flex items-center justify-between px-2 pb-2">
               <div className="flex items-center gap-0.5">
-                <button className="p-1.5 rounded-[2px] hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-400 transition-colors" aria-label="Attach">
+                <button className="p-1.5 rounded-[2px] hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-400 transition-colors" aria-label={t('attach')}>
                   <Plus className="w-3 h-3 md:w-3.5 md:h-3.5" strokeWidth={1.5} />
                 </button>
                 <div className="h-3 w-[1px] bg-neutral-100 dark:bg-neutral-800 mx-1" />
@@ -191,7 +191,7 @@ export function ChatInterface({ siteName }: ChatInterfaceProps) {
                 onClick={handleSend}
                 disabled={isLoading || !input.trim()}
                 className="p-1.5 rounded-[2px] bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black disabled:opacity-20 hover:opacity-80 transition-all active:scale-95"
-                aria-label="Send"
+                aria-label={t('send')}
               >
                 <ArrowUp className="w-3 h-3 md:w-3.5 md:h-3.5" strokeWidth={2.5} />
               </button>

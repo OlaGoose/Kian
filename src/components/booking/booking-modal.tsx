@@ -24,7 +24,7 @@ interface DateOption {
   dateStr: string;
 }
 
-const AVAILABLE_TIMES = ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00'];
+const AVAILABLE_TIMES = ['12:00', '13:00', '14:00', '18:00', '19:00', '20:00'];
 const DAY_NAMES_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const DAY_NAMES_ZH = ['日', '一', '二', '三', '四', '五', '六'];
 
@@ -160,7 +160,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
             <button
               onClick={handleClose}
               className="absolute top-4 right-4 text-neutral-400 dark:text-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
-              aria-label="Close"
+              aria-label={t('close')}
             >
               <X className="w-4 h-4" />
             </button>

@@ -2,11 +2,25 @@ import { SITE_URL, SOCIAL_LINKS } from '@/lib/constants';
 
 type PersonLdOptions = {
   name: string;
+  alternateName?: string;
   description?: string;
   image?: string;
+  jobTitle?: string;
+  worksFor?: { name: string; url?: string };
+  alumniOf?: Array<{ name: string; url?: string }>;
+  knowsAbout?: string[];
 };
 
-export function buildPersonLd({ name, description, image }: PersonLdOptions) {
+export function buildPersonLd({
+  name,
+  alternateName,
+  description,
+  image,
+  jobTitle,
+  worksFor,
+  alumniOf,
+  knowsAbout,
+}: PersonLdOptions) {
   const sameAs = [
     SOCIAL_LINKS.twitter,
     SOCIAL_LINKS.github,
@@ -18,9 +32,27 @@ export function buildPersonLd({ name, description, image }: PersonLdOptions) {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name,
+    ...(alternateName && { alternateName }),
     url: SITE_URL,
     ...(description && { description }),
     ...(image && { image }),
+    ...(jobTitle && { jobTitle }),
+    ...(worksFor && {
+      worksFor: {
+        '@type': 'Organization',
+        name: worksFor.name,
+        ...(worksFor.url && { url: worksFor.url }),
+      },
+    }),
+    ...(alumniOf &&
+      alumniOf.length > 0 && {
+        alumniOf: alumniOf.map((org) => ({
+          '@type': 'Organization',
+          name: org.name,
+          ...(org.url && { url: org.url }),
+        })),
+      }),
+    ...(knowsAbout && knowsAbout.length > 0 && { knowsAbout }),
     ...(sameAs.length > 0 && { sameAs }),
   };
 }
