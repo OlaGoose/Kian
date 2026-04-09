@@ -35,6 +35,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
 
   html::-webkit-scrollbar,

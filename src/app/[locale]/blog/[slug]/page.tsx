@@ -65,7 +65,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates,
     openGraph: {
       type: 'article',
-      title: `${title} — ${siteT('name')}`,
+      title: `${title} · ${siteT('name')}`,
       description,
       url: alternates.canonical,
       publishedTime: post.published_at ?? undefined,
