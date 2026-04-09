@@ -123,7 +123,6 @@ export default async function BlogPostPage({ params }: Props) {
   });
 
   const faqLd = faqItems && faqItems.length > 0 ? buildFaqPageLd(faqItems) : null;
-  const eyebrowTags = post.tags.slice(0, 3);
 
   return (
     <>
@@ -145,19 +144,6 @@ export default async function BlogPostPage({ params }: Props) {
 
             <article>
               <header className="mb-10 border-b border-neutral-100 pb-10 dark:border-neutral-900">
-                {eyebrowTags.length > 0 && (
-                  <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 font-sans text-[11px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600">
-                    {eyebrowTags.map((tag, i) => (
-                      <span key={tag} className="flex items-center gap-3">
-                        {i > 0 && (
-                          <span className="h-[3px] w-[3px] shrink-0 rounded-full bg-neutral-300 dark:bg-neutral-700" />
-                        )}
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
                 <h1 className="mb-4 text-[24px] font-medium leading-snug tracking-[-0.02em] text-neutral-900 dark:text-neutral-100 md:text-[30px] md:leading-[1.22]">
                   {title}
                 </h1>

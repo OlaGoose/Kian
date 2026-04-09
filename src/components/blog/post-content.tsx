@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
@@ -13,14 +14,15 @@ export function PostContent({ content }: PostContentProps) {
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[
+          rehypeRaw,
           rehypeSlug,
           [rehypeAutolinkHeadings, { behavior: 'wrap' }],
         ]}
         components={{
           table({ children }) {
             return (
-              <div className="not-prose my-8 overflow-x-auto rounded-[2px] border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-[#0a0a0a]">
-                <table className="w-full min-w-[520px] border-collapse text-left text-[13px] md:min-w-0 md:text-[14px]">
+              <div className="my-8 overflow-x-auto rounded-[2px] border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-[#0a0a0a]">
+                <table className="w-full min-w-[480px] border-collapse text-left text-[13px] md:min-w-0 md:text-[14px]">
                   {children}
                 </table>
               </div>
@@ -52,16 +54,26 @@ export function PostContent({ content }: PostContentProps) {
           },
           td({ children }) {
             return (
-              <td className="border-b border-neutral-100 px-4 py-3 align-top text-neutral-800 dark:border-neutral-900 dark:text-neutral-200">
+              <td className="border-b border-neutral-100 px-4 py-3 align-top text-neutral-700 dark:border-neutral-900 dark:text-neutral-300">
                 {children}
               </td>
             );
           },
           blockquote({ children }) {
             return (
-              <blockquote className="not-prose my-8 border-l-2 border-neutral-300 py-0.5 pl-5 italic dark:border-neutral-600 [&_p]:mb-3 [&_p]:text-[16px] [&_p]:leading-[1.75] [&_p]:text-neutral-800 [&_p]:font-normal [&_strong]:font-medium [&_strong]:not-italic [&_ul]:mb-3 [&_ul]:mt-0 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5 [&_ul]:text-[15px] [&_ul]:not-italic [&_p:last-child]:mb-0 [&_ul:last-child]:mb-0 md:[&_p]:text-[17px] md:[&_ul]:text-[16px] dark:[&_p]:text-neutral-200 dark:[&_ul]:text-neutral-300">
+              <blockquote className="my-8 border-l-2 border-neutral-300 py-0.5 pl-5 dark:border-neutral-700 [&_p]:mb-2 [&_p]:text-[16px] [&_p]:italic [&_p]:leading-[1.75] [&_p]:text-neutral-700 [&_p:last-child]:mb-0 md:[&_p]:text-[17px] dark:[&_p]:text-neutral-300">
                 {children}
               </blockquote>
+            );
+          },
+          em({ children }) {
+            return <em className="italic">{children}</em>;
+          },
+          strong({ children }) {
+            return (
+              <strong className="font-medium not-italic text-neutral-900 dark:text-neutral-100">
+                {children}
+              </strong>
             );
           },
           code({ className, children, ...props }) {
@@ -84,7 +96,6 @@ export function PostContent({ content }: PostContentProps) {
               </code>
             );
           },
-          // Open external links in new tab
           a({ href, children, ...props }) {
             const isExternal = href?.startsWith('http');
             return (
@@ -97,10 +108,6 @@ export function PostContent({ content }: PostContentProps) {
                 {children}
               </a>
             );
-          },
-          // Custom list items (remove default bullet)
-          li({ children }) {
-            return <li>{children}</li>;
           },
         }}
       >
