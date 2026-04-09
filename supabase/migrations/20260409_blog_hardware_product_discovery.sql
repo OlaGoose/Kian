@@ -33,11 +33,159 @@ Most consumer hardware today is still at stage one or two. The transition to sta
 
 | Stage | Type | Example | Status |
 |-------|------|---------|--------|
-| 1 | Fixed parameters | Standard chair · Fixed fan speed · Single-focal lens | Commoditized |
-| 2 | Manually adjustable | Ergonomic chair · Multi-speed fan · Optical zoom | Competitive |
-| 3 | Self-adaptive | Posture-sensing chair · Temperature-responsive fan · Auto-focus + scene AI | **Opportunity window** |
+| 1 | Fixed parameters | Plain chair | Commoditized |
+| 2 | Manually adjustable | Ergonomic chair | Competitive |
+| 3 | Self-adaptive | Posture-sensing chair | **Opportunity window** |
 
 This pattern repeats across sleep tech, kitchen appliances, fitness equipment, industrial tools, and dozens of categories most founders have not looked at yet. The unlock is always the same: a scalable **sensor** plus an algorithm shaped by the latest **LLM updates**.
+
+---
+
+## Real-World Evidence: Kickstarter Validates the Opportunity Window
+
+Three recent campaigns confirm the pattern with hard market numbers. Each began as a fixed-parameter or manually adjustable product category. Adding sensors plus on-device AI unlocked latent demand that manual alternatives could not satisfy — all reaching their first million in hours.
+
+<style>
+  .wrap { padding: 1.5rem 0; }
+  .wrap table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .wrap th { font-size: 10px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.06em; padding: 6px 10px; text-align: left; border-bottom: 1.5px solid var(--color-border-primary); white-space: nowrap; }
+  .wrap td { padding: 8px 10px; border-bottom: 1px solid var(--color-border-tertiary); vertical-align: top; color: var(--color-text-primary); line-height: 1.5; }
+  .wrap tr:last-child td { border-bottom: none; }
+  .wrap .prod a { font-weight: 500; color: var(--color-text-primary); text-decoration: none; border-bottom: 1px solid var(--color-border-secondary); }
+  .wrap .prod a:hover { border-bottom-color: var(--color-text-primary); }
+  .sub { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+  .tag { display: inline-block; font-size: 10px; font-weight: 500; padding: 1px 6px; border-radius: 3px; margin-top: 3px; }
+  .tag-blue   { background: #E6F1FB; color: #0C447C; }
+  .tag-teal   { background: #E1F5EE; color: #085041; }
+  .tag-coral  { background: #FAECE7; color: #712B13; }
+  .tag-purple { background: #EEEDFE; color: #3C3489; }
+  .tag-green  { background: #EAF3DE; color: #27500A; }
+  .tag-amber  { background: #FAEEDA; color: #633806; }
+  @media (prefers-color-scheme: dark) {
+    .tag-blue   { background: #0C447C; color: #B5D4F4; }
+    .tag-teal   { background: #085041; color: #9FE1CB; }
+    .tag-coral  { background: #712B13; color: #F5C4B3; }
+    .tag-purple { background: #3C3489; color: #CECBF6; }
+    .tag-green  { background: #27500A; color: #C0DD97; }
+    .tag-amber  { background: #633806; color: #FAC775; }
+  }
+  .muted { color: var(--color-text-secondary); }
+  .evo { display: flex; flex-direction: column; gap: 4px; }
+  .evo-row { display: flex; align-items: baseline; gap: 6px; font-size: 11px; }
+  .evo-n { font-weight: 500; color: var(--color-text-tertiary); min-width: 12px; }
+  .evo-text { color: var(--color-text-secondary); }
+  .evo-row.current .evo-text { color: var(--color-text-primary); font-weight: 500; }
+  .evo-row.next .evo-text { color: var(--color-text-primary); }
+  .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--color-border-primary); flex-shrink: 0; margin-top: 5px; }
+  .dot-amber { background: #BA7517; }
+  .dot-green { background: #3B6D11; }
+  .need { font-size: 11px; color: var(--color-text-secondary); padding: 5px 8px; border-left: 2px solid var(--color-border-secondary); margin-bottom: 4px; line-height: 1.4; }
+</style>
+<div class="wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Core Need</th>
+        <th>Sensors</th>
+        <th>AI Boundary</th>
+        <th>Context</th>
+        <th>Evolution Path → Opportunity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="prod"><a href="https://nas.ugreen.com/pages/ugreen-ai-nas-feature-introduction" target="_blank" rel="noopener noreferrer">UGREEN AI NAS</a></div>
+          <div class="sub">Private cloud + on-device LLM</div>
+          <div><span class="tag tag-blue">$8.7M raised</span></div>
+        </td>
+        <td><div class="need">My data, my control — and I want to use it</div></td>
+        <td>
+          <div class="muted" style="font-size:11px">Storage I/O only</div>
+          <div><span class="tag tag-coral">Weak</span></div>
+        </td>
+        <td>
+          <div style="font-size:11px">96 TOPS on-device LLM</div>
+          <div style="font-size:11px" class="muted">Doc Q&amp;A / voice transcription / image recognition</div>
+          <div><span class="tag tag-blue">On-device LLM</span></div>
+        </td>
+        <td>
+          <div style="font-size:11px">Privacy users + home / small teams</div>
+          <div><span class="tag tag-green">Mature, high-frequency</span></div>
+        </td>
+        <td>
+          <div class="evo">
+            <div class="evo-row"><div class="dot"></div><div class="evo-text">HDD + SMB file service</div></div>
+            <div class="evo-row"><div class="dot"></div><div class="evo-text">NAS app ecosystem + remote access</div></div>
+            <div class="evo-row current"><div class="dot dot-amber"></div><div class="evo-text">On-device LLM + semantic search</div></div>
+            <div class="evo-row next"><div class="dot dot-green"></div><div class="evo-text">Ambient sensing + AI perception hub <span class="tag tag-green">Opportunity</span></div></div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="prod"><a href="https://tiiny.ai/" target="_blank" rel="noopener noreferrer">Tiiny AI Pocket Lab</a></div>
+          <div class="sub">Pocket AI supercomputer</div>
+          <div><span class="tag tag-blue">$1M in 5 hours</span></div>
+        </td>
+        <td><div class="need">AI is my tool — it shouldn't depend on the cloud</div></td>
+        <td>
+          <div class="muted" style="font-size:11px">NPU + built-in mic</div>
+          <div><span class="tag tag-coral">Weak</span></div>
+        </td>
+        <td>
+          <div style="font-size:11px">120B-parameter on-device inference</div>
+          <div style="font-size:11px" class="muted">Zero token cost / OpenAI-API-compatible</div>
+          <div><span class="tag tag-purple">Most aggressive on-device inference</span></div>
+        </td>
+        <td>
+          <div style="font-size:11px">Developers / researchers / privacy users</div>
+          <div><span class="tag tag-teal">Emerging, high-growth</span></div>
+        </td>
+        <td>
+          <div class="evo">
+            <div class="evo-row"><div class="dot"></div><div class="evo-text">Cloud API, monthly subscription</div></div>
+            <div class="evo-row"><div class="dot"></div><div class="evo-text">Consumer GPU, small local models</div></div>
+            <div class="evo-row current"><div class="dot dot-amber"></div><div class="evo-text">Pocket-sized 120B plug-and-play</div></div>
+            <div class="evo-row next"><div class="dot dot-green"></div><div class="evo-text">Sensor input + perception-action loop <span class="tag tag-green">Opportunity</span></div></div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="prod"><a href="https://mseries.yarbo.com/" target="_blank" rel="noopener noreferrer">Yarbo M</a></div>
+          <div class="sub">Modular yard robot</div>
+          <div><span class="tag tag-blue">$1M in 2 hours</span></div>
+        </td>
+        <td><div class="need">Do my yard work — better than I would</div></td>
+        <td>
+          <div style="font-size:11px">LiDAR + NetRTK + AI vision + IMU</div>
+          <div><span class="tag tag-green">Strong — core competency</span></div>
+        </td>
+        <td>
+          <div style="font-size:11px">6 TOPS + multi-sensor fusion</div>
+          <div style="font-size:11px" class="muted">Real-time obstacle avoidance / path planning / seasonal switching</div>
+          <div><span class="tag tag-teal">Embodied perception + decision</span></div>
+        </td>
+        <td>
+          <div style="font-size:11px">Homeowners with yards (0.5–1.5 acres)</div>
+          <div><span class="tag tag-green">High-frequency essential need</span></div>
+        </td>
+        <td>
+          <div class="evo">
+            <div class="evo-row"><div class="dot"></div><div class="evo-text">Gas/electric tools, manual operation</div></div>
+            <div class="evo-row"><div class="dot"></div><div class="evo-text">Wire-guided robots, fixed paths</div></div>
+            <div class="evo-row current"><div class="dot dot-amber"></div><div class="evo-text">Wireless nav + all-season modular autonomy</div></div>
+            <div class="evo-row next"><div class="dot dot-green"></div><div class="evo-text">Soil / plant sensing + yard health diagnostics <span class="tag tag-green">Opportunity</span></div></div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+The signal is consistent across categories: buyers reward the **transition from manual to self-adaptive** the moment underlying technology is ready. Every "Opportunity" row in the evolution paths above is a product gap that a resourced team with **China supply chain** access can move on today.
 
 ---
 
@@ -170,11 +318,123 @@ $content_en$,
 
 | 阶段 | 类型 | 示例 | 现状 |
 |------|------|------|------|
-| 1 | 固定参数 | 标准椅·固定风扇转速·定焦镜头 | 已商品化 |
-| 2 | 可手动调节 | 人体工学椅·多挡风扇·光学变焦 | 竞争激烈 |
-| 3 | 自适应 | 姿态感知椅·温度响应风扇·自动对焦 + 场景 AI | **机会窗口** |
+| 1 | 固定参数 | 普通椅子 | 已商品化 |
+| 2 | 可手动调节 | 人体工学椅 | 竞争激烈 |
+| 3 | 自适应 | 姿态感知椅 | **机会窗口** |
 
 这一模式在睡眠科技、厨房电器、健身设备、工业工具以及大多数创始人尚未关注的数十个品类中反复出现。解锁的方式始终相同：可规模化的**传感器**加上由最新**大模型更新**赋能的算法。
+
+---
+
+## 市场验证：Kickstarter 印证机会窗口
+
+以下三个近期众筹案例以真实数字印证了这一模式。每个项目都起源于固定参数或手动可调品类，加入传感器与端侧 AI 后，释放了此前手动产品无法满足的潜在需求——全部在数小时内完成百万美元融资。
+
+<div class="wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>项目</th>
+        <th>需求本质</th>
+        <th>传感器</th>
+        <th>AI 边界</th>
+        <th>场景</th>
+        <th>演化路径 → 机会</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="prod"><a href="https://nas.ugreen.com/pages/ugreen-ai-nas-feature-introduction" target="_blank" rel="noopener noreferrer">UGREEN AI NAS</a></div>
+          <div class="sub">私有云 + 本地 LLM</div>
+          <div><span class="tag tag-blue">$870 万众筹</span></div>
+        </td>
+        <td><div class="need">数据是我的，我要掌控，还要能用</div></td>
+        <td>
+          <div class="muted" style="font-size:11px">仅存储 I/O</div>
+          <div><span class="tag tag-coral">弱</span></div>
+        </td>
+        <td>
+          <div style="font-size:11px">96 TOPS 本地 LLM</div>
+          <div style="font-size:11px" class="muted">文档问答 / 语音转录 / 图片识别</div>
+          <div><span class="tag tag-blue">端侧大模型</span></div>
+        </td>
+        <td>
+          <div style="font-size:11px">隐私用户 + 家庭/小团队</div>
+          <div><span class="tag tag-green">成熟高频</span></div>
+        </td>
+        <td>
+          <div class="evo">
+            <div class="evo-row"><div class="dot"></div><div class="evo-text">硬盘 + SMB 文件服务</div></div>
+            <div class="evo-row"><div class="dot"></div><div class="evo-text">NAS 应用生态 + 远程访问</div></div>
+            <div class="evo-row current"><div class="dot dot-amber"></div><div class="evo-text">本地 LLM + 语义检索</div></div>
+            <div class="evo-row next"><div class="dot dot-green"></div><div class="evo-text">环境传感 + AI 感知中枢 <span class="tag tag-green">机会</span></div></div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="prod"><a href="https://tiiny.ai/" target="_blank" rel="noopener noreferrer">Tiiny AI Pocket Lab</a></div>
+          <div class="sub">口袋 AI 超算</div>
+          <div><span class="tag tag-blue">5 小时破百万</span></div>
+        </td>
+        <td><div class="need">AI 是我的工具，不该受制于云</div></td>
+        <td>
+          <div class="muted" style="font-size:11px">NPU + 内置麦克风</div>
+          <div><span class="tag tag-coral">弱</span></div>
+        </td>
+        <td>
+          <div style="font-size:11px">120B 参数本地推理</div>
+          <div style="font-size:11px" class="muted">0 Token 费 / OpenAI API 兼容</div>
+          <div><span class="tag tag-purple">最激进端侧推理</span></div>
+        </td>
+        <td>
+          <div style="font-size:11px">开发者 / 研究者 / 隐私用户</div>
+          <div><span class="tag tag-teal">新兴高增速</span></div>
+        </td>
+        <td>
+          <div class="evo">
+            <div class="evo-row"><div class="dot"></div><div class="evo-text">云端 API，付月费</div></div>
+            <div class="evo-row"><div class="dot"></div><div class="evo-text">消费级 GPU，本地小模型</div></div>
+            <div class="evo-row current"><div class="dot dot-amber"></div><div class="evo-text">口袋尺寸，120B 即插即用</div></div>
+            <div class="evo-row next"><div class="dot dot-green"></div><div class="evo-text">传感器输入 + 感知执行闭环 <span class="tag tag-green">机会</span></div></div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="prod"><a href="https://mseries.yarbo.com/" target="_blank" rel="noopener noreferrer">Yarbo M</a></div>
+          <div class="sub">模块化庭院机器人</div>
+          <div><span class="tag tag-blue">2 小时破百万</span></div>
+        </td>
+        <td><div class="need">院子的活我不想干，但要比我干得好</div></td>
+        <td>
+          <div style="font-size:11px">LiDAR + NetRTK + AI 视觉 + IMU</div>
+          <div><span class="tag tag-green">强，核心竞争力</span></div>
+        </td>
+        <td>
+          <div style="font-size:11px">6 TOPS + 多传感融合</div>
+          <div style="font-size:11px" class="muted">实时避障 / 路径规划 / 四季切换</div>
+          <div><span class="tag tag-teal">具身感知决策</span></div>
+        </td>
+        <td>
+          <div style="font-size:11px">有院子房主（0.5~1.5 英亩）</div>
+          <div><span class="tag tag-green">刚需高频</span></div>
+        </td>
+        <td>
+          <div class="evo">
+            <div class="evo-row"><div class="dot"></div><div class="evo-text">油电设备，人工操作</div></div>
+            <div class="evo-row"><div class="dot"></div><div class="evo-text">埋线机器人，固定路径</div></div>
+            <div class="evo-row current"><div class="dot dot-amber"></div><div class="evo-text">无线导航 + 四季模块全自主</div></div>
+            <div class="evo-row next"><div class="dot dot-green"></div><div class="evo-text">土壤/植物传感 + 庭院健康诊断 <span class="tag tag-green">机会</span></div></div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+信号跨品类高度一致：底层技术就绪的那一刻，消费者会奖励**从手动到自适应的跃迁**。演化路径中的每个"机会"节点，都是拥有**中国供应链**资源的团队今天就可以行动的产品空白。
 
 ---
 
@@ -298,9 +558,9 @@ $content_zh$,
 
   true,
   '2026-04-09T00:00:00Z',
-  '2026-04-09T00:00:00Z',
-  ARRAY['sensor hardware', 'China supply chain', 'China sourcing agent', 'LLM update', 'product discovery', 'PDCA', 'hardware innovation', 'edge AI'],
-  12
+  '2026-04-09T12:00:00Z',
+  ARRAY['sensor hardware', 'China supply chain', 'China sourcing agent', 'LLM update', 'product discovery', 'PDCA', 'hardware innovation', 'edge AI', 'Kickstarter', 'self-adaptive hardware'],
+  14
 )
 ON CONFLICT (slug) DO UPDATE SET
   title_en             = EXCLUDED.title_en,
