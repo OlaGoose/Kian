@@ -169,6 +169,26 @@ export function buildCollectionPageLd({ name, description, url }: CollectionPage
   };
 }
 
+type FaqItem = {
+  question: string;
+  answer: string;
+};
+
+export function buildFaqPageLd(items: FaqItem[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
+}
+
 export function buildSoftwareAppListLd({
   name,
   items,
