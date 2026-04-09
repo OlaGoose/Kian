@@ -28,7 +28,11 @@
     "readMore": "阅读全文",
     "minuteRead": "{count} 分钟阅读",
     "backToBlog": "所有文章",
-    "publishedOn": "发布于"
+    "publishedOn": "发布于",
+    "tableOfContents": "目录",
+    "faqTitle": "常见问题",
+    "faqDescription": "关于本文的常见问题与简要回答。",
+    "topics": "主题标签"
   },
   "projects": {
     "title": "作品",

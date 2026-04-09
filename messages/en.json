@@ -28,7 +28,11 @@
     "readMore": "Read more",
     "minuteRead": "{count} min read",
     "backToBlog": "All posts",
-    "publishedOn": "Published"
+    "publishedOn": "Published",
+    "tableOfContents": "Table of contents",
+    "faqTitle": "Frequently asked questions",
+    "faqDescription": "Short answers to common questions about this article.",
+    "topics": "Topics"
   },
   "projects": {
     "title": "Projects",

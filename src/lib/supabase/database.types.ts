@@ -27,6 +27,8 @@ export type Database = {
           tags: string[];
           cover_image: string | null;
           reading_time_minutes: number;
+          faq_en: Json | null;
+          faq_zh: Json | null;
         };
         Insert: {
           id?: string;
@@ -44,6 +46,8 @@ export type Database = {
           tags?: string[];
           cover_image?: string | null;
           reading_time_minutes?: number;
+          faq_en?: Json | null;
+          faq_zh?: Json | null;
         };
         Update: {
           id?: string;
@@ -60,6 +64,8 @@ export type Database = {
           tags?: string[];
           cover_image?: string | null;
           reading_time_minutes?: number;
+          faq_en?: Json | null;
+          faq_zh?: Json | null;
         };
         Relationships: [];
       };

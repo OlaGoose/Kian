@@ -2,29 +2,30 @@ export default function BlogPostLoading() {
   return (
     <div className="min-h-screen bg-white dark:bg-[#050505]">
       <main className="w-full mt-0 md:mt-16">
-        <div className="max-w-[640px] mx-auto px-6 pt-10 pb-20 md:pt-0">
-          {/* Back link skeleton */}
-          <div className="h-4 w-24 bg-neutral-100 dark:bg-neutral-900 rounded-[2px] animate-pulse mb-8" />
+        <div className="mx-auto max-w-[720px] px-6 pb-20 pt-10 md:pt-0">
+          <div className="mb-8 h-4 w-24 animate-pulse rounded-[2px] bg-neutral-100 dark:bg-neutral-900" />
 
-          {/* Article header */}
           <article>
-            <header className="mb-10">
-              <div className="h-8 w-4/5 bg-neutral-100 dark:bg-neutral-900 rounded-[2px] animate-pulse mb-2" />
-              <div className="h-7 w-1/2 bg-neutral-100 dark:bg-neutral-900 rounded-[2px] animate-pulse mb-4" />
-
-              <div className="flex items-center gap-4">
-                <div className="h-3 w-28 bg-neutral-100 dark:bg-neutral-900 rounded-[2px] animate-pulse" />
-                <div className="h-3 w-16 bg-neutral-100 dark:bg-neutral-900 rounded-[2px] animate-pulse" />
-              </div>
-
-              <div className="flex items-center gap-3 mt-4">
+            <header className="mb-10 border-b border-neutral-100 pb-10 dark:border-neutral-900">
+              <div className="mb-4 flex gap-2">
                 {Array.from({ length: 3 }).map((_, i) => (
-                  <div key={i} className="h-3 w-12 bg-neutral-100 dark:bg-neutral-900 rounded-[2px] animate-pulse" />
+                  <div
+                    key={i}
+                    className="h-3 w-16 animate-pulse rounded-[2px] bg-neutral-100 dark:bg-neutral-900"
+                  />
                 ))}
+              </div>
+              <div className="mb-4 h-8 w-4/5 max-w-xl animate-pulse rounded-[2px] bg-neutral-100 dark:bg-neutral-900" />
+              <div className="mb-6 h-16 max-w-[600px] animate-pulse rounded-[2px] bg-neutral-100 dark:bg-neutral-900" />
+
+              <div className="flex flex-wrap gap-3">
+                <div className="h-3 w-28 animate-pulse rounded-[2px] bg-neutral-100 dark:bg-neutral-900" />
+                <div className="h-3 w-20 animate-pulse rounded-[2px] bg-neutral-100 dark:bg-neutral-900" />
+                <div className="h-3 w-24 animate-pulse rounded-[2px] bg-neutral-100 dark:bg-neutral-900" />
               </div>
             </header>
 
-            <div className="h-[1px] bg-neutral-100 dark:bg-neutral-900 mb-10" />
+            <div className="mb-10 h-24 animate-pulse rounded-[2px] border border-neutral-100 bg-neutral-50 dark:border-neutral-800 dark:bg-[#0a0a0a]" />
 
             {/* Content skeleton */}
             <div className="space-y-4">

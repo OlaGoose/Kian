@@ -8,7 +8,11 @@ import { PostContent } from '@/components/blog/post-content';
 import { localizedText } from '@/lib/localized-content';
 import { formatDate } from '@/lib/utils';
 import { getAlternates } from '@/lib/metadata';
-import { buildBlogPostingLd } from '@/lib/structured-data';
+import { buildBlogPostingLd, buildFaqPageLd } from '@/lib/structured-data';
+import { extractMarkdownToc, stripEmbeddedFaqMarkdown } from '@/lib/blog-markdown';
+import { parsePostFaqJson } from '@/lib/post-faq';
+import { BlogPostToc } from '@/components/blog/blog-post-toc';
+import { FaqSection } from '@/components/blog/faq-section';
 import { SITE_URL, TWITTER_CREATOR } from '@/lib/constants';
 import type { Tables } from '@/lib/supabase/database.types';
 
@@ -96,7 +100,13 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) notFound();
 
   const title = localizedText(locale, post.title_en, post.title_zh);
-  const content = localizedText(locale, post.content_en, post.content_zh);
+  const excerpt = localizedText(locale, post.excerpt_en, post.excerpt_zh);
+  const localizedBody = localizedText(locale, post.content_en, post.content_zh);
+  const faqItems = parsePostFaqJson(locale === 'zh' ? post.faq_zh : post.faq_en);
+  const bodyMarkdown = faqItems
+    ? stripEmbeddedFaqMarkdown(localizedBody, locale)
+    : localizedBody;
+  const tocItems = extractMarkdownToc(bodyMarkdown);
   const postUrl = locale === 'zh'
     ? `${SITE_URL}/zh/blog/${slug}`
     : `${SITE_URL}/blog/${slug}`;
@@ -112,55 +122,101 @@ export default async function BlogPostPage({ params }: Props) {
     tags: post.tags,
   });
 
+  const faqLd = faqItems && faqItems.length > 0 ? buildFaqPageLd(faqItems) : null;
+  const eyebrowTags = post.tags.slice(0, 3);
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {faqLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+        />
+      )}
 
       <div className="min-h-screen bg-white dark:bg-[#050505]">
         <main className="w-full mt-0 md:mt-16">
-          <div className="max-w-[640px] mx-auto px-6 pt-10 pb-20 md:pt-0">
+          <div className="mx-auto max-w-[720px] px-6 pb-20 pt-10 md:pt-0">
             <BackLink href={`${prefix}/blog`} label={t('backToBlog')} />
 
             <article>
-              <header className="mb-10">
-                <h1 className="text-[22px] md:text-[30px] font-medium leading-snug mb-4">
+              <header className="mb-10 border-b border-neutral-100 pb-10 dark:border-neutral-900">
+                {eyebrowTags.length > 0 && (
+                  <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 font-sans text-[11px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600">
+                    {eyebrowTags.map((tag, i) => (
+                      <span key={tag} className="flex items-center gap-3">
+                        {i > 0 && (
+                          <span className="h-[3px] w-[3px] shrink-0 rounded-full bg-neutral-300 dark:bg-neutral-700" />
+                        )}
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                <h1 className="mb-4 text-[24px] font-medium leading-snug tracking-[-0.02em] text-neutral-900 dark:text-neutral-100 md:text-[30px] md:leading-[1.22]">
                   {title}
                 </h1>
 
-                <div className="flex items-center gap-4 text-neutral-400 dark:text-neutral-600">
-                  {post.published_at && (
-                    <time
-                      dateTime={post.published_at}
-                      className="text-[12px] md:text-[14px]"
-                    >
-                      {t('publishedOn')} {formatDate(post.published_at, locale)}
-                    </time>
-                  )}
-                  <span className="text-[12px] md:text-[14px]">
-                    {t('minuteRead', { count: post.reading_time_minutes })}
-                  </span>
-                </div>
+                {excerpt && (
+                  <p className="mb-6 max-w-[600px] text-[16px] font-light leading-[1.75] text-neutral-600 dark:text-neutral-400 md:text-[17px]">
+                    {excerpt}
+                  </p>
+                )}
 
-                {/* {post.tags.length > 0 && (
-                  <div className="flex items-center gap-3 mt-4">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-sans text-[12px] tracking-wide text-neutral-400 dark:text-neutral-600 md:text-[13px]">
+                  {post.published_at && (
+                    <>
+                      <time dateTime={post.published_at}>
+                        {t('publishedOn')} {formatDate(post.published_at, locale)}
+                      </time>
+                      <span className="text-neutral-300 dark:text-neutral-700" aria-hidden>
+                        ·
+                      </span>
+                    </>
+                  )}
+                  <span>{t('minuteRead', { count: post.reading_time_minutes })}</span>
+                  <span className="text-neutral-300 dark:text-neutral-700" aria-hidden>
+                    ·
+                  </span>
+                  <span>{siteT('name')}</span>
+                </div>
+              </header>
+
+              <BlogPostToc items={tocItems} label={t('tableOfContents')} />
+
+              <PostContent content={bodyMarkdown} />
+
+              {faqItems && (
+                <FaqSection
+                  headingId="article-faq"
+                  title={t('faqTitle')}
+                  description={t('faqDescription')}
+                  items={faqItems}
+                />
+              )}
+
+              {post.tags.length > 0 && (
+                <footer className="mt-14 border-t border-neutral-100 pt-10 dark:border-neutral-900">
+                  <p className="mb-3 font-sans text-[11px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600">
+                    {t('topics')}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
                     {post.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-[11px] md:text-[13px] uppercase tracking-wider text-neutral-400 dark:text-neutral-600"
+                        className="rounded-[2px] border border-neutral-200 bg-neutral-50 px-3 py-1.5 font-sans text-[12px] text-neutral-600 dark:border-neutral-800 dark:bg-[#0a0a0a] dark:text-neutral-400"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
-                )} */}
-              </header>
-
-              <div className="h-[1px] bg-neutral-100 dark:bg-neutral-900 mb-10" />
-
-              <PostContent content={content} />
+                </footer>
+              )}
             </article>
           </div>
         </main>
