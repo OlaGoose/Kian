@@ -59,8 +59,8 @@ export function HomeClient({ name, posts }: HomeClientProps) {
           </p>
 
           <p className="text-copy my-6">
-            {t.rich('bio1', {
-              developerLink: (chunks) => <CustomLink href={`${prefix}/projects`}>{chunks}</CustomLink>,
+          {t.rich('bio1', {
+            developerLink: (chunks) => <CustomLink href={`${prefix}/about`}>{chunks}</CustomLink>,
               pinganLink: (chunks) => (
                 <CustomLink href="https://group.pingan.com/" external>
                   {chunks}

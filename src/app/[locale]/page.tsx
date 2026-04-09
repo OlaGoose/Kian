@@ -61,18 +61,20 @@ export default async function HomePage({ params }: Props) {
     name: t('name'),
     alternateName: locale === 'zh' ? 'Kian Xu' : '许元凯',
     description: t('description'),
-    jobTitle: locale === 'zh' ? '独立开发者 · 跨境电商从业者' : 'Independent Developer & Cross-border E-commerce',
+    jobTitle: locale === 'zh' ? 'B2B 科技产品采购 Agent' : 'B2B Tech Product Sourcing Agent',
     worksFor: {
-      name: locale === 'zh' ? '独立创业者' : 'Self-employed',
+      name: locale === 'zh' ? '独立采购 Agent' : 'Independent Sourcing Agent',
     },
     alumniOf: [
       { name: locale === 'zh' ? '平安科技' : 'Ping An Technology', url: 'https://group.pingan.com/' },
       { name: locale === 'zh' ? '顺丰国际' : 'S.F. International', url: 'https://www.sf-express.com/' },
       { name: 'PLAUD', url: 'https://www.plaud.ai/' },
     ],
-    knowsAbout: locale === 'zh'
-      ? ['跨境电商', 'SEO', '前端开发', 'Next.js', 'TypeScript', '独立开发']
-      : ['Cross-border E-commerce', 'SEO', 'Frontend Development', 'Next.js', 'TypeScript', 'Indie Development'],
+    knowsAbout:
+      locale === 'zh'
+        ? ['B2B 科技产品采购', '硬件采购', '供应链管理', '深圳电子产业', '传感器采购', '跨境电商', 'SEO', '前端开发', 'Next.js', 'TypeScript']
+        : ['B2B Tech Product Sourcing', 'Hardware Procurement', 'Supply Chain Management', 'Shenzhen Electronics', 'Sensor Sourcing', 'Cross-border E-commerce', 'SEO', 'Frontend Development', 'Next.js', 'TypeScript'],
+    address: { locality: 'Shenzhen', country: 'CN' },
   });
   const websiteLd = buildWebSiteLd({ name: t('name'), description: t('description') });
 

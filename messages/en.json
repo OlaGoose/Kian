@@ -1,8 +1,8 @@
 {
   "site": {
     "name": "Kian Xu",
-    "pageTitle": "Kian Xu | Independent Developer & Cross-border E-commerce",
-    "description": "Personal site of Kian Xu (许元凯). Merchant by day, dad by evening, builder by night. Former engineering manager at Ping An Tech & S.F. International, and frontend lead at PLAUD. Now building products and running cross-border e-commerce."
+    "pageTitle": "Kian Xu | B2B Tech Product Sourcing Agent · Shenzhen",
+    "description": "Kian Xu (许元凯) is a B2B tech product sourcing agent based in Shenzhen, China. Former engineering manager at Ping An Technology and S.F. International, and frontend lead at PLAUD. Connecting international buyers with China's hardware supply chain."
   },
   "nav": {
     "home": "Home",
@@ -14,7 +14,7 @@
   },
   "home": {
     "tagline": "Merchant by day. Dad by evening. Builder by night.",
-    "bio1": "I'm a <developerLink>developer and builder</developerLink>. I've worked as an engineering manager at <pinganLink>Ping An Technology</pinganLink> and <sfLink>S.F. International</sfLink>, then led the frontend team at <plaudLink>PLAUD</plaudLink> across multiple product lines. These days I run an e-commerce business and focus on SEO.",
+    "bio1": "I'm a <developerLink>B2B tech sourcing agent</developerLink> and developer based in Shenzhen. I led engineering teams at <pinganLink>Ping An Technology</pinganLink> and <sfLink>S.F. International</sfLink>, then led the frontend at <plaudLink>PLAUD</plaudLink>. Today I source hardware for international buyers.",
     "bio2": "I look for ideas where sensor tech, AI frontiers, and high-frequency niches meet what I can actually do, then push that last part a little further each time. One sharp idea wins. Ship it. PDCA. Repeat.",
     "writingTitle": "Some of my favorite writing includes:",
     "projectsTitle": "Some of my projects:",
@@ -118,6 +118,31 @@
       "b1688": "1688",
       "yiwugo": "Yiwugo"
     }
+  },
+  "about": {
+    "metaTitle": "About Kian Xu — B2B Tech Sourcing Agent, Shenzhen",
+    "metaDescription": "Kian Xu is a B2B tech product sourcing agent based in Shenzhen, China. Former engineering manager at Ping An Technology and S.F. International, and frontend lead at PLAUD. Specializing in hardware procurement for international buyers.",
+    "heading": "About",
+    "intro": "I bridge the gap between international buyers and China's electronics supply chain.",
+    "body1": "Based in Shenzhen — ground zero for hardware manufacturing — I work as a B2B sourcing agent specializing in tech products: sensors, electronics, IoT hardware, and consumer tech. What makes me different from a typical trading company is the engineering layer: I spent over a decade as a frontend engineering manager before entering the sourcing business, which means I can read a spec sheet, evaluate a BOM, and hold a technical conversation with a factory engineer.",
+    "body2": "I built procurement platforms before I ran them. At Ping An Technology I led the frontend team delivering an enterprise pharmaceutical procurement system and a food safety monitoring platform. At S.F. International I served as Technical Manager for the overseas business unit, shipping the Mobile Web product for their international logistics operation. At PLAUD I led the frontend team across the SaaS product and Shopify storefront.",
+    "body3": "Today I work directly with overseas B2B buyers — primarily in Europe and North America — who need a trustworthy partner in Shenzhen to source, qualify, and manage hardware suppliers. I speak the language of both the factory floor and the product roadmap.",
+    "experienceLabel": "Background",
+    "exp1Company": "Ping An Technology",
+    "exp1Role": "Frontend Engineering Manager",
+    "exp1Detail": "Led the large-scale frontend team. Core projects: enterprise pharmaceutical procurement platform and food safety monitoring & analytics platform.",
+    "exp2Company": "S.F. International",
+    "exp2Role": "Technical Manager, Overseas Business",
+    "exp2Detail": "Led the frontend team and served as Technical Manager for core overseas projects. Shipped the Mobile Web product for international logistics ToC operations.",
+    "exp3Company": "PLAUD",
+    "exp3Role": "Frontend Lead",
+    "exp3Detail": "Led the frontend team across the SaaS product and Shopify storefront. Managed multiple cross-functional business lines.",
+    "contactLabel": "Work with me",
+    "contactText": "Looking for a reliable sourcing partner in Shenzhen for hardware, electronics, or tech products? I'd be glad to connect.",
+    "bookCta": "Schedule a call",
+    "emailCta": "Send an email",
+    "jobTitle": "B2B Tech Product Sourcing Agent",
+    "occupationDescription": "Sourcing hardware and tech products for international B2B buyers from Chinese manufacturers in Shenzhen"
   },
   "booking": {
     "title": "Schedule a Meeting",

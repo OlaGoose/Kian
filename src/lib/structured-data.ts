@@ -9,6 +9,8 @@ type PersonLdOptions = {
   worksFor?: { name: string; url?: string };
   alumniOf?: Array<{ name: string; url?: string }>;
   knowsAbout?: string[];
+  address?: { locality: string; country: string };
+  hasOccupation?: { name: string; location?: string; description?: string };
 };
 
 export function buildPersonLd({
@@ -20,6 +22,8 @@ export function buildPersonLd({
   worksFor,
   alumniOf,
   knowsAbout,
+  address,
+  hasOccupation,
 }: PersonLdOptions) {
   const sameAs = [
     SOCIAL_LINKS.twitter,
@@ -54,6 +58,41 @@ export function buildPersonLd({
       }),
     ...(knowsAbout && knowsAbout.length > 0 && { knowsAbout }),
     ...(sameAs.length > 0 && { sameAs }),
+    ...(address && {
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: address.locality,
+        addressCountry: address.country,
+      },
+    }),
+    ...(hasOccupation && {
+      hasOccupation: {
+        '@type': 'Occupation',
+        name: hasOccupation.name,
+        ...(hasOccupation.location && {
+          occupationLocation: { '@type': 'City', name: hasOccupation.location },
+        }),
+        ...(hasOccupation.description && { description: hasOccupation.description }),
+      },
+    }),
+  };
+}
+
+type ProfilePageLdOptions = {
+  url: string;
+  name: string;
+  description: string;
+  person: object;
+};
+
+export function buildProfilePageLd({ url, name, description, person }: ProfilePageLdOptions) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    url,
+    name,
+    description,
+    mainEntity: person,
   };
 }
 

@@ -1,8 +1,8 @@
 {
   "site": {
     "name": "许元凯",
-    "pageTitle": "许元凯 (Kian Xu) | 独立开发者与跨境电商从业者",
-    "description": "许元凯（Kian Xu）的个人主页。白天经营跨境电商与 SEO，夜间作为独立开发者构建快速、实用的产品。曾任平安科技、顺丰国际工程管理及 PLAUD 前端负责人。"
+    "pageTitle": "许元凯 (Kian Xu) | B2B 科技产品采购 Agent · 深圳",
+    "description": "许元凯（Kian Xu），驻深圳的 B2B 科技产品采购 Agent。曾任平安科技、顺丰国际工程管理职位及 PLAUD 前端负责人。专注于为国际买家对接优质深圳硬件供应商。"
   },
   "nav": {
     "home": "主页",
@@ -14,7 +14,7 @@
   },
   "home": {
     "tagline": "白天经商，傍晚陪伴家人，夜里构建产品。",
-    "bio1": "我是一名<developerLink>开发者和构建者</developerLink>。曾先后在<pinganLink>平安科技</pinganLink>和<sfLink>顺丰国际</sfLink>担任工程管理职位，后加入 <plaudLink>PLAUD</plaudLink> 主导多条产品线的前端团队。如今我经营跨境电商，专注于 SEO。",
+    "bio1": "我是一位驻深圳的 B2B <developerLink>科技产品采购 Agent</developerLink> 与开发者。曾先后在<pinganLink>平安科技</pinganLink>和<sfLink>顺丰国际</sfLink>担任工程管理职位，后加入 <plaudLink>PLAUD</plaudLink> 主导前端团队。如今我为国际买家进行硬件采购。",
     "bio2": "我在传感器技术、AI能力边界、高频细分场景与自身能力资源的交叉点里寻找创业机会，然后每次都把最后这个边界再往外推一点。选出最优解，做出来，PDCA，重复。",
     "writingTitle": "我最喜欢的一些文章：",
     "projectsTitle": "我的部分项目：",
@@ -118,6 +118,31 @@
       "b1688": "1688",
       "yiwugo": "义乌购"
     }
+  },
+  "about": {
+    "metaTitle": "关于许元凯 — B2B 科技产品采购 Agent · 深圳",
+    "metaDescription": "许元凯是一位驻深圳的 B2B 科技产品采购 Agent。曾任平安科技、顺丰国际工程管理负责人及 PLAUD 前端负责人。专注于为国际买家提供硬件采购服务。",
+    "heading": "关于",
+    "intro": "我在国际买家与中国电子供应链之间搭建桥梁。",
+    "body1": "我驻扎在深圳——全球硬件制造的核心地带——以 B2B 采购 Agent 的身份专注于科技产品领域：传感器、电子元器件、IoT 硬件和消费科技产品。相较于普通贸易公司，我的核心差异化来自工程背景：进入采购业务之前，我有超过十年的前端工程管理经验，这意味着我能看懂规格书、评估 BOM 清单，并与工厂工程师进行技术层面的沟通。",
+    "body2": "我不仅使用过采购平台，还亲手构建过它。在平安科技，我带领前端团队交付了企业级药品采购平台和食品安全监控分析平台。在顺丰国际，我担任海外业务技术经理，主导交付了国际物流 ToC 业务的 Mobile Web 产品。在 PLAUD，我主导了 SaaS 产品和 Shopify 产品的前端团队。",
+    "body3": "如今，我直接服务于海外 B2B 买家——主要来自欧美市场——为他们在深圳寻找、评估并管理硬件供应商。我既能说工厂车间的语言，也懂产品路线图的逻辑。",
+    "experienceLabel": "职业背景",
+    "exp1Company": "平安科技",
+    "exp1Role": "大前端团队负责人",
+    "exp1Detail": "带领大前端团队，核心项目：企业药品采购平台、食品安全监控与分析平台。",
+    "exp2Company": "顺丰国际",
+    "exp2Role": "技术经理 · 海外业务",
+    "exp2Detail": "担任大前端团队负责人及核心海外项目技术经理，主导交付国际物流 ToC 业务的 Mobile Web 产品。",
+    "exp3Company": "PLAUD",
+    "exp3Role": "前端团队负责人",
+    "exp3Detail": "主导 SaaS 产品与 Shopify 产品的前端团队，兼顾多个业务项目的前端工作。",
+    "contactLabel": "与我合作",
+    "contactText": "如果你正在寻找深圳的可靠采购伙伴，专注于硬件、电子产品或科技类产品，欢迎与我联系。",
+    "bookCta": "预约通话",
+    "emailCta": "发送邮件",
+    "jobTitle": "B2B 科技产品采购 Agent",
+    "occupationDescription": "为国际 B2B 买家从深圳中国制造商处采购硬件和科技产品"
   },
   "booking": {
     "title": "预约会面",
