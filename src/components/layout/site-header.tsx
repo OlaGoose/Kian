@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Calendar } from 'lucide-react';
+import { BookOpen, Calendar, FolderKanban } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { LocaleSwitcher } from '@/components/ui/locale-switcher';
 import { BookingModal } from '@/components/booking/booking-modal';
@@ -32,15 +32,17 @@ export function SiteHeader({ name }: SiteHeaderProps) {
           <nav className="flex items-center gap-5">
             <Link
               href={`${prefix}/blog`}
-              className="text-[14px] md:text-[16px] text-neutral-500 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+              className="inline-flex text-neutral-500 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
             >
-              {t('blog')}
+              <BookOpen className="w-[15px] h-[15px] shrink-0" strokeWidth={1.5} aria-hidden />
+              <span className="sr-only">{t('blog')}</span>
             </Link>
             <Link
               href={`${prefix}/projects`}
-              className="text-[14px] md:text-[16px] text-neutral-500 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+              className="inline-flex text-neutral-500 dark:text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
             >
-              {t('projects')}
+              <FolderKanban className="w-[15px] h-[15px] shrink-0" strokeWidth={1.5} aria-hidden />
+              <span className="sr-only">{t('projects')}</span>
             </Link>
           </nav>
           {FEATURES.booking && (
