@@ -10,11 +10,13 @@
     "projects": "Projects",
     "chat": "Chat",
     "language": "Language",
-    "scheduleLabel": "Schedule a meeting"
+    "scheduleLabel": "Schedule a meeting",
+    "uses": "Uses",
+    "notes": "Notes"
   },
   "home": {
     "tagline": "Merchant by day. Dad by evening. Builder by night.",
-    "bio1": "I'm a <developerLink>B2B tech sourcing agent</developerLink> and developer based in Shenzhen. I led engineering teams at <pinganLink>Ping An Technology</pinganLink> and <sfLink>S.F. International</sfLink>, then led the frontend at <plaudLink>PLAUD</plaudLink>. Today I source hardware for international buyers.",
+    "bio1": "I'm a <developerLink>B2B tech sourcing agent</developerLink> and full-stack developer based in Shenzhen. I led engineering teams at <pinganLink>Ping An Technology</pinganLink> and <sfLink>S.F. International</sfLink>, then led the frontend at <plaudLink>PLAUD</plaudLink>. Today I source hardware for international buyers.",
     "bio2": "I look for ideas where sensor tech, AI frontiers, and high-frequency niches meet what I can actually do, then push that last part a little further each time. One sharp idea wins. Ship it. PDCA. Repeat.",
     "writingTitle": "Some of my favorite writing includes:",
     "projectsTitle": "Some of my projects:",

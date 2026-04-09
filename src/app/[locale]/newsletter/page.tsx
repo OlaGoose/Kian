@@ -38,12 +38,7 @@ export default async function NewsletterPage({ params }: Props) {
             <h1 className="text-[22px] md:text-[30px] font-medium leading-tight mb-2">
               {isZh ? '订阅' : 'Newsletter'}
             </h1>
-            <p className="text-copy text-neutral-500 dark:text-neutral-500 mb-8">
-              {isZh
-                ? '当前使用轻量占位方式。你可以后续接入 ConvertKit、Beehiiv 或自建订阅 API。'
-                : 'This is a lightweight placeholder route. You can connect ConvertKit, Beehiiv, or a custom API later.'}
-            </p>
-            <p className="text-copy">
+            <p className="text-copy mb-8">
               {isZh ? '先通过邮箱联系：' : 'For now, subscribe via email request: '}
               <CustomLink href={SOCIAL_LINKS.email} external>
                 {SOCIAL_LINKS.email.replace('mailto:', '')}

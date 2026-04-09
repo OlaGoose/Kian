@@ -38,12 +38,7 @@ export default async function GuestbookPage({ params }: Props) {
             <h1 className="text-[22px] md:text-[30px] font-medium leading-tight mb-2">
               {isZh ? '留言板' : 'Guestbook'}
             </h1>
-            <p className="text-copy text-neutral-500 dark:text-neutral-500 mb-8">
-              {isZh
-                ? '当前版本使用最小实现。你可以先通过反馈入口留言，后续再升级为公开留言流。'
-                : 'Minimal version for now. Use the feedback channel first, then upgrade to a public message stream later.'}
-            </p>
-            <p className="text-copy">
+            <p className="text-copy mb-8">
               <Link
                 href={prefix || '/'}
                 className="transition-colors underline decoration-neutral-500 decoration-1 underline-offset-[2.5px] hover:decoration-neutral-400 dark:hover:decoration-neutral-600"

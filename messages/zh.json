@@ -10,11 +10,13 @@
     "projects": "作品",
     "chat": "对话",
     "language": "语言",
-    "scheduleLabel": "预约会面"
+    "scheduleLabel": "预约会面",
+    "uses": "我的工具",
+    "notes": "数字花园"
   },
   "home": {
     "tagline": "白天经商，傍晚陪伴家人，夜里构建产品。",
-    "bio1": "我是一位驻深圳的 B2B <developerLink>科技产品采购 Agent</developerLink> 与开发者。曾先后在<pinganLink>平安科技</pinganLink>和<sfLink>顺丰国际</sfLink>担任工程管理职位，后加入 <plaudLink>PLAUD</plaudLink> 主导前端团队。如今我为国际买家进行硬件采购。",
+    "bio1": "我是一位驻深圳的 B2B <developerLink>科技产品采购 Agent</developerLink> 与全栈开发工程师。曾先后在<pinganLink>平安科技</pinganLink>和<sfLink>顺丰国际</sfLink>担任工程管理职位，后加入 <plaudLink>PLAUD</plaudLink> 主导前端团队。如今我为国际买家进行硬件采购。",
     "bio2": "我在传感器技术、AI能力边界、高频细分场景与自身能力资源的交叉点里寻找创业机会，然后每次都把最后这个边界再往外推一点。选出最优解，做出来，PDCA，重复。",
     "writingTitle": "我最喜欢的一些文章：",
     "projectsTitle": "我的部分项目：",

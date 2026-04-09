@@ -117,8 +117,8 @@ export function HomeClient({ name, posts }: HomeClientProps) {
           </p>
           <div className="text-copy flex flex-wrap gap-x-4 gap-y-2">
             <CustomLink href={`${prefix}/about`}>{locale === 'zh' ? '关于' : 'About'}</CustomLink>
-            <CustomLink href={`${prefix}/uses`}>Uses</CustomLink>
-            <CustomLink href={`${prefix}/notes`}>Notes</CustomLink>
+            <CustomLink href={`${prefix}/uses`}>{navT('uses')}</CustomLink>
+            <CustomLink href={`${prefix}/notes`}>{navT('notes')}</CustomLink>
             <CustomLink href={`${prefix}/newsletter`}>{locale === 'zh' ? '订阅' : 'Newsletter'}</CustomLink>
             <CustomLink href={`${prefix}/guestbook`}>{locale === 'zh' ? '留言板' : 'Guestbook'}</CustomLink>
           </div>
