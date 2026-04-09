@@ -168,16 +168,6 @@ INSERT INTO public.posts (
   published, published_at, tags, reading_time_minutes
 ) VALUES
 (
-  'Things I Believe',
-  '我的信念',
-  'things-i-believe',
-  E'## On Craft\n\nGood software is invisible. The best products get out of the way and let people do what they came to do.\n\n## On Learning\n\nThe best way to learn something deeply is to try to teach it. Writing forces clarity.\n\n## On Building\n\nShip early, learn fast. Perfect is the enemy of shipped. But shipped should not mean careless.\n\n## On Tools\n\nUse boring technology for boring problems. Reach for interesting technology only when the problem demands it.',
-  E'## 关于工艺\n\n好的软件是隐形的。最好的产品会让用户专注于他们想做的事情，而不是软件本身。\n\n## 关于学习\n\n深入学习一件事的最好方式是尝试去教别人。写作迫使你思考清晰。\n\n## 关于构建\n\n尽早发布，快速学习。完美是已发布的敌人。但发布不应意味着粗心。\n\n## 关于工具\n\n用无聊的技术解决无聊的问题。只有当问题需要时，才去使用有趣的技术。',
-  'A collection of things I believe to be true about software, learning, and building.',
-  '关于软件、学习和构建，我认为是真实的一些事情。',
-  true, now() - interval '30 days', ARRAY['beliefs', 'building'], 4
-),
-(
   'How Does Image Compression Work?',
   '图像压缩是如何工作的？',
   'how-image-compression-works',
