@@ -16,6 +16,7 @@ export function AboutActions() {
           <button
             onClick={() => setIsBookingOpen(true)}
             className="py-2.5 px-5 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black text-[12px] font-sans font-medium uppercase tracking-wider hover:opacity-80 transition-all active:scale-[0.99] rounded-[2px]"
+            data-ga-label="booking_open"
           >
             {t('bookCta')}
           </button>
@@ -23,6 +24,7 @@ export function AboutActions() {
         <a
           href={SOCIAL_LINKS.email}
           className="py-2.5 px-5 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 text-[12px] font-sans font-medium uppercase tracking-wider hover:border-neutral-400 dark:hover:border-neutral-600 transition-all active:scale-[0.99] rounded-[2px]"
+          data-ga-label="email_cta"
         >
           {t('emailCta')}
         </a>

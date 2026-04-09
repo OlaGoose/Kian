@@ -46,6 +46,7 @@ export function HomeClient({ name, posts }: HomeClientProps) {
                   onClick={() => setIsBookingOpen(true)}
                   className="text-neutral-400 dark:text-neutral-600 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
                   aria-label={navT('scheduleLabel')}
+                  data-ga-label="booking_open"
                 >
                   <Calendar className="w-[15px] h-[15px]" strokeWidth={1.5} />
                 </button>
@@ -116,14 +117,13 @@ export function HomeClient({ name, posts }: HomeClientProps) {
             {locale === 'zh' ? '探索更多' : 'Explore'}
           </p>
           <div className="text-copy flex flex-wrap gap-x-4 gap-y-2">
-            <CustomLink href={`${prefix}/about`}>{locale === 'zh' ? '关于' : 'About'}</CustomLink>
-            <CustomLink href={`${prefix}/uses`}>{navT('uses')}</CustomLink>
-            <CustomLink href={`${prefix}/notes`}>{navT('notes')}</CustomLink>
-            <CustomLink href={`${prefix}/newsletter`}>{locale === 'zh' ? '订阅' : 'Newsletter'}</CustomLink>
-            <CustomLink href={`${prefix}/guestbook`}>{locale === 'zh' ? '留言板' : 'Guestbook'}</CustomLink>
+            <CustomLink href={`${prefix}/about`} data-ga-label="nav_about">{locale === 'zh' ? '关于' : 'About'}</CustomLink>
+            <CustomLink href={`${prefix}/uses`} data-ga-label="nav_uses">{navT('uses')}</CustomLink>
+            <CustomLink href={`${prefix}/notes`} data-ga-label="nav_notes">{navT('notes')}</CustomLink>
+            <CustomLink href={`${prefix}/newsletter`} data-ga-label="nav_newsletter">{locale === 'zh' ? '订阅' : 'Newsletter'}</CustomLink>
+            <CustomLink href={`${prefix}/guestbook`} data-ga-label="nav_guestbook">{locale === 'zh' ? '留言板' : 'Guestbook'}</CustomLink>
           </div>
 
-          {/* Social links */}
           <div className="mt-12 flex items-center gap-5 text-neutral-400 dark:text-neutral-600">
             {SOCIAL_LINKS.twitter && (
               <a
@@ -132,6 +132,7 @@ export function HomeClient({ name, posts }: HomeClientProps) {
                 rel="noopener noreferrer"
                 className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
                 aria-label="Twitter / X"
+                data-ga-label="social_twitter"
               >
                 <Twitter className="w-[17px] h-[17px]" strokeWidth={1.5} />
               </a>
@@ -143,6 +144,7 @@ export function HomeClient({ name, posts }: HomeClientProps) {
                 rel="noopener noreferrer"
                 className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
                 aria-label="GitHub"
+                data-ga-label="social_github"
               >
                 <Github className="w-[17px] h-[17px]" strokeWidth={1.5} />
               </a>
@@ -154,6 +156,7 @@ export function HomeClient({ name, posts }: HomeClientProps) {
                 rel="noopener noreferrer"
                 className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
                 aria-label="YouTube"
+                data-ga-label="social_youtube"
               >
                 <Youtube className="w-[17px] h-[17px]" strokeWidth={1.5} />
               </a>
@@ -165,6 +168,7 @@ export function HomeClient({ name, posts }: HomeClientProps) {
                 rel="noopener noreferrer"
                 className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
                 aria-label="LinkedIn"
+                data-ga-label="social_linkedin"
               >
                 <Linkedin className="w-[17px] h-[17px]" strokeWidth={1.5} />
               </a>
@@ -173,6 +177,7 @@ export function HomeClient({ name, posts }: HomeClientProps) {
               href={SOCIAL_LINKS.email}
               className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
               aria-label="Email"
+              data-ga-label="social_email"
             >
               <Mail className="w-[17px] h-[17px]" strokeWidth={1.5} />
             </a>

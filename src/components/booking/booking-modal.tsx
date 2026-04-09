@@ -326,6 +326,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                       onClick={() => setStep('form')}
                       disabled={!selectedDate || !selectedTime}
                       className="w-full py-2.5 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black text-[11px] font-sans font-medium uppercase tracking-wider hover:opacity-80 transition-all rounded-[2px] disabled:opacity-25 active:scale-[0.99]"
+                      data-ga-label="booking_next"
                     >
                       {t('next')}
                     </button>
@@ -396,6 +397,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                         type="submit"
                         disabled={submitting}
                         className="flex-1 py-2.5 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black text-[11px] font-sans font-medium uppercase tracking-wider hover:opacity-80 transition-all rounded-[2px] active:scale-[0.99] disabled:opacity-25"
+                        data-ga-label="booking_submit"
                       >
                         {submitting ? t('submitting') : t('submit')}
                       </button>

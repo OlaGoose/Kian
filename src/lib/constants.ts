@@ -25,3 +25,5 @@ export const FEATURES = {
   feedback: process.env.NEXT_PUBLIC_FEEDBACK_ENABLED !== 'false',
   booking: process.env.NEXT_PUBLIC_BOOKING_ENABLED !== 'false',
 } as const;
+
+export const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;

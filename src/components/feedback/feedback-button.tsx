@@ -252,6 +252,7 @@ export function FeedbackButton() {
         onClick={() => setIsOpen(true)}
         className="fixed bottom-5 right-5 md:bottom-7 md:right-7 p-2.5 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-all shadow-sm hover:shadow z-40 active:scale-95 rounded-[2px]"
         aria-label={t('title')}
+        data-ga-label="feedback_open"
       >
         <MessageSquare className="w-[18px] h-[18px]" strokeWidth={1.5} />
       </button>
@@ -380,6 +381,7 @@ export function FeedbackButton() {
                         (mode === 'voice' && !audioBlob)
                       }
                       className="w-full py-2.5 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black text-[12px] md:text-[14px] font-medium uppercase tracking-wider hover:opacity-80 transition-all active:scale-[0.99] disabled:opacity-25 rounded-[2px]"
+                      data-ga-label="feedback_submit"
                     >
                       {isSubmitting ? t('submitting') : t('submit')}
                     </button>
