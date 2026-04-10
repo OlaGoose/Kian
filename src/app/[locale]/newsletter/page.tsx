@@ -14,13 +14,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description =
     locale === 'zh' ? '接收我最新的文章、笔记与项目更新。' : 'Get updates on new writing, notes, and projects.';
 
-  return buildPageMetadata({
-    locale,
-    path: 'newsletter',
-    title,
-    description,
-    siteName: siteT('name'),
-  });
+  return {
+    ...buildPageMetadata({
+      locale,
+      path: 'newsletter',
+      title,
+      description,
+      siteName: siteT('name'),
+    }),
+    robots: { index: false, follow: true },
+  };
 }
 
 export default async function NewsletterPage({ params }: Props) {

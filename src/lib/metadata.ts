@@ -18,6 +18,7 @@ export function getAlternates(locale: string, path?: string) {
     canonical: locale === 'zh' ? zhUrl : enUrl,
     languages: {
       en: enUrl,
+      'zh-Hans': zhUrl,
       zh: zhUrl,
       'x-default': enUrl,
     },

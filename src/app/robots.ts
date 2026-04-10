@@ -22,7 +22,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/_next/'],
+        disallow: ['/api/'],
       },
       // Allow all AI crawlers full access to public content for GEO (Generative Engine Optimization)
       ...AI_CRAWLERS.map((userAgent) => ({

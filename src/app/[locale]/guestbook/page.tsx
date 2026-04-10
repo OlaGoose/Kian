@@ -13,13 +13,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description =
     locale === 'zh' ? '欢迎留下你的想法、建议或一句问候。' : 'Leave a message, feedback, or a quick hello.';
 
-  return buildPageMetadata({
-    locale,
-    path: 'guestbook',
-    title,
-    description,
-    siteName: siteT('name'),
-  });
+  return {
+    ...buildPageMetadata({
+      locale,
+      path: 'guestbook',
+      title,
+      description,
+      siteName: siteT('name'),
+    }),
+    robots: { index: false, follow: true },
+  };
 }
 
 export default async function GuestbookPage({ params }: Props) {

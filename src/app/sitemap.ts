@@ -2,7 +2,20 @@ import type { MetadataRoute } from 'next';
 import { createBuildClient } from '@/lib/supabase/build';
 import { SITE_URL } from '@/lib/constants';
 import type { Tables } from '@/lib/supabase/database.types';
-import { NOTES } from '@/lib/notes';
+
+function sitemapAlternates(path?: string) {
+  const suffix = path ? `/${path}` : '';
+  const enUrl = `${SITE_URL}${suffix}`;
+  const zhUrl = `${SITE_URL}/zh${suffix}`;
+  return {
+    languages: {
+      en: enUrl,
+      'zh-Hans': zhUrl,
+      zh: zhUrl,
+      'x-default': enUrl,
+    },
+  };
+}
 
 export const revalidate = 3600; // Regenerate every hour
 
@@ -41,113 +54,42 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: contentLastModified,
       changeFrequency: 'monthly' as const,
       priority: 1,
-      alternates: {
-        languages: { en: SITE_URL, zh: `${SITE_URL}/zh`, 'x-default': SITE_URL },
-      },
+      alternates: sitemapAlternates(),
     },
     {
       url: `${SITE_URL}/blog`,
       lastModified: latestPostDate,
       changeFrequency: 'weekly' as const,
       priority: 0.8,
-      alternates: {
-        languages: {
-          en: `${SITE_URL}/blog`,
-          zh: `${SITE_URL}/zh/blog`,
-          'x-default': `${SITE_URL}/blog`,
-        },
-      },
+      alternates: sitemapAlternates('blog'),
     },
     {
       url: `${SITE_URL}/projects`,
       lastModified: latestProjectDate,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
-      alternates: {
-        languages: {
-          en: `${SITE_URL}/projects`,
-          zh: `${SITE_URL}/zh/projects`,
-          'x-default': `${SITE_URL}/projects`,
-        },
-      },
+      alternates: sitemapAlternates('projects'),
     },
     {
       url: `${SITE_URL}/projects/ozon-catalog`,
       lastModified: latestProjectDate,
       changeFrequency: 'monthly' as const,
       priority: 0.65,
-      alternates: {
-        languages: {
-          en: `${SITE_URL}/projects/ozon-catalog`,
-          zh: `${SITE_URL}/zh/projects/ozon-catalog`,
-          'x-default': `${SITE_URL}/projects/ozon-catalog`,
-        },
-      },
+      alternates: sitemapAlternates('projects/ozon-catalog'),
     },
     {
       url: `${SITE_URL}/about`,
       lastModified: contentLastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.7,
-      alternates: {
-        languages: {
-          en: `${SITE_URL}/about`,
-          zh: `${SITE_URL}/zh/about`,
-          'x-default': `${SITE_URL}/about`,
-        },
-      },
-    },
-    {
-      url: `${SITE_URL}/uses`,
-      lastModified: contentLastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-      alternates: {
-        languages: {
-          en: `${SITE_URL}/uses`,
-          zh: `${SITE_URL}/zh/uses`,
-          'x-default': `${SITE_URL}/uses`,
-        },
-      },
-    },
-    {
-      url: `${SITE_URL}/guestbook`,
-      lastModified: contentLastModified,
-      changeFrequency: 'weekly' as const,
-      priority: 0.6,
-      alternates: {
-        languages: {
-          en: `${SITE_URL}/guestbook`,
-          zh: `${SITE_URL}/zh/guestbook`,
-          'x-default': `${SITE_URL}/guestbook`,
-        },
-      },
-    },
-    {
-      url: `${SITE_URL}/newsletter`,
-      lastModified: contentLastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-      alternates: {
-        languages: {
-          en: `${SITE_URL}/newsletter`,
-          zh: `${SITE_URL}/zh/newsletter`,
-          'x-default': `${SITE_URL}/newsletter`,
-        },
-      },
+      alternates: sitemapAlternates('about'),
     },
     {
       url: `${SITE_URL}/notes`,
       lastModified: contentLastModified,
       changeFrequency: 'weekly' as const,
       priority: 0.65,
-      alternates: {
-        languages: {
-          en: `${SITE_URL}/notes`,
-          zh: `${SITE_URL}/zh/notes`,
-          'x-default': `${SITE_URL}/notes`,
-        },
-      },
+      alternates: sitemapAlternates('notes'),
     },
   ];
 
@@ -158,29 +100,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: new Date(post.updated_at),
         changeFrequency: 'monthly' as const,
         priority: 0.7,
-        alternates: {
-          languages: {
-            en: `${SITE_URL}/blog/${post.slug}`,
-            zh: `${SITE_URL}/zh/blog/${post.slug}`,
-            'x-default': `${SITE_URL}/blog/${post.slug}`,
-          },
-        },
+        alternates: sitemapAlternates(`blog/${post.slug}`),
       },
     ]) ?? [];
 
-  const notePages = NOTES.map((note) => ({
-    url: `${SITE_URL}/notes/${note.slug}`,
-    lastModified: contentLastModified,
-    changeFrequency: 'weekly' as const,
-    priority: 0.55,
-    alternates: {
-      languages: {
-        en: `${SITE_URL}/notes/${note.slug}`,
-        zh: `${SITE_URL}/zh/notes/${note.slug}`,
-        'x-default': `${SITE_URL}/notes/${note.slug}`,
-      },
-    },
-  }));
-
-  return [...staticPages, ...postPages, ...notePages];
+  return [...staticPages, ...postPages];
 }

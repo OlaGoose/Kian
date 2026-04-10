@@ -14,13 +14,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? '我日常使用的硬件、软件和开发工具清单。'
       : 'Hardware, software, and tools I use daily.';
 
-  return buildPageMetadata({
-    locale,
-    path: 'uses',
-    title,
-    description,
-    siteName: siteT('name'),
-  });
+  return {
+    ...buildPageMetadata({
+      locale,
+      path: 'uses',
+      title,
+      description,
+      siteName: siteT('name'),
+    }),
+    robots: { index: false, follow: true },
+  };
 }
 
 const TOOL_SECTIONS = [

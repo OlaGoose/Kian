@@ -24,13 +24,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = locale === 'zh' ? `笔记：${slug}` : `Note: ${slug}`;
   const description =
     locale === 'zh' ? '数字花园中的过程化记录。' : 'A process-focused entry in the digital garden.';
-  return buildPageMetadata({
-    locale,
-    path: `notes/${slug}`,
-    title,
-    description,
-    siteName: siteT('name'),
-  });
+  return {
+    ...buildPageMetadata({
+      locale,
+      path: `notes/${slug}`,
+      title,
+      description,
+      siteName: siteT('name'),
+    }),
+    robots: { index: false, follow: true },
+  };
 }
 
 export default async function NoteDetailPage({ params }: Props) {

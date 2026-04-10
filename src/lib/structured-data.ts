@@ -1,4 +1,4 @@
-import { SITE_URL, SOCIAL_LINKS } from '@/lib/constants';
+import { SITE_URL, SITE_NAME, SOCIAL_LINKS } from '@/lib/constants';
 
 type PersonLdOptions = {
   name: string;
@@ -108,7 +108,7 @@ export function buildWebSiteLd({ name, description }: WebSiteLdOptions) {
     url: SITE_URL,
     name,
     description,
-    inLanguage: ['en', 'zh'],
+    inLanguage: 'en',
   };
 }
 
@@ -203,6 +203,7 @@ export function buildCollectionPageLd({ name, description, url }: CollectionPage
     url,
     author: {
       '@type': 'Person',
+      name: SITE_NAME,
       url: SITE_URL,
     },
   };
@@ -240,24 +241,35 @@ export function buildSoftwareAppListLd({
     url: string | null;
   }>;
 }) {
+  const toAbsoluteUrl = (url: string | null): string | null => {
+    if (!url) return null;
+    if (url.startsWith('http://') || url.startsWith('https://')) return url;
+    return `${SITE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
+  };
+
   return {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name,
-    itemListElement: items.map((item) => ({
-      '@type': 'ListItem',
-      position: item.position,
-      item: {
-        '@type': 'SoftwareApplication',
-        name: item.name,
-        ...(item.description && { description: item.description }),
-        ...(item.url && { url: item.url }),
-        applicationCategory: 'WebApplication',
-        author: {
-          '@type': 'Person',
-          url: SITE_URL,
+    itemListElement: items.map((item) => {
+      const absoluteUrl = toAbsoluteUrl(item.url);
+      return {
+        '@type': 'ListItem',
+        position: item.position,
+        item: {
+          '@type': 'SoftwareApplication',
+          name: item.name,
+          ...(item.description && { description: item.description }),
+          ...(absoluteUrl && { url: absoluteUrl }),
+          applicationCategory: 'WebApplication',
+          operatingSystem: 'Web',
+          author: {
+            '@type': 'Person',
+            name: SITE_NAME,
+            url: SITE_URL,
+          },
         },
-      },
-    })),
+      };
+    }),
   };
 }
